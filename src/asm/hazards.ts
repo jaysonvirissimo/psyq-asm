@@ -8,6 +8,8 @@
  *   register. A `div`/`rem` expansion's final mflo/mfhi counts as a load.
  * - H3: between mflo/mfhi and the next mult/div there must be two instructions.
  * - H4: after mfc2/cfc2, like H2.
+ * - H5 (`insertGteGapNops`, after the others): a GTE command needs two words
+ *   after the last lwc2, mtc2, or ctc2.
  *
  * The pass works on the expanded stream, so "the next instruction" is always
  * the first word of the next group: a macro that starts with `lui $at` does not
@@ -220,4 +222,43 @@ export function insertNops(items: readonly Item[]): Item[] {
     ...items.flatMap((item, index) => [...(inserts.get(index) ?? []), item]),
     ...(inserts.get(items.length) ?? []),
   ];
+}
+
+/** Instructions that write a GTE register, which a GTE command must not follow closely. */
+const GTE_WRITES: ReadonlySet<string> = new Set(['lwc2', 'mtc2', 'ctc2']);
+
+/**
+ * H5: a GTE command (`cop2`) may not start within two words of the last `lwc2`,
+ * `mtc2`, or `ctc2` in its section. ASPSX counts every word in between, macro
+ * expansions and the nops of the other rules included, and looks past labels,
+ * directives, function boundaries, and section switches; it inserts the
+ * missing nops right before the command, after any labels, in reorder and
+ * noreorder mode alike (probes VERIFY-25 to VERIFY-27). So this runs on the
+ * stream `insertNops` returns.
+ */
+export function insertGteGapNops(items: readonly Item[]): Item[] {
+  const since = new Map<string, number>();
+  const out: Item[] = [];
+  for (const item of items) {
+    if (item.kind !== 'group') {
+      out.push(item);
+      continue;
+    }
+    let count = since.get(item.section) ?? Number.POSITIVE_INFINITY;
+    if (endsOf(item)[0].row.mnemonic === 'cop2') {
+      for (; count < 2; count++) {
+        out.push(
+          nop(
+            item,
+            'gte-gap-nop',
+            'a GTE command may not start within two words of a GTE register write',
+          ),
+        );
+      }
+    }
+    for (const word of item.words) count = GTE_WRITES.has(word.row.mnemonic) ? 0 : count + 1;
+    since.set(item.section, count);
+    out.push(item);
+  }
+  return out;
 }

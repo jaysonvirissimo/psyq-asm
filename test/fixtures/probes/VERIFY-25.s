@@ -1,0 +1,52 @@
+# VERIFY-25, -G 0: How many words must separate a GTE command from lwc2, mtc2, or ctc2?
+	.set	noreorder
+	lwc2	$0,0($4)
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	lwc2	$1,4($4)
+	nop
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	lwc2	$2,8($4)
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	mtc2	$5,$9
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	mtc2	$5,$9
+	nop
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	ctc2	$5,$31
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	swc2	$0,0($4)
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	mfc2	$2,$9
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	cfc2	$2,$31
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	mtc0	$5,$12
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	cop2	0x00000001
+	cop2	0x00486012
+	addu	$2,$3,$3
+	addu	$2,$3,$3
+	jr	$31
+	nop

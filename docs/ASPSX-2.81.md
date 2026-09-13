@@ -149,9 +149,16 @@ it as if it were a load. **[maspsx] test_div**
 write. This is maspsx issue
 #118, reported against real ASPSX output. **[aspsx: VERIFY-18]**
 
-`mtc2`/`ctc2` followed by a GTE command gets nothing: PsyQ's inline macros write
-their own nops. The compiler's `#nop` comments are ignored entirely; the rules
-above decide.
+**H5. The GTE command gap.** A GTE command (`cop2 <command>`) may not start
+within two words of the last `lwc2`, `mtc2`, or `ctc2`. ASPSX counts every word
+in between, macro expansions and the nops of the rules above included, and looks
+past labels, directives, function boundaries, and section switches; it inserts
+the missing nops right before the command, after any labels, in `reorder` and
+`noreorder` alike. `swc2`, `mfc2`, `cfc2`, coprocessor 0 moves, and other
+commands neither start the count nor end it. **[aspsx: VERIFY-25, VERIFY-26,
+VERIFY-27, c27_gte_inline]**
+
+The compiler's `#nop` comments are ignored entirely; the rules above decide.
 
 ## Small data
 
@@ -244,3 +251,6 @@ probe test holds `psyq-asm` to them.
 | VERIFY-22 | `mflo` · `mfhi` · `mult` | two nops before the `mult` |
 | VERIFY-23 | Alignment of `.lcomm` allocations of each size | the size rounded up to a power of two, at most 16 |
 | VERIFY-24 | Can `.bss` hold data? | yes, kept byte for byte; `.lcomm` offsets still count from 0 beside it |
+| VERIFY-25 | How many words must separate a GTE command from `lwc2`, `mtc2`, or `ctc2`? | two; ASPSX inserts nops to make them up |
+| VERIFY-26 | What counts toward that gap, and what ends it? | every word, inserted nops included; labels, directives, functions, and sections do not end it; a later write restarts it |
+| VERIFY-27 | Where do labels bind when GTE gap nops are inserted? | before the nops |

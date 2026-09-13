@@ -3,7 +3,7 @@ import { decodeSource, validateAssembleOptions } from '../options.js';
 import type { AssembleOptions, AssembleResult } from '../public-types.js';
 import { Diagnostics } from './diagnostics.js';
 import { expand } from './expand.js';
-import { insertNops } from './hazards.js';
+import { insertGteGapNops, insertNops } from './hazards.js';
 import { layout } from './layout.js';
 import { buildObject } from './object.js';
 import { parse } from './parser.js';
@@ -30,7 +30,7 @@ export function assemble(source: string | Uint8Array, options: AssembleOptions):
     partialDivExpansion: normalized.partialDivExpansion,
     diagnostics,
   });
-  const withNops = insertNops(items);
+  const withNops = insertGteGapNops(insertNops(items));
   const laidOut = layout(withNops, symbols, normalized.gpSize, diagnostics);
 
   if (diagnostics.hasErrors) return { success: false, diagnostics: diagnostics.sorted() };

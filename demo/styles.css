@@ -155,6 +155,7 @@ tr.macro td {
 tr.branch-delay-nop td,
 tr.load-delay-nop td,
 tr.hilo-gap-nop td,
+tr.gte-gap-nop td,
 tr.cop-delay-nop td {
   background: var(--nop);
 }

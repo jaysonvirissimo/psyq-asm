@@ -155,14 +155,14 @@ executable, is in place (`scripts/oracle.mjs`).
 
 ## Output model
 
-| Field                | Contents                                                                                                                                                                                                             |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `object.sections[]`  | `name`, `kind` (`code`, `data`, `bss`), `bytes`, `size`, `relocations`; code sections also `words` and `provenance`. First-appearance order; `.lcomm` allocations create `.sbss`/`.bss` last.                        |
-| `relocations[]`      | `offset` (bytes), `kind` (`HI16`, `LO16`, `GPREL16`, `MIPS26`, `WORD32`), `fieldMask`, `target` (a symbol and addend for an extern or `.comm`, or a section offset for anything the file defines), and `fieldValue`. |
-| `provenance[]`       | One per word: source `line`, `kind` (`instruction`, `macro`, `branch-delay-nop`, `load-delay-nop`, `hilo-gap-nop`, `cop-delay-nop`, `align`, `data`), the `macro` that expanded, and a `note` for inserted nops.     |
-| `object.symbols[]`   | `name`, `binding` (`global`, `local`, `extern`, `common`), `section`, `offset` (not for `extern` or `common`), `size`.                                                                                               |
-| `object.functions[]` | From `.ent`/`.end`: `name`, `start` and `end` word indices, `frame`, `mask`, `fmask`.                                                                                                                                |
-| `object.smallData[]` | The symbols addressed through `$gp`, with the reason.                                                                                                                                                                |
+| Field                | Contents                                                                                                                                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `object.sections[]`  | `name`, `kind` (`code`, `data`, `bss`), `bytes`, `size`, `relocations`; code sections also `words` and `provenance`. First-appearance order; `.lcomm` allocations create `.sbss`/`.bss` last.                                   |
+| `relocations[]`      | `offset` (bytes), `kind` (`HI16`, `LO16`, `GPREL16`, `MIPS26`, `WORD32`), `fieldMask`, `target` (a symbol and addend for an extern or `.comm`, or a section offset for anything the file defines), and `fieldValue`.            |
+| `provenance[]`       | One per word: source `line`, `kind` (`instruction`, `macro`, `branch-delay-nop`, `load-delay-nop`, `hilo-gap-nop`, `cop-delay-nop`, `gte-gap-nop`, `align`, `data`), the `macro` that expanded, and a `note` for inserted nops. |
+| `object.symbols[]`   | `name`, `binding` (`global`, `local`, `extern`, `common`), `section`, `offset` (not for `extern` or `common`), `size`.                                                                                                          |
+| `object.functions[]` | From `.ent`/`.end`: `name`, `start` and `end` word indices, `frame`, `mask`, `fmask`.                                                                                                                                           |
+| `object.smallData[]` | The symbols addressed through `$gp`, with the reason.                                                                                                                                                                           |
 
 ## Errors
 

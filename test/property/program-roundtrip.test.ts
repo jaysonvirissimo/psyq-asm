@@ -8,9 +8,16 @@ import { formatProgram } from '../../src/program/format-program.js';
 import { operandArbitrary } from '../helpers/arbitraries.js';
 import { assembleOk, hex8, wordsOf } from '../helpers/assembly.js';
 
-/** Rows after which ASPSX may insert a nop; re-assembly would not round-trip them. */
+/**
+ * Rows after which ASPSX may insert a nop (the GTE register writes pad a later
+ * GTE command); re-assembly would not round-trip them.
+ */
 const ROUND_TRIP_ROWS = ISA_ROWS.filter(
-  (row) => row.hazard !== 'load' && row.hazard !== 'mflo' && row.hazard !== 'cop-from',
+  (row) =>
+    row.hazard !== 'load' &&
+    row.hazard !== 'mflo' &&
+    row.hazard !== 'cop-from' &&
+    !['lwc2', 'mtc2', 'ctc2'].includes(row.mnemonic),
 );
 
 const word = fc

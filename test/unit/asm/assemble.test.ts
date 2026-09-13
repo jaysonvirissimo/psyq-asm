@@ -92,7 +92,16 @@ describe('assemble: native instructions', () => {
           ),
         ),
       ),
-    ).toEqual(['0x48444000', '0x00000000', '0xC8850004', '0x4A180001', '0x40026000']);
+    ).toEqual([
+      '0x48444000',
+      '0x00000000',
+      '0xC8850004',
+      // ASPSX pads a GTE command to two words after lwc2 (H5).
+      '0x00000000',
+      '0x00000000',
+      '0x4A180001',
+      '0x40026000',
+    ]);
   });
 
   it('assembles an empty source', () => {

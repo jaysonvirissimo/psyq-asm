@@ -352,3 +352,60 @@ describe('endsOf', () => {
     expect([first.row.mnemonic, last.row.mnemonic]).toEqual(['sll', 'sll']);
   });
 });
+
+describe('H5: the GTE command gap', () => {
+  it('pads a command to two words after lwc2, mtc2, or ctc2, counting every word between', () => {
+    expect(kinds(src('\tlwc2\t$0,0($4)', '\tcop2\t0x00486012'))).toEqual([
+      'instruction',
+      'gte-gap-nop',
+      'gte-gap-nop',
+      'instruction',
+    ]);
+    expect(kinds(src('\tmtc2\t$5,$9', '\tnop', '\tcop2\t0x00486012'))).toEqual([
+      'instruction',
+      'macro',
+      'gte-gap-nop',
+      'instruction',
+    ]);
+    expect(kinds(src('\tctc2\t$5,$31', '\tla\t$2,sym', '\tcop2\t0x00486012'))).toEqual([
+      'instruction',
+      'macro',
+      'macro',
+      'instruction',
+    ]);
+    expect(kinds(src('\tswc2\t$0,0($4)', '\tmfc2\t$2,$9', '\tcop2\t0x00486012'))).toEqual([
+      'instruction',
+      'instruction',
+      'instruction',
+    ]);
+    expect(
+      kinds(src('\tmflo\t$2', '\tlwc2\t$0,0($4)', '\tmult\t$5,$6', '\tcop2\t0x00486012')),
+    ).toEqual(['instruction', 'instruction', 'hilo-gap-nop', 'instruction', 'instruction']);
+  });
+
+  it('counts from the last write past labels and directives, and puts the nops after labels', () => {
+    const text = src(
+      '\t.set\tnoreorder',
+      '\tmtc2\t$5,$9',
+      '\tnop',
+      '\tlwc2\t$0,0($4)',
+      '\t.data',
+      '\t.word\t1',
+      '\t.text',
+      '$L5:',
+      '\tcop2\t0x00486012',
+      '\tbeq\t$0,$0,$L5',
+      '\tnop',
+    );
+    expect(wordsOf(assembleOk(text))).toEqual([
+      '0x48854800',
+      '0x00000000',
+      '0xC8800000',
+      '0x00000000',
+      '0x00000000',
+      '0x4A486012',
+      '0x1000FFFC',
+      '0x00000000',
+    ]);
+  });
+});

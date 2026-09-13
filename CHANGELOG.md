@@ -12,6 +12,8 @@ A fidelity fix is not a breaking change even when it changes output.
 
 ### Fidelity
 
+- A GTE command (`cop2`) that follows `lwc2`, `mtc2`, or `ctc2` within two words
+  gets the nops ASPSX inserts before it (new provenance kind `gte-gap-nop`).
 - Names starting with `L` are ordinary symbols unless they are `LM<digits>`
   debugging markers: calls to external functions such as `LoadThing` no longer
   fail, and such globals and statics appear in the object's symbols.

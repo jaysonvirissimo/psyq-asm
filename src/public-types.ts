@@ -163,6 +163,7 @@ export type WordOriginKind =
   | 'load-delay-nop'
   | 'hilo-gap-nop'
   | 'cop-delay-nop'
+  | 'gte-gap-nop'
   | 'align'
   | 'data';
 
