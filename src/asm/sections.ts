@@ -3,20 +3,35 @@ import type { Relocation, Section, WordOrigin } from '../public-types.js';
 
 export type SectionKind = Section['kind'];
 
-/** `.text` holds code; `.bss` and `.sbss` reserve space; everything else is data. */
+/**
+ * `.text` holds code; `.bss` and `.sbss` reserve space (and may also hold data,
+ * which ASPSX keeps); everything else is data.
+ */
 export function sectionKind(name: string): SectionKind {
   if (name === '.text') return 'code';
   if (name === '.bss' || name === '.sbss') return 'bss';
   return 'data';
 }
 
-/** Accumulates one section's contents during layout. */
+function padding(offset: number, alignment: number): number {
+  return (alignment - (offset % alignment)) % alignment;
+}
+
+/**
+ * Accumulates one section's contents during layout. A bss section has two
+ * cursors, as in ASPSX 2.81: one for what `.byte`, `.word`, `.space`, and
+ * `.align` put there, and one for `.lcomm` allocations, which counts from zero
+ * beside the first (probe VERIFY-24). Its size is the two together.
+ */
 export class SectionBuilder {
   readonly name: string;
   readonly kind: SectionKind;
   readonly relocations: Relocation[] = [];
   private readonly data: number[] = [];
   private readonly origins: WordOrigin[] = [];
+  /** bss only: zero bytes at the end of the data cursor, not yet written out. */
+  private zeros = 0;
+  /** bss only: the `.lcomm` cursor. */
   private reserved = 0;
 
   constructor(name: string) {
@@ -24,9 +39,9 @@ export class SectionBuilder {
     this.kind = sectionKind(name);
   }
 
-  /** The current size, in bytes. */
+  /** The data cursor, in bytes. */
   get offset(): number {
-    return this.kind === 'bss' ? this.reserved : this.data.length;
+    return this.data.length + this.zeros;
   }
 
   pushWord(word: number, origin: WordOrigin): void {
@@ -35,6 +50,7 @@ export class SectionBuilder {
   }
 
   pushBytes(bytes: Uint8Array, origin: WordOrigin): void {
+    for (; this.zeros > 0; this.zeros--) this.data.push(0);
     for (const byte of bytes) this.data.push(byte);
     this.coverWithOrigin(origin);
   }
@@ -42,7 +58,7 @@ export class SectionBuilder {
   /** Reserve zeroed space: nop words where code is word-aligned, zero bytes otherwise. */
   pad(size: number, origin: WordOrigin): void {
     if (this.kind === 'bss') {
-      this.reserved += size;
+      this.zeros += size;
       return;
     }
     let remaining = size;
@@ -50,6 +66,13 @@ export class SectionBuilder {
       for (; remaining >= 4; remaining -= 4) this.pushWord(0, origin);
     }
     this.pushBytes(new Uint8Array(remaining), origin);
+  }
+
+  /** bss only: allocate an `.lcomm` on its own cursor, returning its offset. */
+  reserve(size: number, alignment: number): number {
+    const offset = this.reserved + padding(this.reserved, alignment);
+    this.reserved = offset + size;
+    return offset;
   }
 
   private coverWithOrigin(origin: WordOrigin): void {
@@ -74,12 +97,10 @@ export class SectionBuilder {
         provenance: this.origins,
       };
     }
-    return {
-      name: this.name,
-      kind: this.kind,
-      bytes: Uint8Array.from(this.data),
-      size: this.offset,
-      relocations: this.relocations,
-    };
+    const size = this.offset + this.reserved;
+    // A bss section that never held data has no contents; one that did has all of them.
+    const bytes = this.data.length === 0 ? new Uint8Array(0) : new Uint8Array(size);
+    bytes.set(this.data);
+    return { name: this.name, kind: this.kind, bytes, size, relocations: this.relocations };
   }
 }

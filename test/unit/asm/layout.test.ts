@@ -73,6 +73,38 @@ describe('layout: sections and data', () => {
       bytesOf(assembleOk(src('\t.data', '\t.byte\t1', '\t.align\t2', '\t.byte\t2')), '.data'),
     ).toBe('01 00 00 00 02');
   });
+
+  it('lets .bss hold data, with .lcomm space counted from zero beside it, as ASPSX 2.81 does', () => {
+    const object = assembleOk(
+      src(
+        '\t.section .bss,"aw",@progbits',
+        '\t.byte\t0',
+        '\t.half\t0',
+        '\t.space\t3',
+        '\t.word\t5',
+        'chars:',
+        '\t.ascii\t"x"',
+        '\t.lcomm\tpad,4',
+        '\t.text',
+        '\tla\t$2,chars',
+      ),
+    );
+    const bss = sectionOf(object, '.bss');
+    expect(bss.size).toBe(15);
+    expect(Array.from(bss.bytes)).toEqual([0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 120, 0, 0, 0, 0]);
+    expect(sectionOf(object, '.text').relocations.map((r) => r.target)).toEqual([
+      { kind: 'section', section: '.bss', offset: 10, label: 'chars' },
+      { kind: 'section', section: '.bss', offset: 10, label: 'chars' },
+    ]);
+    expect(object.symbols).toContainEqual({
+      name: 'pad',
+      binding: 'local',
+      section: '.bss',
+      offset: 0,
+      size: 4,
+    });
+    expect(sectionOf(assembleOk(src('\t.lcomm\tonly,8')), '.bss').bytes).toHaveLength(0);
+  });
 });
 
 describe('layout: commons', () => {

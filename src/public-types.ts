@@ -90,7 +90,10 @@ export interface AssembledObject {
 export interface Section {
   readonly name: SectionName;
   readonly kind: 'code' | 'data' | 'bss';
-  /** Section contents; empty for bss. */
+  /**
+   * Section contents. Empty for a bss section that holds only reserved space;
+   * a bss section that data was written into has all its bytes.
+   */
   readonly bytes: Uint8Array;
   /** Size in bytes, including reserved bss space. */
   readonly size: number;

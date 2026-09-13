@@ -261,9 +261,6 @@ describe('assemble: errors', () => {
           '\t.word\t%hi(x)',
           '\t.word\t$Lnone',
           '\taddu\t$2,$3,$4',
-          '\t.bss',
-          '\t.word\t1',
-          '\t.ascii\t"x"',
         ),
       ),
     ).toEqual([
@@ -279,16 +276,6 @@ describe('assemble: errors', () => {
         line: 6,
         code: 'unsupported-syntax',
         message: 'instructions belong in a code section, not .data.',
-      },
-      {
-        line: 8,
-        code: 'invalid-directive',
-        message: '.bss can only reserve space, not hold data.',
-      },
-      {
-        line: 9,
-        code: 'invalid-directive',
-        message: '.bss can only reserve space, not hold data.',
       },
     ]);
   });

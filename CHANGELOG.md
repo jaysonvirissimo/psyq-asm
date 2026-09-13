@@ -10,6 +10,15 @@ A fidelity fix is not a breaking change even when it changes output.
 
 ## [Unreleased]
 
+### Fidelity
+
+- Names starting with `L` are ordinary symbols unless they are `LM<digits>`
+  debugging markers: calls to external functions such as `LoadThing` no longer
+  fail, and such globals and statics appear in the object's symbols.
+- `.bss` may hold data (`.section .bss` then `.word 0`), which is kept, as
+  ASPSX does, instead of being an error. `.lcomm` offsets in such a section still count
+  from 0 beside the data, as ASPSX's do.
+
 ## [0.1.0] - 2026-09-13
 
 ### Added

@@ -181,7 +181,10 @@ Numeric `%hi(n)`/`%lo(n)` fold into constants, with `%hi` adjusted for a negativ
 ## Sections, data, and functions
 
 `.text` holds code, `.bss` and `.sbss` reserve space, and every other section
-holds data. `.align n` pads to 2ⁿ, with nop words in code. `.word` accepts
+holds data. Data written into `.bss` (say `.section .bss` and `.word 0`) is kept
+as it is, with no implicit alignment, and `.lcomm` offsets in that section still count from 0 beside it, the
+section's size being the two together.
+**[aspsx: VERIFY-24]** `.align n` pads to 2ⁿ, with nop words in code. `.word` accepts
 numbers, symbols with addends, and labels; `.half`, `.short`, and `.byte` accept
 numbers. `.ascii` decodes C escapes; `.asciiz` appends a zero byte.
 
@@ -240,3 +243,4 @@ probe test holds `psyq-asm` to them.
 | VERIFY-21 | Where `LM<digits>` debugging labels bind when a nop is inserted before the next instruction | before the nop, like any other label |
 | VERIFY-22 | `mflo` · `mfhi` · `mult` | two nops before the `mult` |
 | VERIFY-23 | Alignment of `.lcomm` allocations of each size | the size rounded up to a power of two, at most 16 |
+| VERIFY-24 | Can `.bss` hold data? | yes, kept byte for byte; `.lcomm` offsets still count from 0 beside it |

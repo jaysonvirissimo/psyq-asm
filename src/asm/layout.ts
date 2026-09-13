@@ -83,13 +83,16 @@ function assignLabels(
       else sizes.set(section, at(section) + contentSize(d));
     }
   }
-  // Only .lcomm is allocated here; the linker places .comm symbols.
+  // Only .lcomm is allocated here, on its own cursor beside any data in the
+  // section (probe VERIFY-24); the linker places .comm symbols.
+  const reserved = new Map<string, number>();
   for (const common of symbols.commons.values()) {
     if (!common.local) continue;
     const target = commonSection(common.size, gpSize);
-    const offset = at(target) + padding(at(target), commonAlignment(common.size, common.align));
+    const at = reserved.get(target) ?? 0;
+    const offset = at + padding(at, commonAlignment(common.size, common.align));
     bind(common.name, { section: target, offset });
-    sizes.set(target, offset + common.size);
+    reserved.set(target, offset + common.size);
   }
   return labels;
 }
@@ -151,7 +154,7 @@ class Emitter {
       if (!common.local) continue;
       const builder = this.builder(commonSection(common.size, this.gpSize));
       const align = commonAlignment(common.size, common.align);
-      builder.pad(padding(builder.offset, align) + common.size, { line: 1, kind: 'data' });
+      builder.reserve(common.size, align);
     }
     return {
       sections: [...this.builders.values()].map((b) => b.finish()),
@@ -245,15 +248,8 @@ class Emitter {
     at: { line: number; column: number },
     origin: WordOrigin,
   ): void {
+    // ASPSX accepts data in .bss and .sbss and keeps it (probe VERIFY-24).
     const builder = this.builder(this.section);
-    if (builder.kind === 'bss') {
-      this.diagnostics.error(
-        at,
-        'invalid-directive',
-        `${this.section} can only reserve space, not hold data.`,
-      );
-      return;
-    }
     if (d.kind === 'bytes') {
       builder.pushBytes(d.bytes, origin);
       return;
