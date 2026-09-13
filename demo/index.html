@@ -1,0 +1,70 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: MIT -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>psyq-asm demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>psyq-asm</h1>
+      <p>
+        Paste PsyQ 4.4 <code>cc1psx</code> output and see the words ASPSX 2.81 would produce, with
+        the reason each word exists. Everything runs in this page; nothing is uploaded.
+      </p>
+    </header>
+    <main>
+      <section class="pane" aria-labelledby="assemble-heading">
+        <h2 id="assemble-heading">Assemble</h2>
+        <label for="source">Assembly</label>
+        <textarea id="source" spellcheck="false" rows="18"></textarea>
+        <div class="controls">
+          <fieldset>
+            <legend>Small-data threshold</legend>
+            <label><input type="radio" name="gp" value="0" /> -G 0</label>
+            <label><input type="radio" name="gp" value="8" checked /> -G 8</label>
+          </fieldset>
+          <label><input type="checkbox" id="partial" /> Partial divide expansion (ASPSX -0)</label>
+          <button id="assemble" type="button" disabled>Assemble</button>
+          <span id="status" role="status"></span>
+        </div>
+        <ul id="diagnostics"></ul>
+        <div class="scroll">
+          <table id="words">
+            <thead>
+              <tr>
+                <th scope="col">Offset</th>
+                <th scope="col">Word</th>
+                <th scope="col">Instruction</th>
+                <th scope="col">Line</th>
+                <th scope="col">Why</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="pane" aria-labelledby="decode-heading">
+        <h2 id="decode-heading">Decode</h2>
+        <label for="hex">Words (8 hexadecimal digits each)</label>
+        <textarea id="hex" spellcheck="false" rows="8"></textarea>
+        <div class="controls">
+          <label>Base address <input id="base" placeholder="0x80010000" size="12" /></label>
+          <button id="decode" type="button" disabled>Decode</button>
+        </div>
+        <pre id="program"></pre>
+      </section>
+    </main>
+    <footer>
+      <p>
+        MIT licensed. Pairs with
+        <a href="https://github.com/jaysonvirissimo/psyq-wasm">psyq-wasm</a>, which produces the
+        compiler output this assembles. Ground truth from
+        <a href="https://github.com/mkst/maspsx">maspsx</a>.
+      </p>
+    </footer>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

@@ -9,6 +9,8 @@ export type {
   AssembleOptions,
   AssembleResult,
   AssembleSuccess,
+  DecodedProgram,
+  DecodeOptions,
   Diagnostic,
   DiagnosticCode,
   EncodableInstruction,
@@ -39,3 +41,5 @@ export { decode } from './isa/decode.js';
 export { encode } from './isa/encode.js';
 export { format } from './isa/format.js';
 export { REGISTER_NAMES, parseRegister } from './isa/registers.js';
+export { decodeWords } from './program/decode-words.js';
+export { formatProgram } from './program/format-program.js';

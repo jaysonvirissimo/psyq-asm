@@ -52,6 +52,12 @@ const TRANSPARENT_DEBUG = new Set(['.stabs', '.stabn', '.stabd', '.def', '.begin
 const OPAQUE_DEBUG = new Set(['.type', '.size', '.val', '.scl', '.endef', '.dim', '.tag', '.line']);
 const SYMBOL_NAME = /^[A-Za-z_.$][A-Za-z0-9_.$]*$/;
 
+/**
+ * Largest `.space` or `.comm` size accepted: 16 MiB, eight times a PlayStation's
+ * main memory. A bound keeps a malformed size from exhausting memory.
+ */
+const MAX_RESERVATION = 0x1000000;
+
 /** Internal: a malformed directive, turned into a diagnostic by `interpretDirective`. */
 class DirectiveError extends Error {
   readonly code: 'invalid-directive' | 'unsupported-syntax' | 'immediate-out-of-range';
@@ -218,7 +224,7 @@ function interpret(
       const base = {
         kind: 'common',
         name: symbolArg(name, list[0]),
-        size: integerArg(name, list[1], 0, 0x7fffffff),
+        size: integerArg(name, list[1], 0, MAX_RESERVATION),
         local: name === '.lcomm',
       } as const;
       return list.length === 3 ? { ...base, align: integerArg(name, list[2], 1, 0x8000) } : base;
@@ -238,7 +244,7 @@ function interpret(
     case '.skip': {
       const list = args(text);
       expectCount(name, list, 1, 1);
-      return { kind: 'space', size: integerArg(name, list[0], 0, 0x7fffffff) };
+      return { kind: 'space', size: integerArg(name, list[0], 0, MAX_RESERVATION) };
     }
     case '.ent': {
       const list = args(text);

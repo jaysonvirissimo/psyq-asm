@@ -1,0 +1,165 @@
+/* SPDX-License-Identifier: MIT */
+:root {
+  color-scheme: light dark;
+  --bg: #fbfaf7;
+  --fg: #1d1d1b;
+  --muted: #6b6860;
+  --line: #dcd8cf;
+  --accent: #2f5d8a;
+  --macro: #eef3f8;
+  --nop: #fbf1dc;
+  --error: #a3261b;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #181816;
+    --fg: #ecebe6;
+    --muted: #a19e95;
+    --line: #3a3934;
+    --accent: #8fb8e0;
+    --macro: #1f2a35;
+    --nop: #3a3120;
+    --error: #ff8a7a;
+  }
+}
+
+body {
+  margin: 0 auto;
+  max-width: 78rem;
+  padding: 1.5rem 1rem 3rem;
+}
+
+header p,
+footer p {
+  color: var(--muted);
+  max-width: 48rem;
+}
+
+a {
+  color: var(--accent);
+}
+
+main {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+}
+
+@media (max-width: 60rem) {
+  main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pane {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1rem;
+  min-width: 0;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+textarea,
+pre,
+.mono,
+input {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+}
+
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 0.25rem;
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin: 0.75rem 0;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  float: left;
+  margin-right: 0.5rem;
+  color: var(--muted);
+}
+
+button {
+  font: inherit;
+  padding: 0.35rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+#diagnostics {
+  padding-left: 1.25rem;
+}
+
+#diagnostics .error {
+  color: var(--error);
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.2rem 0.5rem;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+tr.macro td {
+  background: var(--macro);
+}
+
+tr.branch-delay-nop td,
+tr.load-delay-nop td,
+tr.hilo-gap-nop td,
+tr.cop-delay-nop td {
+  background: var(--nop);
+}
+
+pre {
+  overflow-x: auto;
+  white-space: pre;
+}

@@ -37,6 +37,18 @@ describe('repository hygiene', () => {
     expect(files.filter((f) => f.startsWith('tmp/'))).toEqual([]);
   });
 
+  it('names every open VERIFY item of the rule set in a code comment and a probe', () => {
+    const doc = readFileSync(fromRoot('docs/ASPSX-2.81.md'), 'utf8');
+    const items = [...doc.matchAll(/^\| (VERIFY-\d+) \|/gm)].map((m) => String(m[1]));
+    expect(items.length).toBeGreaterThan(0);
+    const code = files
+      .filter((f) => f.startsWith('src/'))
+      .map((f) => readFileSync(fromRoot(f), 'utf8'))
+      .join('\n');
+    expect(items.filter((item) => !new RegExp(`${item}\\b`).test(code))).toEqual([]);
+    expect(items.filter((item) => !files.includes(`test/fixtures/probes/${item}.s`))).toEqual([]);
+  });
+
   it('contains no absolute paths from a developer machine', () => {
     // Written as escaped patterns so this file does not match itself.
     const machinePath =

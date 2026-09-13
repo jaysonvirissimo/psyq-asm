@@ -100,6 +100,9 @@ function following(items: readonly Item[], from: number, count: number): Next[] 
       if (item.option === 'noreorder' && noreorderAt === undefined) noreorderAt = index;
       continue;
     }
+    // VERIFY-21: every transparent label, `L`-prefixed debugging markers
+    // included, stays before a nop inserted ahead of the next group; maspsx
+    // leaves `L` markers after it. The difference is invisible at -g0.
     if (item.kind === 'label' && item.transparent) continue;
     if (item.kind !== 'group') break;
     found.push({ group: item, index, noreorderAt });
@@ -200,6 +203,7 @@ export function insertNops(items: readonly Item[], options: HazardOptions): Item
     }
     if (hazard === 'mflo' && multiplyGap(items, index, item, insert)) return;
 
+    // VERIFY-17: loads are checked whatever the reorder mode, as in maspsx.
     const delayed = delayedRegister(item, options);
     const [next] = following(items, index, 1);
     if (delayed === undefined || next === undefined) return;

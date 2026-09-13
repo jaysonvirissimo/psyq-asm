@@ -1,0 +1,13 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: MIT -->
+<meta charset="utf-8" />
+<title>psyq-asm direct ESM consumer</title>
+<!--
+  No bundler and no build step: an import map points the bare specifier at the
+  installed package, the way a plain static page consumes it.
+-->
+<script type="importmap">
+  { "imports": { "psyq-asm": "/node_modules/psyq-asm/dist/index.js" } }
+</script>
+<pre id="out">assembling…</pre>
+<script type="module" src="./main.js"></script>

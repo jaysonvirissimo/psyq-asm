@@ -263,3 +263,21 @@ export interface FormatStyle {
   /** Immediates, offsets, and targets in hexadecimal. Default true. */
   readonly hex?: boolean;
 }
+
+// ---- whole programs --------------------------------------------------------
+
+export interface DecodeOptions {
+  /** Address of the first word: labels are named by address and jump targets resolved. */
+  readonly baseAddress?: number;
+  /** Prefix of synthetic label names. Default 'L'. */
+  readonly labelPrefix?: string;
+}
+
+export interface DecodedProgram {
+  readonly instructions: readonly (Instruction | UnknownInstruction)[];
+  /** Word index to synthetic label, for every branch (and jump) target inside the program. */
+  readonly labels: ReadonlyMap<number, string>;
+  /** Instruction index to target word index, for branches (and jumps) whose target is labelled. */
+  readonly branchTargets: ReadonlyMap<number, number>;
+  readonly baseAddress?: number;
+}

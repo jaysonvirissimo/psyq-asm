@@ -302,6 +302,7 @@ function expandDivide(
   ops: Operands,
   ctx: ExpandContext,
 ): Outcome | undefined {
+  // VERIFY-12: unsigned divides get only the divide-by-zero trap (five words).
   const unsigned = m.endsWith('u');
   const divide: TableMnemonic = unsigned ? 'divu' : 'div';
   const move: TableMnemonic = m.startsWith('rem') ? 'mfhi' : 'mflo';
@@ -367,6 +368,7 @@ function expandMacro(m: string, ops: Operands, ctx: ExpandContext): Outcome | un
         : expects(m, 'two registers');
     }
     case 'negu': {
+      // VERIFY-8: negu, la with a number, and b follow GNU as semantics.
       const [rd, rs = rd] = ops;
       return ops.length <= 2 && isReg(rd) && isReg(rs)
         ? macro(m, [word('subu', gpr(rd.number), gpr(0), gpr(rs.number))])
