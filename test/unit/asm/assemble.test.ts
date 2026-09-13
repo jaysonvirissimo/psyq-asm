@@ -70,7 +70,8 @@ describe('assemble: native instructions', () => {
   });
 
   it('fills omitted optional operands', () => {
-    expect(wordsOf(assembleOk(src('\tjalr\t$2', '\tsyscall', '\tbreak', '\ttge\t$1,$2')))).toEqual([
+    const text = src('\t.set\tnoreorder', '\tjalr\t$2', '\tsyscall', '\tbreak', '\ttge\t$1,$2');
+    expect(wordsOf(assembleOk(text))).toEqual([
       '0x0040F809',
       '0x0000000C',
       '0x0000000D',
@@ -91,7 +92,7 @@ describe('assemble: native instructions', () => {
           ),
         ),
       ),
-    ).toEqual(['0x48444000', '0xC8850004', '0x4A180001', '0x40026000']);
+    ).toEqual(['0x48444000', '0x00000000', '0xC8850004', '0x4A180001', '0x40026000']);
   });
 
   it('assembles an empty source', () => {
@@ -170,7 +171,8 @@ describe('assemble: warnings', () => {
 
   it('records the function that .end closes after a stray .ent', () => {
     const object = assembleOk(src('\t.ent\tf', '\t.ent\tg', '\tjr\t$31', '\t.end\tg'));
-    expect(object.functions).toEqual([{ name: 'g', section: '.text', start: 0, end: 1 }]);
+    // The jr's delay-slot nop belongs to g as well.
+    expect(object.functions).toEqual([{ name: 'g', section: '.text', start: 0, end: 2 }]);
   });
 });
 
@@ -244,7 +246,7 @@ describe('assemble: errors', () => {
       {
         line: 1,
         code: 'branch-out-of-range',
-        message: 'beq: the target is 32768 instructions away.',
+        message: 'beq: the target is 32769 instructions away.',
       },
     ]);
   });

@@ -6,6 +6,7 @@ describe('relocations', () => {
   it('records symbol and label relocations with their field values', () => {
     const object = assembleOk(
       src(
+        '\t.set\tnoreorder',
         '\t.data',
         'tbl:',
         '\t.word\t1,2',
@@ -120,6 +121,7 @@ describe('relocations', () => {
       '0x24020002',
       '0x24028000',
       '0x08000040',
+      '0x00000000',
     ]);
     expect(sectionOf(object, '.text').relocations.map((r) => [r.kind, r.fieldValue])).toEqual([
       ['HI16', 0],
@@ -160,18 +162,25 @@ describe('relocations', () => {
         '\t.end\tclassify',
       ),
     );
+    // The compiler's `#nop` after `lw $2,0($3)` is a real load delay, and every
+    // jump under reorder gets its delay-slot nop.
     expect(wordsOf(object)).toEqual([
       '0x2C820007',
-      '0x10400008',
+      '0x1040000C',
       '0x3C020000',
       '0x24420000',
       '0x00041880',
       '0x00621821',
       '0x8C620000',
+      '0x00000000',
       '0x00400008',
+      '0x00000000',
       '0x03E00008',
+      '0x00000000',
       '0x03E00008',
+      '0x00000000',
       '0x03E00008',
+      '0x00000000',
     ]);
     expect(sectionOf(object, '.text').relocations.map((r) => [r.offset, r.kind, r.target])).toEqual(
       [
@@ -182,10 +191,10 @@ describe('relocations', () => {
     expect(
       sectionOf(object, '.rdata').relocations.map((r) => [r.kind, r.target, r.fieldValue]),
     ).toEqual([
-      ['WORD32', { kind: 'section', section: '.text', offset: 32, label: '$L15' }, 32],
-      ['WORD32', { kind: 'section', section: '.text', offset: 36, label: '$L16' }, 36],
+      ['WORD32', { kind: 'section', section: '.text', offset: 40, label: '$L15' }, 40],
+      ['WORD32', { kind: 'section', section: '.text', offset: 48, label: '$L16' }, 48],
     ]);
-    expect(object.functions).toEqual([{ name: 'classify', section: '.text', start: 0, end: 11 }]);
+    expect(object.functions).toEqual([{ name: 'classify', section: '.text', start: 0, end: 16 }]);
     expect(object.symbols).toEqual([
       { name: 'classify', binding: 'local', section: '.text', offset: 0 },
     ]);
@@ -195,7 +204,7 @@ describe('relocations', () => {
     const object = assembleOk(src('\t.globl\thelper', 'helper:', '\tjr\t$31', '\tjal\thelper'));
     expect(sectionOf(object, '.text').relocations).toEqual([
       {
-        offset: 4,
+        offset: 8,
         kind: 'MIPS26',
         fieldMask: 0x03ffffff,
         target: { kind: 'symbol', name: 'helper', addend: 0 },

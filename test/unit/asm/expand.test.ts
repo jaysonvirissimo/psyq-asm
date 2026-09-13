@@ -33,6 +33,7 @@ describe('expansion: pseudo-instructions', () => {
       { line: 1, kind: 'macro', macro: 'li' },
       { line: 1, kind: 'macro', macro: 'li' },
       { line: 2, kind: 'instruction' },
+      { line: 2, kind: 'branch-delay-nop', note: 'the delay slot of jr under .set reorder' },
     ]);
   });
 });
@@ -149,7 +150,7 @@ describe('expansion: divide', () => {
   it('omits the traps under partialDivExpansion (ASPSX -0)', () => {
     expect(
       listing(src('\tdiv\t$2,$4,$6', '\tremu\t$3,$4,$5'), { partialDivExpansion: true }),
-    ).toEqual(['div $4,$6', 'mflo $2', 'divu $4,$5', 'mfhi $3']);
+    ).toEqual(['div $4,$6', 'mflo $2', 'sll $0,$0,0', 'sll $0,$0,0', 'divu $4,$5', 'mfhi $3']);
   });
 });
 

@@ -40,7 +40,15 @@ describe('layout: sections and data', () => {
 
   it('pads code with nop words and keeps provenance per word', () => {
     const object = assembleOk(
-      src('\tjr\t$31', '\t.align\t3', '\tjr\t$31', '\t.byte\t1', '\t.align\t2', '\t.space\t5'),
+      src(
+        '\t.set\tnoreorder',
+        '\tjr\t$31',
+        '\t.align\t3',
+        '\tjr\t$31',
+        '\t.byte\t1',
+        '\t.align\t2',
+        '\t.space\t5',
+      ),
     );
     expect(wordsOf(object)).toEqual([
       '0x03E00008',
@@ -51,12 +59,12 @@ describe('layout: sections and data', () => {
       '0x00000000',
     ]);
     expect(sectionOf(object, '.text').provenance).toEqual([
-      { line: 1, kind: 'instruction' },
-      { line: 2, kind: 'align' },
-      { line: 3, kind: 'instruction' },
-      { line: 4, kind: 'data' },
-      { line: 6, kind: 'data' },
-      { line: 6, kind: 'data' },
+      { line: 2, kind: 'instruction' },
+      { line: 3, kind: 'align' },
+      { line: 4, kind: 'instruction' },
+      { line: 5, kind: 'data' },
+      { line: 7, kind: 'data' },
+      { line: 7, kind: 'data' },
     ]);
   });
 
