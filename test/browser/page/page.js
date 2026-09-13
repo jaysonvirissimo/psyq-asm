@@ -13,8 +13,8 @@ const hex8 = (value) => `0x${(value >>> 0).toString(16).toUpperCase().padStart(8
 
 window.psyqAsm = {
   /** Assemble and return the .text words as 0x%08X strings, or the diagnostics. */
-  words(source, gpSize) {
-    const result = assemble(source, { gpSize });
+  words(source, gpSize, aspsxVersion) {
+    const result = assemble(source, { gpSize, aspsxVersion });
     if (!result.success) return { diagnostics: result.diagnostics };
     const text = result.object.sections.find((section) => section.name === '.text');
     return { words: [...(text?.words ?? [])].map(hex8) };

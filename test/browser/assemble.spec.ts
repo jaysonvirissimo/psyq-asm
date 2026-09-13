@@ -8,7 +8,11 @@ import { loadAspsxFixtures } from '../helpers/fixtures.js';
 
 interface Harness {
   psyqAsm: {
-    words: (source: string, gpSize: number) => { words?: string[]; diagnostics?: unknown[] };
+    words: (
+      source: string,
+      gpSize: number,
+      aspsxVersion: string,
+    ) => { words?: string[]; diagnostics?: unknown[] };
     roundTrip: (words: number[]) => number[] | null;
     describe: (word: number) => { text: string; encoded: number | null };
   };
@@ -24,14 +28,17 @@ async function openHarness(page: Page): Promise<string[]> {
 }
 
 test.describe('psyq-asm in the browser', () => {
-  test('assembles the ASPSX 2.81 ground truth word-exact', async ({ page }) => {
+  test('assembles the ASPSX 2.77 and 2.81 ground truth word-exact', async ({ page }) => {
     const errors = await openHarness(page);
     for (const fixture of loadAspsxFixtures()) {
       const outcome = await page.evaluate(
-        ([source, gpSize]) => (window as unknown as Harness).psyqAsm.words(source, gpSize),
-        [fixture.source, fixture.gpSize] as const,
+        ([source, gpSize, version]) =>
+          (window as unknown as Harness).psyqAsm.words(source, gpSize, version),
+        [fixture.source, fixture.gpSize, fixture.aspsxVersion] as const,
       );
-      expect(outcome, fixture.name).toEqual({ words: fixture.expectedWords });
+      expect(outcome, `${fixture.name} (${fixture.aspsxVersion})`).toEqual({
+        words: fixture.expectedWords,
+      });
     }
     expect(errors).toEqual([]);
   });
