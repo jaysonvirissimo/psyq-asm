@@ -86,35 +86,70 @@ describe('layout: commons', () => {
     '\tlw\t$2,%gp_rel(a)($gp)',
   );
 
-  it('allocates small commons in .sbss and the rest in .bss at -G 8', () => {
+  it('leaves .comm to the linker and allocates .lcomm in .sbss at -G 8', () => {
     const object = assembleOk(text, { gpSize: 8 });
     expect(object.sections.map((s) => [s.name, s.size])).toEqual([
       ['.text', 4],
-      ['.sbss', 17],
-      ['.bss', 100],
+      ['.sbss', 2],
     ]);
     expect(object.symbols).toEqual([
-      { name: 'a', binding: 'common', section: '.sbss', offset: 0, size: 4 },
-      { name: 'big', binding: 'common', section: '.bss', offset: 0, size: 100 },
-      { name: 'c', binding: 'local', section: '.sbss', offset: 4, size: 2 },
-      { name: 'd', binding: 'common', section: '.sbss', offset: 8, size: 8 },
-      { name: 'e', binding: 'common', section: '.sbss', offset: 16, size: 1 },
+      { name: 'a', binding: 'common', section: '.sbss', size: 4 },
+      { name: 'big', binding: 'common', section: '.bss', size: 100 },
+      { name: 'c', binding: 'local', section: '.sbss', offset: 0, size: 2 },
+      { name: 'd', binding: 'common', section: '.sbss', size: 8 },
+      { name: 'e', binding: 'common', section: '.sbss', size: 1 },
     ]);
     expect(object.smallData.map((s) => s.name)).toEqual(['a', 'c', 'd', 'e']);
+    expect(sectionOf(object, '.text').relocations.map((r) => r.target)).toEqual([
+      { kind: 'symbol', name: 'a', addend: 0 },
+    ]);
   });
 
-  it('allocates everything in .bss at -G 0, aligned by size (VERIFY-5)', () => {
-    const object = assembleOk(text, { gpSize: 0 });
-    expect(object.sections.map((s) => [s.name, s.size])).toEqual([
-      ['.text', 4],
-      ['.bss', 121],
+  it('lays out .lcomm in order and aligned by size, as ASPSX 2.81 does', () => {
+    const lcomm = src(
+      '\t.comm\tg1,4',
+      '\t.lcomm\tl1,1',
+      '\t.lcomm\tl2,4',
+      '\t.text',
+      '\t.lcomm\tl3,2',
+      '\t.lcomm\tl4,8',
+      '\t.lcomm\tl5,3',
+      '\t.lcomm\tbig,100',
+      '\t.lcomm\tl6,1',
+      '\tla\t$2,l6',
+    );
+    const bss = (object: ReturnType<typeof assembleOk>): (string | number)[][] =>
+      object.sections.filter((s) => s.kind === 'bss').map((s) => [s.name, s.size]);
+    const offsets = (object: ReturnType<typeof assembleOk>): (string | number | undefined)[][] =>
+      object.symbols.map((s) => [s.name, s.section, s.offset]);
+    const at8 = assembleOk(lcomm, { gpSize: 8 });
+    expect(bss(at8)).toEqual([
+      ['.sbss', 28],
+      ['.bss', 100],
     ]);
-    expect(object.symbols.map((s) => [s.name, s.offset])).toEqual([
-      ['a', 0],
-      ['big', 8],
-      ['c', 108],
-      ['d', 112],
-      ['e', 120],
+    expect(offsets(at8)).toEqual([
+      ['g1', '.sbss', undefined],
+      ['l1', '.sbss', 0],
+      ['l2', '.sbss', 4],
+      ['l3', '.sbss', 8],
+      ['l4', '.sbss', 16],
+      ['l5', '.sbss', 24],
+      ['big', '.bss', 0],
+      ['l6', '.sbss', 27],
+    ]);
+    expect(sectionOf(at8, '.text').relocations.map((r) => r.target)).toEqual([
+      { kind: 'section', section: '.sbss', offset: 27, label: 'l6' },
+    ]);
+    const at0 = assembleOk(lcomm, { gpSize: 0 });
+    expect(bss(at0)).toEqual([['.bss', 133]]);
+    expect(offsets(at0).slice(1)).toEqual([
+      ['l1', '.bss', 0],
+      ['l2', '.bss', 4],
+      ['l3', '.bss', 8],
+      ['l4', '.bss', 16],
+      ['l5', '.bss', 24],
+      ['big', '.bss', 32],
+      ['l6', '.bss', 132],
     ]);
   });
 

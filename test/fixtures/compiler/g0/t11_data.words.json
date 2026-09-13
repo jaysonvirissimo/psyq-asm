@@ -76,5 +76,288 @@
     "0x3463A05F",
     "0x03E00008",
     "0x00000000"
-  ]
+  ],
+  "data": {
+    "sections": {
+      ".data": 36,
+      ".rdata": 20
+    },
+    "relocations": [
+      {
+        "section": ".data",
+        "offset": 16,
+        "kind": "WORD32",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 16,
+        "kind": "HI16",
+        "target": {
+          "symbol": "g_arr",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 20,
+        "kind": "LO16",
+        "target": {
+          "symbol": "g_arr",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 44,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 48,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 72,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 80,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 84,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 24
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 88,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 24
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 92,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 28
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 96,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 28
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 112,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__adddf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 136,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 32
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 140,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 32
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 152,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__addsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 184,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__ltsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 216,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixdfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 248,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsidf",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "consts",
+          "section": ".text",
+          "offset": 272
+        },
+        {
+          "name": "float_cmp",
+          "section": ".text",
+          "offset": 176
+        },
+        {
+          "name": "from_int",
+          "section": ".text",
+          "offset": 240
+        },
+        {
+          "name": "g_dbl",
+          "section": ".data",
+          "offset": 24
+        },
+        {
+          "name": "g_flt",
+          "section": ".data",
+          "offset": 32
+        },
+        {
+          "name": "g_int",
+          "section": ".data",
+          "offset": 0
+        },
+        {
+          "name": "g_small",
+          "section": ".data",
+          "offset": 8
+        },
+        {
+          "name": "g_str",
+          "section": ".data",
+          "offset": 16
+        },
+        {
+          "name": "get_dbl",
+          "section": ".text",
+          "offset": 84
+        },
+        {
+          "name": "get_flt",
+          "section": ".text",
+          "offset": 136
+        },
+        {
+          "name": "get_str",
+          "section": ".text",
+          "offset": 72
+        },
+        {
+          "name": "to_int",
+          "section": ".text",
+          "offset": 208
+        },
+        {
+          "name": "use_globals",
+          "section": ".text",
+          "offset": 0
+        }
+      ],
+      "commons": [
+        {
+          "name": "g_arr",
+          "section": ".bss",
+          "size": 100
+        }
+      ],
+      "locals": []
+    }
+  }
 }

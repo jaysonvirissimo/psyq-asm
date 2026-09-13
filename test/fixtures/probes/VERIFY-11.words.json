@@ -13,5 +13,14 @@
     "0x00611025",
     "0x3C010001",
     "0x00611026"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

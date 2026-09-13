@@ -52,12 +52,21 @@ function withRelocation<T>(value: T, relocation: RelocationDraft | undefined): R
   return relocation === undefined ? { value } : { value, relocation };
 }
 
-/** A symbol's relocation target, and the value its field starts from. */
+/**
+ * A symbol's relocation target, and the value its field starts from. ASPSX 2.81
+ * relocates against the section for anything this file defines (a label of any
+ * name, a global, an `.lcomm`), with the addend folded into the offset, and
+ * against the symbol only for what it does not define: externs and `.comm`.
+ */
 function targetOf(
   symbol: SymbolExpr,
   ctx: ResolveContext,
 ): { readonly target: RelocationTarget; readonly base: number } | ResolveError {
-  if (!isLocalLabel(symbol.name)) {
+  const label = ctx.labels.get(symbol.name);
+  if (label === undefined) {
+    if (isLocalLabel(symbol.name)) {
+      return failure('undefined-label', `${symbol.name} is not defined.`);
+    }
     // The addend lives in the relocation and the field holds 0 (lwlw.yaml:
     // `lw $2,Savemap+2944` is 0x8C420000).
     return {
@@ -65,8 +74,6 @@ function targetOf(
       base: 0,
     };
   }
-  const label = ctx.labels.get(symbol.name);
-  if (label === undefined) return failure('undefined-label', `${symbol.name} is not defined.`);
   const offset = label.offset + symbol.addend;
   return {
     target: { kind: 'section', section: label.section, offset, label: symbol.name },

@@ -67,5 +67,70 @@
     "0x00621821",
     "0x03E00008",
     "0x00601021"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "copy_foo",
+          "section": ".text",
+          "offset": 108
+        },
+        {
+          "name": "get_arr2",
+          "section": ".text",
+          "offset": 48
+        },
+        {
+          "name": "get_c",
+          "section": ".text",
+          "offset": 12
+        },
+        {
+          "name": "get_field",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "get_next_value",
+          "section": ".text",
+          "offset": 60
+        },
+        {
+          "name": "get_s",
+          "section": ".text",
+          "offset": 36
+        },
+        {
+          "name": "get_uc",
+          "section": ".text",
+          "offset": 24
+        },
+        {
+          "name": "make_small",
+          "section": ".text",
+          "offset": 160
+        },
+        {
+          "name": "set_all",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "sum_small",
+          "section": ".text",
+          "offset": 204
+        },
+        {
+          "name": "walk",
+          "section": ".text",
+          "offset": 224
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

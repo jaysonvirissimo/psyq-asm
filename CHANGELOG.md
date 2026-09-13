@@ -55,11 +55,17 @@ A fidelity fix is not a breaking change even when it changes output.
 - `break` carries two 10-bit codes. A single source code is split as maspsx does;
   the divide traps are `break 7,0` and `break 6,0`.
 - Checked against real ASPSX 2.81, run in Docker by `scripts/aspsx-oracle.rb`:
-  all 41 compiler fixtures (one compiled with `-g`) and all 19 probes match word for word, settling 18 verification items (VERIFY-1 and 6 to 22). The rest of this list is what
+  all 41 compiler fixtures (one compiled with `-g`) and all 19 probes match word for word, settling all 19 verification items (VERIFY-1 and 5 to 22). The rest of this list is what
   changed as a result.
 - Relocated fields against local labels hold 0: `j $L9`, `%lo($LC1)`, and
   jump-table `.word $L15` entries no longer carry the label's offset.
 - `.extern sym,size` no longer makes a symbol small data.
+- `.comm` allocates nothing: the linker places common symbols, which keep their
+  size and `.sbss`/`.bss` section but no offset. `.lcomm` still allocates, in
+  order and aligned by size.
+- Relocations against anything the file defines (functions, globals, statics,
+  `.lcomm`) target its section and offset, as `$L` labels already did; only
+  externs and `.comm` symbols stay symbol-relative.
 - A load made under `.set noreorder` gets no delay nop.
 - The multiply gap: a load between `mflo`/`mfhi` and `mult`/`div` no longer
   cancels the gap nop, and that one nop also serves as the load delay; a

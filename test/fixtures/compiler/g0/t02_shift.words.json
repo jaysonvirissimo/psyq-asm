@@ -20,5 +20,50 @@
     "0x00441025",
     "0x03E00008",
     "0x3042FFFF"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "rot5",
+          "section": ".text",
+          "offset": 48
+        },
+        {
+          "name": "shl",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "shlk",
+          "section": ".text",
+          "offset": 24
+        },
+        {
+          "name": "shr",
+          "section": ".text",
+          "offset": 8
+        },
+        {
+          "name": "shrk",
+          "section": ".text",
+          "offset": 32
+        },
+        {
+          "name": "ushr",
+          "section": ".text",
+          "offset": 16
+        },
+        {
+          "name": "ushrk",
+          "section": ".text",
+          "offset": 40
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

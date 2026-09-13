@@ -350,7 +350,8 @@ const byName = (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
  * than .text (whose words are compared directly), every relocation with its
  * target, and the symbols it defines. Imports are left out, because psyq-asm
  * lists the externs a file declares while ASPSX lists the ones it references;
- * the local symbols ASPSX writes for -g0 code are the .lcomm ones.
+ * the local symbols ASPSX writes are `.lcomm` symbols and static functions
+ * (labels named by `.ent`).
  *
  * @param {PsyqObject} object
  */

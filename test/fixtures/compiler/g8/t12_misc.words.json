@@ -117,5 +117,88 @@
     "0x2403000A",
     "0x03E00008",
     "0x00601021"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 276,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "ext2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 432,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 452
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 440,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 452
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "abs_",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "bits",
+          "section": ".text",
+          "offset": 184
+        },
+        {
+          "name": "clamp",
+          "section": ".text",
+          "offset": 112
+        },
+        {
+          "name": "dot",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "fixed_mul",
+          "section": ".text",
+          "offset": 72
+        },
+        {
+          "name": "memcpy_like",
+          "section": ".text",
+          "offset": 356
+        },
+        {
+          "name": "nested",
+          "section": ".text",
+          "offset": 216
+        },
+        {
+          "name": "pack",
+          "section": ".text",
+          "offset": 152
+        },
+        {
+          "name": "ternary_chain",
+          "section": ".text",
+          "offset": 404
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

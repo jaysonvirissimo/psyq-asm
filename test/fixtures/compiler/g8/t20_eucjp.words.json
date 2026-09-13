@@ -10,5 +10,69 @@
     "0x24420000",
     "0x03E00008",
     "0x24020004"
-  ]
+  ],
+  "data": {
+    "sections": {
+      ".rdata": 27
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 20,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 16
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "codec_label",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "label_length",
+          "section": ".text",
+          "offset": 24
+        },
+        {
+          "name": "ration_label",
+          "section": ".text",
+          "offset": 12
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

@@ -14,5 +14,14 @@
     "0x00000000",
     "0x0007000D",
     "0x00001010"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

@@ -88,5 +88,70 @@
     "0x000210C0",
     "0x03E00008",
     "0x00821023"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "div_",
+          "section": ".text",
+          "offset": 56
+        },
+        {
+          "name": "divk",
+          "section": ".text",
+          "offset": 188
+        },
+        {
+          "name": "divk2",
+          "section": ".text",
+          "offset": 224
+        },
+        {
+          "name": "mod_",
+          "section": ".text",
+          "offset": 136
+        },
+        {
+          "name": "modk",
+          "section": ".text",
+          "offset": 268
+        },
+        {
+          "name": "mul",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "mulk",
+          "section": ".text",
+          "offset": 16
+        },
+        {
+          "name": "mulk2",
+          "section": ".text",
+          "offset": 32
+        },
+        {
+          "name": "udiv_",
+          "section": ".text",
+          "offset": 108
+        },
+        {
+          "name": "udivk",
+          "section": ".text",
+          "offset": 244
+        },
+        {
+          "name": "umodk",
+          "section": ".text",
+          "offset": 296
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

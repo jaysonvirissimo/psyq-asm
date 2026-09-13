@@ -141,7 +141,7 @@ What is verified today:
   programs re-assemble to their words, output is deterministic, and no input
   makes `assemble` throw.
 
-What is not verified yet: one item, VERIFY-5 (how `.comm` allocations are laid out in data sections), listed at the end of the rule set with the 18 items real ASPSX 2.81 has settled. A differential oracle,
+What is not verified yet: nothing in the rule set. Real ASPSX 2.81 output settled all 19 verification items, listed at the end of it. A differential oracle,
 which compares assembled words with an already-matched decompilation's original
 executable, is in place (`scripts/oracle.mjs`).
 
@@ -156,14 +156,14 @@ executable, is in place (`scripts/oracle.mjs`).
 
 ## Output model
 
-| Field                | Contents                                                                                                                                                                                                         |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `object.sections[]`  | `name`, `kind` (`code`, `data`, `bss`), `bytes`, `size`, `relocations`; code sections also `words` and `provenance`. First-appearance order; `.comm` allocations create `.sbss`/`.bss` last.                     |
-| `relocations[]`      | `offset` (bytes), `kind` (`HI16`, `LO16`, `GPREL16`, `MIPS26`, `WORD32`), `fieldMask`, `target` (a symbol and addend, or a section offset for a local label), and `fieldValue`.                                  |
-| `provenance[]`       | One per word: source `line`, `kind` (`instruction`, `macro`, `branch-delay-nop`, `load-delay-nop`, `hilo-gap-nop`, `cop-delay-nop`, `align`, `data`), the `macro` that expanded, and a `note` for inserted nops. |
-| `object.symbols[]`   | `name`, `binding` (`global`, `local`, `extern`, `common`), `section`, `offset`, `size`.                                                                                                                          |
-| `object.functions[]` | From `.ent`/`.end`: `name`, `start` and `end` word indices, `frame`, `mask`, `fmask`.                                                                                                                            |
-| `object.smallData[]` | The symbols addressed through `$gp`, with the reason.                                                                                                                                                            |
+| Field                | Contents                                                                                                                                                                                                             |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `object.sections[]`  | `name`, `kind` (`code`, `data`, `bss`), `bytes`, `size`, `relocations`; code sections also `words` and `provenance`. First-appearance order; `.lcomm` allocations create `.sbss`/`.bss` last.                        |
+| `relocations[]`      | `offset` (bytes), `kind` (`HI16`, `LO16`, `GPREL16`, `MIPS26`, `WORD32`), `fieldMask`, `target` (a symbol and addend for an extern or `.comm`, or a section offset for anything the file defines), and `fieldValue`. |
+| `provenance[]`       | One per word: source `line`, `kind` (`instruction`, `macro`, `branch-delay-nop`, `load-delay-nop`, `hilo-gap-nop`, `cop-delay-nop`, `align`, `data`), the `macro` that expanded, and a `note` for inserted nops.     |
+| `object.symbols[]`   | `name`, `binding` (`global`, `local`, `extern`, `common`), `section`, `offset` (not for `extern` or `common`), `size`.                                                                                               |
+| `object.functions[]` | From `.ent`/`.end`: `name`, `start` and `end` word indices, `frame`, `mask`, `fmask`.                                                                                                                                |
+| `object.smallData[]` | The symbols addressed through `$gp`, with the reason.                                                                                                                                                                |
 
 ## Errors
 

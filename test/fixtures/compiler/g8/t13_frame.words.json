@@ -91,5 +91,58 @@
     "0x00621021",
     "0x03E00008",
     "0x03ACE821"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 56,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "mess_hall",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 288,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "mess_hall",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 304,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "mess_hall",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "rations_fill",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "rations_sum",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "two_frames",
+          "section": ".text",
+          "offset": 224
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

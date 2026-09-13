@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 /**
  * Layout: pass A assigns every label its section offset (after expansion and
- * nop insertion have fixed each group's size, and after `.comm` allocation);
+ * nop insertion have fixed each group's size, and after `.lcomm` allocation);
  * pass B resolves operands and encodes words into section buffers.
  */
 import { encode } from '../isa/encode.js';
@@ -26,8 +26,8 @@ export interface Layout {
 }
 
 /**
- * VERIFY-5: alignment of a `.comm`/`.lcomm` allocation when none is given, from
- * its size (maspsx aligns `.sbss` entries this way).
+ * Alignment of an `.lcomm` allocation when none is given, from its size, as
+ * ASPSX 2.81 lays them out.
  */
 export function commonAlignment(size: number, explicit: number | undefined): number {
   if (explicit !== undefined) return explicit;
@@ -40,8 +40,8 @@ function padding(offset: number, alignment: number): number {
   return (alignment - (offset % alignment)) % alignment;
 }
 
-/** Commons no larger than the -G threshold go to `.sbss`, the rest to `.bss`. */
-function commonSection(size: number, gpSize: number): string {
+/** Commons no larger than the -G threshold belong to `.sbss`, the rest to `.bss`. */
+export function commonSection(size: number, gpSize: number): string {
   return gpSize > 0 && size <= gpSize ? '.sbss' : '.bss';
 }
 
@@ -83,7 +83,9 @@ function assignLabels(
       else sizes.set(section, at(section) + contentSize(d));
     }
   }
+  // Only .lcomm is allocated here; the linker places .comm symbols.
   for (const common of symbols.commons.values()) {
+    if (!common.local) continue;
     const target = commonSection(common.size, gpSize);
     const offset = at(target) + padding(at(target), commonAlignment(common.size, common.align));
     bind(common.name, { section: target, offset });
@@ -146,6 +148,7 @@ class Emitter {
       );
     }
     for (const common of this.symbols.commons.values()) {
+      if (!common.local) continue;
       const builder = this.builder(commonSection(common.size, this.gpSize));
       const align = commonAlignment(common.size, common.align);
       builder.pad(padding(builder.offset, align) + common.size, { line: 1, kind: 'data' });

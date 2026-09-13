@@ -20,5 +20,40 @@
     "0x3442A988",
     "0x03E00008",
     "0x00821021"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "add3",
+          "section": ".text",
+          "offset": 8
+        },
+        {
+          "name": "add_one",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "addk",
+          "section": ".text",
+          "offset": 40
+        },
+        {
+          "name": "neg_and",
+          "section": ".text",
+          "offset": 20
+        },
+        {
+          "name": "uaddk",
+          "section": ".text",
+          "offset": 56
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

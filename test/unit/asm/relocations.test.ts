@@ -39,14 +39,14 @@ describe('relocations', () => {
         offset: 0,
         kind: 'HI16',
         fieldMask: 0xffff,
-        target: { kind: 'symbol', name: 'tbl', addend: 0 },
+        target: { kind: 'section', section: '.data', offset: 0, label: 'tbl' },
         fieldValue: 0,
       },
       {
         offset: 4,
         kind: 'LO16',
         fieldMask: 0xffff,
-        target: { kind: 'symbol', name: 'tbl', addend: 4 },
+        target: { kind: 'section', section: '.data', offset: 4, label: 'tbl' },
         fieldValue: 0,
       },
       {
@@ -200,14 +200,14 @@ describe('relocations', () => {
     ]);
   });
 
-  it('relocates jumps to symbols defined in the same file against the symbol', () => {
+  it('relocates jumps to symbols defined in the same file against their section', () => {
     const object = assembleOk(src('\t.globl\thelper', 'helper:', '\tjr\t$31', '\tjal\thelper'));
     expect(sectionOf(object, '.text').relocations).toEqual([
       {
         offset: 8,
         kind: 'MIPS26',
         fieldMask: 0x03ffffff,
-        target: { kind: 'symbol', name: 'helper', addend: 0 },
+        target: { kind: 'section', section: '.text', offset: 0, label: 'helper' },
         fieldValue: 0,
       },
     ]);

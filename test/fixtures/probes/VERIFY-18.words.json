@@ -8,5 +8,14 @@
     "0x4845F800",
     "0x00000000",
     "0xACC50000"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

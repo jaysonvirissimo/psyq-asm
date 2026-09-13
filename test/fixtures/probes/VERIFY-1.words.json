@@ -10,5 +10,87 @@
     "0x24420000",
     "0x3C040000",
     "0x8C840000"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "symbol": "g_counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "LO16",
+        "target": {
+          "symbol": "g_counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "HI16",
+        "target": {
+          "symbol": "g_counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "LO16",
+        "target": {
+          "symbol": "g_counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 16,
+        "kind": "HI16",
+        "target": {
+          "symbol": "g_counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 20,
+        "kind": "LO16",
+        "target": {
+          "symbol": "g_counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 24,
+        "kind": "HI16",
+        "target": {
+          "symbol": "g_large",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 28,
+        "kind": "LO16",
+        "target": {
+          "symbol": "g_large",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

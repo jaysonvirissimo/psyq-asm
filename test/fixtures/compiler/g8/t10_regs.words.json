@@ -102,5 +102,85 @@
     "0x00621021",
     "0x03E00008",
     "0x27BD0100"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 172,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "ext",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 184,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "ext",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 196,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "ext",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 208,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "ext",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 220,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "ext",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 232,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "ext",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "bigframe",
+          "section": ".text",
+          "offset": 308
+        },
+        {
+          "name": "pressure",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "spill",
+          "section": ".text",
+          "offset": 136
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

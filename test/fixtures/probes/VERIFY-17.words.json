@@ -4,5 +4,14 @@
   "words": [
     "0x8C820000",
     "0x00421821"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

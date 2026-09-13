@@ -10,5 +10,14 @@
     "0x3484999A",
     "0x3C053FB9",
     "0x34A59999"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

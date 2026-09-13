@@ -7,5 +7,14 @@
     "0xAC229C40",
     "0x3C011234",
     "0xAC225678"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

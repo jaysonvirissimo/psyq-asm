@@ -86,5 +86,97 @@
     "0x2402FFFE",
     "0x03E00008",
     "0xA482FFFC"
-  ]
+  ],
+  "data": {
+    "sections": {
+      ".sdata": 6
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 224,
+        "kind": "GPREL16",
+        "target": {
+          "symbol": "codec_mask",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 252,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "codec_freq",
+          "section": ".sdata",
+          "offset": 0
+        },
+        {
+          "name": "compare_signed",
+          "section": ".text",
+          "offset": 120
+        },
+        {
+          "name": "compare_unsigned",
+          "section": ".text",
+          "offset": 164
+        },
+        {
+          "name": "load_signed",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "load_unsigned",
+          "section": ".text",
+          "offset": 20
+        },
+        {
+          "name": "negative_half",
+          "section": ".text",
+          "offset": 316
+        },
+        {
+          "name": "store_half",
+          "section": ".text",
+          "offset": 40
+        },
+        {
+          "name": "store_uhalf",
+          "section": ".text",
+          "offset": 56
+        },
+        {
+          "name": "tune",
+          "section": ".text",
+          "offset": 200
+        },
+        {
+          "name": "widen_signed",
+          "section": ".text",
+          "offset": 72
+        },
+        {
+          "name": "widen_unsigned",
+          "section": ".text",
+          "offset": 96
+        }
+      ],
+      "commons": [
+        {
+          "name": "codec_mask",
+          "section": ".sbss",
+          "size": 8
+        }
+      ],
+      "locals": []
+    }
+  }
 }

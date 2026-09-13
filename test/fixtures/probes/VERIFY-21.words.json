@@ -7,5 +7,14 @@
     "0x00421821",
     "0x1000FFFD",
     "0x00000000"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

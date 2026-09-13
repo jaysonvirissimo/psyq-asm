@@ -6,5 +6,53 @@
     "0x24420000",
     "0x0C000000",
     "0x00000000"
-  ]
+  ],
+  "data": {
+    "sections": {
+      ".data": 4
+    },
+    "relocations": [
+      {
+        "section": ".data",
+        "offset": 0,
+        "kind": "WORD32",
+        "target": {
+          "symbol": "sym",
+          "addend": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "symbol": "sym",
+          "addend": 74565
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "LO16",
+        "target": {
+          "symbol": "sym",
+          "addend": 74565
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "sym",
+          "addend": 8
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

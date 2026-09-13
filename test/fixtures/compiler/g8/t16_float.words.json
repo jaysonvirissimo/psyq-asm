@@ -187,5 +187,335 @@
     "0x8FB00010",
     "0x03E00008",
     "0x27BD0028"
-  ]
+  ],
+  "data": {
+    "sections": {
+      ".sdata": 16
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 16,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 64
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 36,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 40,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 44,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__truncdfsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 52,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 64
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 60,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 88,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixsfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 120,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixunssfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 152,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixdfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 188,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsisf",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 224,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsidf",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 248,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__adddf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 280,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__subsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 296,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__ltsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 312,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__negsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 332,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__ltsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 420,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__extendsfdf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 440,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__adddf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 476,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsidf",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 496,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__divdf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 504,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 520
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 564,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__mulsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 576,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__addsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 636,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__ltdf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 652,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 712
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 668,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__gtdf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 696,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__nedf2",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "average",
+          "section": ".text",
+          "offset": 360
+        },
+        {
+          "name": "close_enough",
+          "section": ".text",
+          "offset": 272
+        },
+        {
+          "name": "compare_doubles",
+          "section": ".text",
+          "offset": 600
+        },
+        {
+          "name": "freq_a",
+          "section": ".sdata",
+          "offset": 0
+        },
+        {
+          "name": "freq_b",
+          "section": ".sdata",
+          "offset": 4
+        },
+        {
+          "name": "freq_c",
+          "section": ".sdata",
+          "offset": 8
+        },
+        {
+          "name": "from_int",
+          "section": ".text",
+          "offset": 180
+        },
+        {
+          "name": "from_uint",
+          "section": ".text",
+          "offset": 212
+        },
+        {
+          "name": "pick",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "scale",
+          "section": ".text",
+          "offset": 552
+        },
+        {
+          "name": "to_int",
+          "section": ".text",
+          "offset": 80
+        },
+        {
+          "name": "to_short",
+          "section": ".text",
+          "offset": 144
+        },
+        {
+          "name": "to_uint",
+          "section": ".text",
+          "offset": 112
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

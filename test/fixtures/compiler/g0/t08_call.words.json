@@ -86,5 +86,142 @@
     "0x8FB00010",
     "0x03E00008",
     "0x27BD0018"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 64,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee6",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 104,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "take_ptr",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 148,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 164,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 176,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 228,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 200
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 240,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 200
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 292,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 268
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 308,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 320
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "call1",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "call_local",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "call_many",
+          "section": ".text",
+          "offset": 32
+        },
+        {
+          "name": "chain",
+          "section": ".text",
+          "offset": 132
+        },
+        {
+          "name": "recursive",
+          "section": ".text",
+          "offset": 268
+        },
+        {
+          "name": "use_helper",
+          "section": ".text",
+          "offset": 216
+        }
+      ],
+      "commons": [],
+      "locals": [
+        {
+          "name": "helper",
+          "section": ".text",
+          "offset": 200
+        }
+      ]
+    }
+  }
 }

@@ -4,5 +4,14 @@
   "words": [
     "0x000001CD",
     "0x000101CD"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

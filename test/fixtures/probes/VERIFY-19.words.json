@@ -6,5 +6,14 @@
     "0x8C830000",
     "0x00000000",
     "0x00A60018"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

@@ -172,15 +172,9 @@ VERIFY-1]**
 
 Every relocated field holds 0; the target and any addend live in the relocation.
 
-Against a symbol: `lw $2,Savemap+2944` assembles to `0x8C420000`. **[fixture:
-lwlw (LO16), gp_offset (GPREL16)]** HI16, MIPS26, and WORD32 agree. **[aspsx:
-VERIFY-7]**
+Against a symbol this file does not define (an `.extern` or a `.comm`), the target is the symbol and its addend: `lw $2,Savemap+2944` assembles to `0x8C420000`. **[fixture: lwlw (LO16), gp_offset (GPREL16)]** HI16, MIPS26, and WORD32 agree. **[aspsx: VERIFY-7]**
 
-Against a local label (`$L12`, `$LC0`), the target is the label's section and
-offset, and the field is still 0: `j $L9`, `%lo($LC1)`, and a jump table's
-`.word $L15` entries all assemble with zero fields. **[aspsx: VERIFY-6,
-t04_branch, t05_loop, t11_data]** Consumers compare words under each
-relocation's `fieldMask`.
+Against anything this file defines, whatever its name (a `$L` label, a function, a global, a static, or an `.lcomm`), the target is that label's section and offset with the addend folded in, and the field is still 0: `j $L9`, `jal f`, `%lo(g_int)`, and a jump table's `.word $L15` all assemble with zero fields. **[aspsx: VERIFY-5, VERIFY-6, t04_branch, t11_data, t14_half]** Consumers compare words under each relocation's `fieldMask`.
 
 Numeric `%hi(n)`/`%lo(n)` fold into constants, with `%hi` adjusted for a negative
 `%lo`.
@@ -192,9 +186,7 @@ holds data. `.align n` pads to 2ⁿ, with nop words in code. `.word` accepts
 numbers, symbols with addends, and labels; `.half`, `.short`, and `.byte` accept
 numbers. `.ascii` decodes C escapes; `.asciiz` appends a zero byte.
 
-`.comm`/`.lcomm` allocate, in order of appearance after all other contents,
-into `.sbss` when no larger than `gpSize` and `.bss` otherwise, aligned to 8, 4,
-2, or 1 by size unless an alignment is given. VERIFY-5
+`.lcomm` allocates, in order of appearance after the section's other contents, into `.sbss` when no larger than `gpSize` and `.bss` otherwise, aligned to 8, 4, 2, or 1 by size unless an alignment is given. `.comm` allocates nothing: the linker places the symbol, and the object records only its size and whether it belongs to `.sbss` or `.bss`. **[aspsx: VERIFY-5]**
 
 `.ent`/`.end` delimit functions; `.frame`, `.mask`, and `.fmask` are recorded on
 them.
@@ -217,11 +209,7 @@ them.
 
 ## Open verification items
 
-The numbering follows the project's original plan, so it has gaps.
-
-| Item | Question | Default | How to settle |
-| --- | --- | --- | --- |
-| VERIFY-5 | Alignment and order of `.comm`/`.lcomm` allocations | by size, in order of appearance | real assembler; data sections only |
+None: real ASPSX 2.81 output has settled every item. The numbering follows the project's original plan, so it has gaps.
 
 ## Settled verification items
 
@@ -232,6 +220,7 @@ probe test holds `psyq-asm` to them.
 | Item | Question | ASPSX 2.81 |
 | --- | --- | --- |
 | VERIFY-1 | Is `.extern sym,size` with a size no larger than `gpSize` addressed through `$gp`? | No: `lui` and `%lo` |
+| VERIFY-5 | Alignment and order of `.comm`/`.lcomm` allocations | `.lcomm` in order, aligned by size; `.comm` left to the linker |
 | VERIFY-6 | Field value of a relocation against a local label | 0 |
 | VERIFY-7 | Field value of HI16, MIPS26, and WORD32 relocations against symbols | 0 |
 | VERIFY-8 | Expansions of `negu`, `la` with a number, and `b` | as GNU as, except `b` is `bgez $0` |

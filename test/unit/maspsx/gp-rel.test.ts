@@ -12,9 +12,18 @@ import { listing } from '../../helpers/listing.js';
 
 const options = { gpSize: 65536 };
 
+/**
+ * What each $gp-relative relocation adds: the addend against a `.comm` symbol,
+ * or the offset in the section for a label the file defines, which ASPSX 2.81
+ * relocates against its section.
+ */
 function addends(text: string): number[] {
   return sectionOf(assembleOk(text, options), '.text').relocations.map((r) =>
-    r.kind === 'GPREL16' && r.target.kind === 'symbol' ? r.target.addend : Number.NaN,
+    r.kind !== 'GPREL16'
+      ? Number.NaN
+      : r.target.kind === 'symbol'
+        ? r.target.addend
+        : r.target.offset,
   );
 }
 

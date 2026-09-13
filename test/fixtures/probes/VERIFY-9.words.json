@@ -5,5 +5,14 @@
     "0x34028000",
     "0x3403FFFF",
     "0x340C8CB8"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

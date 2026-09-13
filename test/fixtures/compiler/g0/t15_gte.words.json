@@ -164,5 +164,59 @@
     "0x25080006",
     "0x03E00008",
     "0x00000000"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 340,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 352
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 464,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 76
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "apply_rot",
+          "section": ".text",
+          "offset": 76
+        },
+        {
+          "name": "dot_fixed",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "identity",
+          "section": ".text",
+          "offset": 308
+        },
+        {
+          "name": "scale_matrix",
+          "section": ".text",
+          "offset": 556
+        },
+        {
+          "name": "transform_box",
+          "section": ".text",
+          "offset": 400
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

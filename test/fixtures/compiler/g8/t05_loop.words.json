@@ -40,5 +40,45 @@
     "0x24A5FFFF",
     "0x03E00008",
     "0x00000000"
-  ]
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 116,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 136
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "count_down",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "fill",
+          "section": ".text",
+          "offset": 116
+        },
+        {
+          "name": "sum",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "sum_for",
+          "section": ".text",
+          "offset": 44
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

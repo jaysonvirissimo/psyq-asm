@@ -81,11 +81,13 @@ function placed(symbol: SymbolEntry): PlacedSymbol {
 /**
  * This package's object described the way scripts/psyq-object.mjs describes a
  * real one (see `dataOf` there): section sizes other than .text, relocations,
- * global definitions, commons, and `.lcomm` locals.
+ * global definitions, commons, and the locals ASPSX writes: `.lcomm` symbols and
+ * static functions (labels named by `.ent`).
  */
 export function dataOf(result: AssembleResult): ObjectData | undefined {
   if (!result.success) return undefined;
-  const { sections, symbols } = result.object;
+  const { sections, symbols, functions } = result.object;
+  const functionNames = new Set(functions.map((f) => f.name));
   const sizes: Record<string, number> = {};
   for (const section of [...sections].sort(byName)) {
     if (section.name !== '.text' && section.size > 0) sizes[section.name] = section.size;
@@ -118,7 +120,7 @@ export function dataOf(result: AssembleResult): ObjectData | undefined {
         .map((s) => ({ name: s.name, section: s.section ?? '', size: s.size ?? 0 }))
         .sort(byName),
       locals: symbols
-        .filter((s) => s.binding === 'local' && s.size !== undefined)
+        .filter((s) => s.binding === 'local' && (s.size !== undefined || functionNames.has(s.name)))
         .map(placed)
         .sort(byName),
     },

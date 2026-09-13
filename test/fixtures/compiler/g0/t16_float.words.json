@@ -190,5 +190,371 @@
     "0x8FB00010",
     "0x03E00008",
     "0x27BD0028"
-  ]
+  ],
+  "data": {
+    "sections": {
+      ".data": 16
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 16,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 20,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 76
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 36,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 40,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 44,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 48,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 52,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 56,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__truncdfsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 64,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 76
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 72,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 100,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixsfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 132,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixunssfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 164,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixdfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 200,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsisf",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 236,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsidf",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 260,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__adddf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 292,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__subsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 308,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__ltsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 324,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__negsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 344,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__ltsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 432,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__extendsfdf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 452,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__adddf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 488,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsidf",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 508,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__divdf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 516,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 532
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 576,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__mulsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 588,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__addsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 648,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__ltdf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 664,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 724
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 680,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__gtdf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 708,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__nedf2",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "average",
+          "section": ".text",
+          "offset": 372
+        },
+        {
+          "name": "close_enough",
+          "section": ".text",
+          "offset": 284
+        },
+        {
+          "name": "compare_doubles",
+          "section": ".text",
+          "offset": 612
+        },
+        {
+          "name": "freq_a",
+          "section": ".data",
+          "offset": 0
+        },
+        {
+          "name": "freq_b",
+          "section": ".data",
+          "offset": 4
+        },
+        {
+          "name": "freq_c",
+          "section": ".data",
+          "offset": 8
+        },
+        {
+          "name": "from_int",
+          "section": ".text",
+          "offset": 192
+        },
+        {
+          "name": "from_uint",
+          "section": ".text",
+          "offset": 224
+        },
+        {
+          "name": "pick",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "scale",
+          "section": ".text",
+          "offset": 564
+        },
+        {
+          "name": "to_int",
+          "section": ".text",
+          "offset": 92
+        },
+        {
+          "name": "to_short",
+          "section": ".text",
+          "offset": 156
+        },
+        {
+          "name": "to_uint",
+          "section": ".text",
+          "offset": 124
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
 }

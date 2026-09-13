@@ -114,6 +114,10 @@ export interface Relocation {
   readonly fieldValue: number;
 }
 
+/**
+ * A symbol this file does not define (an extern or a `.comm`), with its addend;
+ * or, for anything the file defines, that label's section and offset.
+ */
 export type RelocationTarget =
   | { readonly kind: 'symbol'; readonly name: string; readonly addend: number }
   | {
@@ -121,14 +125,16 @@ export type RelocationTarget =
       readonly section: SectionName;
       /** Offset in `section`, addend included. */
       readonly offset: number;
+      /** The label or symbol the offset came from. */
       readonly label?: string;
     };
 
 export interface SymbolEntry {
   readonly name: string;
   readonly binding: 'global' | 'local' | 'extern' | 'common';
-  /** Absent for extern symbols. */
+  /** Absent for extern symbols; for a `.comm` symbol, the section it belongs to. */
   readonly section?: SectionName;
+  /** Absent for extern and `.comm` symbols, which the linker places. */
   readonly offset?: number;
   /** From `.comm`, `.lcomm`, or `.extern`. */
   readonly size?: number;
