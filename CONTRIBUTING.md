@@ -94,11 +94,24 @@ comment at the implementing code. To close one:
 `npm run test:differential` compiles the C of an already-matched decompilation
 with `psyq-wasm`, assembles it with this package, and compares the result with
 the corresponding words of the original executable under each relocation's
-field mask. It needs the checkout and the executable on the local machine, named
-by environment variables; see `scripts/oracle.mjs`. It never commits game bytes:
-only file names, pass or fail, and hashes are recorded in
-`test/differential/status.json`. Without the environment variables the suite
-skips with a notice.
+field mask. It needs a build and three local inputs, named by environment
+variables:
+
+```sh
+npm run build
+PSYQ_ASM_ORACLE_CHECKOUT=<checkout> \
+PSYQ_ASM_ORACLE_EXECUTABLE=<executable> \
+PSYQ_ASM_ORACLE_MANIFEST=<manifest.json> \
+npm run test:differential
+```
+
+The manifest lists the `-G` value, preprocessor flags, include directories, and
+the functions to compare with their addresses; its format is documented at the
+top of `scripts/oracle.mjs`. The oracle never writes game bytes: only file and
+function names, pass or fail, mismatching word indices, and hashes of this
+package's words are recorded in `test/differential/status.json`. Without the
+environment variables the suite skips. The weekly `Differential oracle`
+workflow runs it once the repository variables it names are configured.
 
 ## Style
 
