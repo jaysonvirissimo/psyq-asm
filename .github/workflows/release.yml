@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # GitHub release
-      id-token: write # npm provenance (trusted publishing)
+      id-token: write # trusted publishing and provenance
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -36,21 +36,27 @@ jobs:
       - run: npm run test:package
 
       # Nothing is attached: the npm tarball is the artifact. The GitHub release
-      # goes out first so a failure leaves nothing published on npm, where a
-      # version cannot be reused once withdrawn.
+      # goes out first so a failure leaves nothing staged on npm, where a version
+      # cannot be reused once withdrawn.
       - name: GitHub release
         uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
 
       # Trusted publishing (OIDC): npm derives the credential from the job's
-      # id-token, so there is no long-lived NPM_TOKEN in repository secrets.
-      # Requires the trusted publisher to be configured on the npm package, and
-      # npm 11.5.1 or newer. Upgraded here rather than before `npm ci`, so the
-      # build and tests run on the same bundled npm as CI.
-      - name: Upgrade npm for trusted publishing
+      # id-token, so there is no long-lived NPM_TOKEN in repository secrets. The
+      # trusted publisher on npm allows staging only, so this job cannot make a
+      # version public: a maintainer approves it with 2FA, under Staged Packages
+      # on npmjs.com or with `npm stage approve <stage-id>`. Provenance is
+      # attached exactly as for a direct publish.
+      #
+      # Staging needs npm 11.15.0 or newer. Upgraded here rather than before
+      # `npm ci`, so the build and tests run on the same bundled npm as CI.
+      - name: Upgrade npm for staged publishing
         run: |
           npm install -g npm@11
           npm --version
-      - name: Publish to npm with provenance
-        run: npm publish --provenance --access public
+      - name: Stage the release on npm with provenance
+        run: npm stage publish --provenance --access public
+      - name: Ask for approval
+        run: echo "::notice::${GITHUB_REF_NAME} is staged on npm. Approve it under Staged Packages on npmjs.com, or with npm stage list psyq-asm and npm stage approve <stage-id>."

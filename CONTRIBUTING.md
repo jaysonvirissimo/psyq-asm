@@ -161,8 +161,11 @@ Tag `vX.Y.Z` on `main`. The release workflow checks that the tag, the
 `package.json` version, and a dated CHANGELOG section agree, then builds and
 runs every test layer before publishing.
 
-Publishing uses npm trusted publishing (OIDC): the release job mints its
-credential from its own `id-token`, so no `NPM_TOKEN` secret is stored. The
-trusted publisher must be configured on the npm package before the first
-release. The demo workflow requires GitHub Pages to be enabled. These are
+Publishing uses npm trusted publishing (OIDC) with staged publishing: the
+release job mints its credential from its own `id-token`, so no `NPM_TOKEN`
+secret is stored, and it can only stage the version (`npm stage publish`). The
+release becomes public when a maintainer approves it with 2FA, under Staged
+Packages on npmjs.com or with `npm stage approve <stage-id>`. The trusted
+publisher on npm is configured for `release.yml` with direct `npm publish` not
+allowed, and the package requires 2FA with no bypass tokens. The demo workflow requires GitHub Pages to be enabled. These are
 repository/account settings, not prerequisites for local validation.
