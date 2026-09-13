@@ -32,6 +32,9 @@ A fidelity fix is not a breaking change even when it changes output.
   `scripts/oracle-manifest.rb` writes manifests from a symbol list; a synthetic
   pipeline test runs in CI, and the real comparison runs on demand on a
   self-hosted runner.
+- Tooling for the real assembler: `scripts/aspsx-oracle.rb` runs ASPSX 2.81
+  under wine on the VERIFY probes and compiler fixtures, reading objects with
+  `scripts/psyq-object.mjs`, and tests require any recorded words exactly.
 
 ### Fidelity
 

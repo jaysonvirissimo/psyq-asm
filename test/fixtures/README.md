@@ -36,9 +36,11 @@ unchanged: the assembly the PsyQ 4.4 `cc1psx` emits at `-O2 -g0 -Wall` with
 `-G 0` and `-G 8` for that project's original C test programs. They keep the
 compiler's CRLF line endings. The C sources live in the psyq-wasm repository.
 
-A fixture gains a `<name>-<g0|g8>.words.json` companion once an oracle has
-verified the words `ASPSX` 2.81 produces for it; until then the test asserts only
-that it assembles without error and that every word has provenance.
+A fixture gains a `<name>.words.json` companion beside it once
+`scripts/aspsx-oracle.rb` has recorded the words the real `ASPSX` 2.81 emits for
+it; the test then requires those `.text` words exactly. Until then it asserts
+only that the fixture assembles without error and that every word has
+provenance.
 
 ## `probes/`
 

@@ -82,8 +82,9 @@ Every behaviour that no fixture proves is tagged `VERIFY-n` in
 `docs/ASPSX-2.81.md`, in the README fidelity table, and in a `// VERIFY-n:`
 comment at the implementing code. To close one:
 
-1. Obtain the words real `ASPSX` 2.81 emits for the item's probe, or find the
-   construct in code the differential oracle has verified.
+1. Obtain the words real `ASPSX` 2.81 emits for the item's probe
+   (`ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> --only <probe>`), or find
+   the construct in code the differential oracle has verified.
 2. Commit that evidence as a fixture with its origin stated.
 3. Make the implementation match, remove the `VERIFY-n` comment, and mark the
    item closed in the document and the README.
