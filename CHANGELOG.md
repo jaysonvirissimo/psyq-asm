@@ -26,8 +26,12 @@ A fidelity fix is not a breaking change even when it changes output.
 - Tests: unit, property, the ASPSX 2.81 ground truth, ported maspsx tests,
   compiler fixtures, VERIFY probes, three browsers, and packaging with Node,
   TypeScript, Vite, bare browser ESM, and Pages consumers.
-- Differential oracle scaffolding (`scripts/oracle.mjs`, `npm run
-  test:differential`, and a weekly workflow) that skips until configured.
+- A differential oracle (`scripts/oracle.mjs`, `npm run test:differential`):
+  compares matched decompiled code with its original executable, keeps every
+  name in the ignored `tmp/` directory, and commits only an aggregate summary.
+  `scripts/oracle-manifest.rb` writes manifests from a symbol list; a synthetic
+  pipeline test runs in CI, and the real comparison runs on demand on a
+  self-hosted runner.
 
 ### Fidelity
 

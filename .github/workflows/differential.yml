@@ -1,68 +1,60 @@
 name: Differential oracle
 
 # Compares assembled words with an already-matched decompilation's original
-# executable. The inputs are not public, so the job needs repository
-# configuration: variables ORACLE_REPOSITORY, ORACLE_REF, and ORACLE_MANIFEST
-# (a path inside that checkout), and the secret ORACLE_EXECUTABLE_URL. Without
-# them it skips with a notice. Weekly rather than per pull request: it never
-# blocks a pull request, but the release checklist requires it to pass.
+# executable. The inputs are not public and must never pass through
+# GitHub-hosted infrastructure, so the comparison runs only on a self-hosted
+# runner (label: psyq-oracle) that already holds them on its own disk. Set the
+# repository variables ORACLE_CHECKOUT_PATH, ORACLE_EXECUTABLE_PATH, and
+# ORACLE_MANIFEST_PATH to paths on that runner. Without them the run ends with
+# a notice. Only the name-free summary.json is uploaded; the detailed report
+# stays in the runner's workspace under tmp/.
 
 on:
-  schedule:
-    - cron: '0 6 * * 1'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
+  inputs:
+    name: Check the oracle configuration
+    runs-on: ubuntu-latest
+    outputs:
+      configured: ${{ steps.check.outputs.configured }}
+    steps:
+      - id: check
+        env:
+          ORACLE_CHECKOUT_PATH: ${{ vars.ORACLE_CHECKOUT_PATH }}
+          ORACLE_EXECUTABLE_PATH: ${{ vars.ORACLE_EXECUTABLE_PATH }}
+          ORACLE_MANIFEST_PATH: ${{ vars.ORACLE_MANIFEST_PATH }}
+        run: |
+          if [ -z "$ORACLE_CHECKOUT_PATH" ] || [ -z "$ORACLE_EXECUTABLE_PATH" ] || [ -z "$ORACLE_MANIFEST_PATH" ]; then
+            echo "::notice::Differential oracle skipped: ORACLE_CHECKOUT_PATH, ORACLE_EXECUTABLE_PATH, and ORACLE_MANIFEST_PATH are not all configured."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
   oracle:
     name: Matched code against the original executable
-    runs-on: ubuntu-latest
+    needs: inputs
+    if: needs.inputs.outputs.configured == 'true'
+    runs-on: [self-hosted, psyq-oracle]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
-          cache: npm
-      - name: Check the oracle inputs
-        id: inputs
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:differential
         env:
-          ORACLE_REPOSITORY: ${{ vars.ORACLE_REPOSITORY }}
-          ORACLE_REF: ${{ vars.ORACLE_REF }}
-          ORACLE_MANIFEST: ${{ vars.ORACLE_MANIFEST }}
-          ORACLE_EXECUTABLE_URL: ${{ secrets.ORACLE_EXECUTABLE_URL }}
-        run: |
-          if [ -z "$ORACLE_REPOSITORY" ] || [ -z "$ORACLE_REF" ] || [ -z "$ORACLE_MANIFEST" ] || [ -z "$ORACLE_EXECUTABLE_URL" ]; then
-            echo "::notice::Differential oracle skipped: ORACLE_REPOSITORY, ORACLE_REF, ORACLE_MANIFEST, and ORACLE_EXECUTABLE_URL are not all configured."
-            echo "configured=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "configured=true" >> "$GITHUB_OUTPUT"
-          fi
-      - if: steps.inputs.outputs.configured == 'true'
-        run: npm ci
-      - if: steps.inputs.outputs.configured == 'true'
-        run: npm run build
-      - if: steps.inputs.outputs.configured == 'true'
-        uses: actions/checkout@v7
-        with:
-          repository: ${{ vars.ORACLE_REPOSITORY }}
-          ref: ${{ vars.ORACLE_REF }}
-          path: oracle-checkout
-      - if: steps.inputs.outputs.configured == 'true'
-        name: Fetch the executable (never uploaded or cached)
-        env:
-          ORACLE_EXECUTABLE_URL: ${{ secrets.ORACLE_EXECUTABLE_URL }}
-        run: curl -fsSL "$ORACLE_EXECUTABLE_URL" -o "$RUNNER_TEMP/oracle.exe"
-      - if: steps.inputs.outputs.configured == 'true'
-        run: npm run test:differential
-        env:
-          PSYQ_ASM_ORACLE_CHECKOUT: ${{ github.workspace }}/oracle-checkout
-          PSYQ_ASM_ORACLE_EXECUTABLE: ${{ runner.temp }}/oracle.exe
-          PSYQ_ASM_ORACLE_MANIFEST: ${{ github.workspace }}/oracle-checkout/${{ vars.ORACLE_MANIFEST }}
-      - if: steps.inputs.outputs.configured == 'true' && always()
+          PSYQ_ASM_ORACLE_CHECKOUT: ${{ vars.ORACLE_CHECKOUT_PATH }}
+          PSYQ_ASM_ORACLE_EXECUTABLE: ${{ vars.ORACLE_EXECUTABLE_PATH }}
+          PSYQ_ASM_ORACLE_MANIFEST: ${{ vars.ORACLE_MANIFEST_PATH }}
+      - if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: differential-status
-          path: test/differential/status.json
+          name: differential-summary
+          path: test/differential/summary.json
           if-no-files-found: ignore
