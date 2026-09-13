@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "useUnknownInCatchVariables": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false,
+    "skipLibCheck": false,
+    "noEmit": true
+  },
+  "include": [
+    "src",
+    "test",
+    "scripts",
+    "demo",
+    "bin",
+    // vitest.config.ts is omitted: importing `vitest/config` pulls in vitest
+    // 5.0.0's own .d.ts files, which do not type-check standalone under
+    // exactOptionalPropertyTypes with skipLibCheck off (vitest-dev/vitest#11140
+    // and a BenchmarkUserOptions.provider variance). Restore this entry once
+    // both are fixed upstream.
+    "playwright.config.ts",
+    "eslint.config.js",
+    "prettier.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tmp",
+    "test/package/out",
+    "test/package/**/node_modules",
+    "test/package/**/dist",
+    // The TypeScript consumer fixture imports "psyq-asm" by name. Inside the
+    // working tree that only resolves through the root package self-reference
+    // to a built dist/, which CI does not have when it type-checks. It is
+    // deliberately checked elsewhere: test/package/run.mjs runs tsc over it
+    // against the packed tarball, which is the resolution a real consumer gets.
+    "test/package/ts-app"
+  ]
+}

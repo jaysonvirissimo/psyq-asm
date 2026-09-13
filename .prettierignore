@@ -1,0 +1,13 @@
+dist/
+coverage/
+tmp/
+test/fixtures/
+test/package/*/dist/
+test/package/*/node_modules/
+test/package/out/
+test/differential/status.json
+playwright-report/
+test-results/
+package-lock.json
+CHANGELOG.md
+docs/

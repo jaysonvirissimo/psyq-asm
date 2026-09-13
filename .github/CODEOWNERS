@@ -1,0 +1,6 @@
+# Default owner for everything in the repository.
+* @jaysonvirissimo
+
+# The rule set and the ground truth that proves it need extra care.
+/docs/ASPSX-2.81.md @jaysonvirissimo
+/test/fixtures/ @jaysonvirissimo

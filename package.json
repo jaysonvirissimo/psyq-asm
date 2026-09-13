@@ -1,0 +1,82 @@
+{
+  "name": "psyq-asm",
+  "version": "0.0.0",
+  "description": "ASPSX 2.81-compatible assembler and R3000 encoder/decoder in TypeScript, for PlayStation 1 matching-decompilation tooling in the browser and Node.js",
+  "keywords": [
+    "psyq",
+    "aspsx",
+    "maspsx",
+    "mips",
+    "r3000",
+    "playstation",
+    "ps1",
+    "psx",
+    "decompilation",
+    "assembler",
+    "disassembler"
+  ],
+  "homepage": "https://github.com/jaysonvirissimo/psyq-asm#readme",
+  "bugs": {
+    "url": "https://github.com/jaysonvirissimo/psyq-asm/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaysonvirissimo/psyq-asm.git"
+  },
+  "license": "MIT",
+  "author": "Jayson Virissimo",
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "LICENSE",
+    "CHANGELOG.md",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "psyq-asm": "./bin/psyq-asm.mjs"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --project unit",
+    "test:watch": "vitest --project unit",
+    "test:coverage": "vitest run --project unit --coverage",
+    "test:differential": "vitest run --project differential",
+    "test:browser": "playwright test",
+    "test:package": "node test/package/run.mjs",
+    "build": "tsc -p tsconfig.build.json",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:coverage",
+    "bench": "node scripts/bench.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.0.0",
+    "@vitest/coverage-v8": "^5.0.0",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "fast-check": "^4.9.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.6",
+    "psyq-wasm": "^1.0.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.69.0",
+    "vite": "^8.0.0",
+    "vitest": "^5.0.0"
+  }
+}

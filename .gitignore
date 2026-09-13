@@ -1,1 +1,28 @@
+# Private working notes; never committed.
 /tmp
+
+# Dependencies
+node_modules/
+test/package/*/node_modules/
+
+# Build output
+dist/
+test/package/*/dist/
+*.tgz
+
+# Test output
+coverage/
+test/package/out/
+playwright-report/
+test-results/
+blob-report/
+.eslintcache
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.claude/

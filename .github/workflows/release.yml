@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Build, verify, publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # GitHub release
+      id-token: write # npm provenance (trusted publishing)
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+
+      # Fails fast when the tag, package.json, and CHANGELOG.md disagree.
+      - run: node scripts/verify-release.mjs --tag "${GITHUB_REF_NAME}"
+
+      - run: npm run build
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:coverage
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run test:browser
+      - run: npm run test:package
+
+      # Nothing is attached: the npm tarball is the artifact. The GitHub release
+      # goes out first so a failure leaves nothing published on npm, where a
+      # version cannot be reused once withdrawn.
+      - name: GitHub release
+        uses: softprops/action-gh-release@v3
+        with:
+          generate_release_notes: true
+
+      # Trusted publishing (OIDC): npm derives the credential from the job's
+      # id-token, so there is no long-lived NPM_TOKEN in repository secrets.
+      # Requires the trusted publisher to be configured on the npm package, and
+      # npm 11.5.1 or newer. Upgraded here rather than before `npm ci`, so the
+      # build and tests run on the same bundled npm as CI.
+      - name: Upgrade npm for trusted publishing
+        run: |
+          npm install -g npm@11
+          npm --version
+      - name: Publish to npm with provenance
+        run: npm publish --provenance --access public
