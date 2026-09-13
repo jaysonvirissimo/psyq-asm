@@ -5,7 +5,7 @@ test/fixtures/
 test/package/*/dist/
 test/package/*/node_modules/
 test/package/out/
-test/differential/status.json
+test/differential/summary.json
 playwright-report/
 test-results/
 package-lock.json

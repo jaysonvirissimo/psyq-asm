@@ -1,0 +1,11 @@
+{
+  "psyqAsmCommit": null,
+  "psyqWasmVersion": null,
+  "manifestSha256": null,
+  "gpSize": null,
+  "functions": {
+    "total": 0,
+    "passed": 0
+  },
+  "date": null
+}

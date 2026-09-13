@@ -107,11 +107,41 @@ npm run test:differential
 
 The manifest lists the `-G` value, preprocessor flags, include directories, and
 the functions to compare with their addresses; its format is documented at the
-top of `scripts/oracle.mjs`. The oracle never writes game bytes: only file and
-function names, pass or fail, mismatching word indices, and hashes of this
-package's words are recorded in `test/differential/status.json`. Without the
-environment variables the suite skips. The weekly `Differential oracle`
-workflow runs it once the repository variables it names are configured.
+top of `scripts/oracle.mjs`, and `scripts/oracle-manifest.rb` writes one from a
+symbol list. For triage, run the script directly and narrow it with `--only`:
+
+```sh
+node scripts/oracle.mjs --checkout <checkout> --executable <executable> \
+  --manifest <manifest.json> --only '<function-or-source-glob>'
+```
+
+A word mismatch (an opcode, register, or immediate differs) fails the
+comparison and is printed with both sides disassembled. A field mismatch (a
+difference only inside a relocation field, which the linker fills in) is
+recorded but never fails it.
+
+The inputs never enter the repository, and neither does anything that names
+them:
+
+- The detailed report, with source file and function names, goes to
+  `tmp/oracle/status.json`, which git ignores. Keep manifests there too.
+- `test/differential/summary.json` is the only committed result: the
+  `psyq-asm` commit, the `psyq-wasm` version, the manifest's SHA-256, the `-G`
+  value, the date, and pass counts. The repository hygiene test enforces its
+  keys.
+- Nothing from the executable is written anywhere.
+
+Without the environment variables the suite skips. The `Differential oracle`
+workflow runs only on a self-hosted runner that already holds the inputs; see
+the workflow file.
+
+### Oracle discrepancies
+
+A discrepancy becomes a regression fixture in `test/fixtures/regressions/`: a
+minimal hand-written source that reproduces the construct, with the expected
+words derived from the rule (or measured with the real assembler). Never copy
+words, instructions, or code from the executable or the matched project. The
+fix, the fixture, and a CHANGELOG **Fidelity** entry land in one commit.
 
 ## Style
 

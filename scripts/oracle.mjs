@@ -5,14 +5,24 @@
  * with the words of the original executable under relocation field masks.
  *
  *   npm run build
- *   node scripts/oracle.mjs --checkout <dir> --executable <file> --manifest <file> [--status <out.json>]
+ *   node scripts/oracle.mjs --checkout <dir> --executable <file> --manifest <file>
+ *                           [--status <file>] [--summary <file>] [--only <glob>]...
  *
- * The checkout and the executable stay on the local machine. Nothing from the
- * executable is written anywhere: the status file records source file names,
- * function names, pass or fail, the indices of mismatching words, and a hash of
- * the words this package produced.
+ * The checkout, the executable, and the manifest stay on the local machine.
  *
- * The manifest is a JSON file describing the build being reproduced:
+ * - The status file (default tmp/oracle/status.json, which git ignores) is the
+ *   detailed report for triage: source file and function names, the indices of
+ *   mismatching words with both sides disassembled, and a hash of the words
+ *   this package produced. It names the matched project's code, so it is never
+ *   committed.
+ * - The summary file (written only with --summary) holds counts and provenance
+ *   and no names; test/differential/summary.json is the committed copy.
+ *
+ * --only keeps the units whose source matches a glob, and the functions whose
+ * names match, in other units; repeat it for several patterns.
+ *
+ * The manifest is a JSON file describing the build being reproduced. A unit may
+ * override gpSize and rawFlags, and add cppFlags after the manifest's own:
  *
  *   {
  *     "gpSize": 8,
@@ -21,15 +31,32 @@
  *     "includeDirs": ["include"],                 (relative to the checkout; every .h is supplied)
  *     "limits": { "maxHeaderCount": 4096 },       (optional psyq-wasm compiler limits)
  *     "units": [
- *       { "source": "source/example.c", "functions": [{ "name": "example", "address": "0x80012345" }] }
+ *       { "source": "source/example.c", "gpSize": 0, "cppFlags": ["-DEXAMPLE"],
+ *         "functions": [{ "name": "example", "address": "0x80012345" }] }
  *     ]
  *   }
+ *
+ * scripts/oracle-manifest.rb writes a manifest from a symbol list.
  */
-import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { basename, join, relative, sep } from 'node:path';
-import { compareWords, hashWords, readPsxExe, wordsAt } from './oracle-compare.mjs';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import { basename, dirname, join, relative, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import {
+  compareWords,
+  hashWords,
+  readPsxExe,
+  selectUnits,
+  summarize,
+  wordsAt,
+} from './oracle-compare.mjs';
 
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DEFAULT_RAW_FLAGS = ['-O2', '-g0', '-Wall'];
+
+/** Where the detailed report goes unless --status says otherwise. */
+export const DEFAULT_STATUS = join(ROOT, 'tmp', 'oracle', 'status.json');
 
 /**
  * @param {string} checkout
@@ -50,14 +77,50 @@ function collectHeaders(checkout, dirs) {
   return headers;
 }
 
+/** @returns {string | null} */
+function psyqAsmCommit() {
+  try {
+    return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).trim();
+  } catch {
+    return null;
+  }
+}
+
+/** @returns {string | null} */
+function psyqWasmVersion() {
+  try {
+    const json = readFileSync(join(ROOT, 'node_modules', 'psyq-wasm', 'package.json'), 'utf8');
+    return JSON.parse(json).version;
+  } catch {
+    return null;
+  }
+}
+
 /**
- * @param {{ checkout: string, executable: string, manifest: string, status?: string }} options
- * @returns {Promise<{ gpSize: number, results: object[] }>}
+ * @param {string} path
+ * @param {unknown} value
  */
-export async function runOracle({ checkout, executable, manifest, status }) {
-  const config = JSON.parse(readFileSync(manifest, 'utf8'));
+function writeJson(path, value) {
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
+}
+
+/**
+ * @param {{ checkout: string, executable: string, manifest: string, status?: string, summary?: string, only?: readonly string[] }} options
+ * @returns {Promise<{ gpSize: number, results: object[], summary: Record<string, unknown> }>}
+ */
+export async function runOracle({
+  checkout,
+  executable,
+  manifest,
+  status = DEFAULT_STATUS,
+  summary,
+  only,
+}) {
+  const manifestBytes = readFileSync(manifest);
+  const config = JSON.parse(manifestBytes.toString('utf8'));
   const exe = readPsxExe(readFileSync(executable));
-  const { assemble } = await import('../dist/index.js');
+  const { assemble, decode, format } = await import('../dist/index.js');
   const { DEFAULT_CPP_FLAGS, createCompiler } = await import('psyq-wasm');
   const includeDirs = config.includeDirs ?? [];
   const headers = collectHeaders(checkout, includeDirs);
@@ -66,17 +129,19 @@ export async function runOracle({ checkout, executable, manifest, status }) {
   );
   const results = [];
   try {
-    for (const unit of config.units) {
+    for (const unit of selectUnits(config.units, only)) {
       const filename = basename(unit.source);
+      const gpSize = unit.gpSize ?? config.gpSize;
       const fail = (error) =>
         results.push({ unit: unit.source, function: null, equal: false, error });
       const compiled = await compiler.compileSource(readFileSync(join(checkout, unit.source)), {
-        gpSize: config.gpSize,
+        gpSize,
         filename,
-        rawFlags: config.rawFlags ?? DEFAULT_RAW_FLAGS,
+        rawFlags: unit.rawFlags ?? config.rawFlags ?? DEFAULT_RAW_FLAGS,
         cppFlags: [
           ...DEFAULT_CPP_FLAGS,
           ...(config.cppFlags ?? []),
+          ...(unit.cppFlags ?? []),
           ...includeDirs.map((d) => `-I${d}`),
         ],
         headers,
@@ -86,7 +151,7 @@ export async function runOracle({ checkout, executable, manifest, status }) {
         continue;
       }
       const assembled = assemble(compiled.asm, {
-        gpSize: config.gpSize,
+        gpSize,
         filename: filename.replace(/\.c$/, '.s'),
       });
       if (!assembled.success) {
@@ -118,8 +183,16 @@ export async function runOracle({ checkout, executable, manifest, status }) {
           function: target.name,
           words: words.length,
           equal: comparison.equal,
-          relocated: comparison.relocated,
-          mismatches: comparison.mismatches.map((m) => m.index),
+          wordMismatches: comparison.wordMismatches.map((m) =>
+            m.kind === 'length'
+              ? m
+              : {
+                  ...m,
+                  actual: format(decode(words[m.index])),
+                  expected: format(decode(expected[m.index])),
+                },
+          ),
+          fieldMismatches: comparison.fieldMismatches,
           sha256: hashWords(words),
         });
       }
@@ -128,33 +201,58 @@ export async function runOracle({ checkout, executable, manifest, status }) {
     compiler.dispose();
   }
   const report = { gpSize: config.gpSize, results };
-  if (status !== undefined) writeFileSync(status, `${JSON.stringify(report, null, 2)}\n`);
-  return report;
+  writeJson(status, report);
+  const aggregate = summarize(report, {
+    psyqAsmCommit: psyqAsmCommit(),
+    psyqWasmVersion: psyqWasmVersion(),
+    manifestSha256: createHash('sha256').update(manifestBytes).digest('hex'),
+    date: new Date().toISOString().slice(0, 10),
+  });
+  if (summary !== undefined) writeJson(summary, aggregate);
+  return { ...report, summary: aggregate };
 }
 
 if (
   process.argv[1] !== undefined &&
   import.meta.url === (await import('node:url')).pathToFileURL(process.argv[1]).href
 ) {
+  const args = process.argv.slice(2);
   const arg = (name) => {
-    const index = process.argv.indexOf(name);
-    return index === -1 ? undefined : process.argv[index + 1];
+    const index = args.indexOf(name);
+    return index === -1 ? undefined : args[index + 1];
   };
+  const only = args.flatMap((a, i) => (a === '--only' && i + 1 < args.length ? [args[i + 1]] : []));
   const checkout = arg('--checkout');
   const executable = arg('--executable');
   const manifest = arg('--manifest');
   if (checkout === undefined || executable === undefined || manifest === undefined) {
     console.error(
-      'usage: node scripts/oracle.mjs --checkout <dir> --executable <file> --manifest <file> [--status <out.json>]',
+      'usage: node scripts/oracle.mjs --checkout <dir> --executable <file> --manifest <file> [--status <file>] [--summary <file>] [--only <glob>]...',
     );
     process.exit(2);
   }
-  const report = await runOracle({ checkout, executable, manifest, status: arg('--status') });
+  const status = arg('--status') ?? DEFAULT_STATUS;
+  const report = await runOracle({
+    checkout,
+    executable,
+    manifest,
+    status,
+    summary: arg('--summary'),
+    only,
+  });
   const failed = report.results.filter((r) => !r.equal);
   console.log(
-    `${String(report.results.length - failed.length)}/${String(report.results.length)} functions match`,
+    `${String(report.results.length - failed.length)}/${String(report.results.length)} functions match (details: ${relative(process.cwd(), status)})`,
   );
-  for (const result of failed)
+  for (const result of failed) {
     console.log(`MISMATCH ${result.unit} ${String(result.function)} ${result.error ?? ''}`);
+    for (const m of result.wordMismatches ?? []) {
+      console.log(
+        m.kind === 'length'
+          ? `  [${String(m.index)}] length differs`
+          : `  [${String(m.index)}] ${m.actual}  expected  ${m.expected}`,
+      );
+    }
+  }
   process.exit(failed.length === 0 ? 0 : 1);
 }

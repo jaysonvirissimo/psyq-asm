@@ -2,6 +2,7 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { SUMMARY_KEYS } from '../../scripts/oracle-compare.mjs';
 import { ROOT, fromRoot } from '../helpers/paths.js';
 
 /** Tracked and not-yet-tracked (but not ignored) files, relative to the root. */
@@ -47,6 +48,20 @@ describe('repository hygiene', () => {
       .join('\n');
     expect(items.filter((item) => !new RegExp(`${item}\\b`).test(code))).toEqual([]);
     expect(items.filter((item) => !files.includes(`test/fixtures/probes/${item}.s`))).toEqual([]);
+  });
+
+  it('commits only aggregate differential-oracle results', () => {
+    // The detailed report names the matched project's files and functions and
+    // stays in the ignored tmp/ directory; only counts and provenance are committed.
+    const differential = files.filter((f) => f.startsWith('test/differential/'));
+    expect(
+      differential.filter((f) => f !== 'test/differential/summary.json' && !f.endsWith('.test.ts')),
+    ).toEqual([]);
+    const summary = JSON.parse(
+      readFileSync(fromRoot('test/differential/summary.json'), 'utf8'),
+    ) as Record<string, unknown>;
+    expect(Object.keys(summary)).toEqual([...SUMMARY_KEYS]);
+    expect(Object.keys(summary['functions'] as object).sort()).toEqual(['passed', 'total']);
   });
 
   it('contains no absolute paths from a developer machine', () => {
