@@ -33,8 +33,11 @@ A fidelity fix is not a breaking change even when it changes output.
   pipeline test runs in CI, and the real comparison runs on demand on a
   self-hosted runner.
 - Tooling for the real assembler: `scripts/aspsx-oracle.rb` runs ASPSX 2.81
-  under wine on the VERIFY probes and compiler fixtures, reading objects with
-  `scripts/psyq-object.mjs`, and tests require any recorded words exactly.
+  under wine, locally or in an x86-64 Docker container
+  (`scripts/aspsx-wine.Dockerfile`), first replaying the 15 ground-truth
+  fixtures, then recording words for the VERIFY probes and compiler fixtures;
+  objects are read with `scripts/psyq-object.mjs`, and tests require any
+  recorded words exactly.
 
 ### Fidelity
 

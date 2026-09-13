@@ -184,7 +184,7 @@ export function readPsyqObject(bytes) {
         skip(2, 'END_SLD');
         break;
       case 74: // function start
-        skip(32, 'FUNCTION');
+        skip(28, 'FUNCTION');
         string('FUNCTION name');
         break;
       case 76: // function end
@@ -206,7 +206,7 @@ export function readPsyqObject(bytes) {
         break;
       }
       case 86: // function start, second form
-        skip(40, 'FUNCTION_START2');
+        skip(36, 'FUNCTION_START2');
         string('FUNCTION_START2 name');
         break;
       default:
