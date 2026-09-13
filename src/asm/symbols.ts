@@ -23,12 +23,13 @@ export interface SymbolTable {
 }
 
 /**
- * Compiler-generated labels that are not symbols: `$L12`, `$LC0`, and `L`
- * followed by a non-digit (`LM439`, debugging line markers). They are resolved
- * against their section rather than exported.
+ * Compiler-generated labels that are not symbols: `$L12`, `$LC0`, and `LM439`
+ * (debugging line markers), plus GNU numeric labels. They are resolved against
+ * their section rather than exported. Any other name, `LoadThing` included, is
+ * an ordinary symbol.
  */
 export function isLocalLabel(name: string): boolean {
-  return name.startsWith('$L') || /^L[^0-9]/.test(name) || isNumericLabel(name);
+  return name.startsWith('$L') || /^LM\d+$/.test(name) || isNumericLabel(name);
 }
 
 /**
@@ -42,11 +43,11 @@ export function isNumericLabel(name: string): boolean {
 
 /**
  * Labels the nop pass looks past, as maspsx does: numbered code labels (`$L12`,
- * `$Lb3`, `$Le3`) and `L`-plus-non-digit markers. Any other label ends the
+ * `$Lb3`, `$Le3`) and `LM` line markers. Any other label ends the
  * lookahead.
  */
 export function isTransparentLabel(name: string): boolean {
-  return /^\$L[be]?\d+$/.test(name) || /^L[^0-9]/.test(name) || isNumericLabel(name);
+  return /^\$L[be]?\d+$/.test(name) || /^LM\d+$/.test(name) || isNumericLabel(name);
 }
 
 export function collectSymbols(

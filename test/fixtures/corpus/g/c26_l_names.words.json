@@ -1,0 +1,187 @@
+{
+  "origin": "ASPSX 2.81 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x00A42823",
+    "0x00A60018",
+    "0x00001812",
+    "0x00031203",
+    "0x03E00008",
+    "0x00821021",
+    "0x27BDFFE8",
+    "0x3C020000",
+    "0x24420000",
+    "0x30840003",
+    "0x00042040",
+    "0x00822021",
+    "0xAFBF0010",
+    "0x84840000",
+    "0x0C000000",
+    "0x00000000",
+    "0x3C030000",
+    "0x8C630000",
+    "0x8FBF0010",
+    "0x00431021",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x27BDFFE8",
+    "0x240500FF",
+    "0xAFBF0010",
+    "0x0C000000",
+    "0x24060040",
+    "0x8FBF0010",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x3C040000",
+    "0x8C840000",
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x0C000000",
+    "0x00000000",
+    "0x3C030000",
+    "0x84630000",
+    "0x8FBF0010",
+    "0x00621021",
+    "0x03E00008",
+    "0x27BD0018"
+  ],
+  "data": {
+    "sections": {
+      ".data": 10
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 28,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 32,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 56,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "LookupExternal",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 64,
+        "kind": "HI16",
+        "target": {
+          "symbol": "LevelCount",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 68,
+        "kind": "LO16",
+        "target": {
+          "symbol": "LevelCount",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 100,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 124,
+        "kind": "HI16",
+        "target": {
+          "symbol": "LevelCount",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 128,
+        "kind": "LO16",
+        "target": {
+          "symbol": "LevelCount",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 140,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 88
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 148,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 152,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 8
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "LastLevel",
+          "section": ".text",
+          "offset": 124
+        },
+        {
+          "name": "Lighten",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "LoadLevel",
+          "section": ".text",
+          "offset": 24
+        }
+      ],
+      "commons": [],
+      "locals": [
+        {
+          "name": "Lerp",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "LevelTable",
+          "section": ".data",
+          "offset": 0
+        }
+      ]
+    }
+  }
+}

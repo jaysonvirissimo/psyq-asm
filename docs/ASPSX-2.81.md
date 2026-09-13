@@ -102,7 +102,7 @@ error, never skipped.
 ## Hazard nops
 
 "The next instruction" is the first word of the next statement's expansion,
-looking past `.set` options, `.loc`, COFF debugging records, and labels named `$L<digits>` or `L<non-digit>...`, and numeric local labels (`1:`). **[aspsx: c04_longlong]** for the last Any other directive, a section switch, and
+looking past `.set` options, `.loc`, COFF debugging records, and labels named `$L<digits>` or `LM<digits>` (debugging line markers; any other name, even one starting with `L`, is a symbol), and numeric local labels (`1:`). **[aspsx: c04_longlong]** for the last Any other directive, a section switch, and
 any other label end the search. So a consumer whose expansion begins with
 `lui $at` does not read the register, while a one-word `$gp` rewrite may.
 **[fixture: addu_at, v0_at, expand_sb]**
@@ -237,6 +237,6 @@ probe test holds `psyq-asm` to them.
 | VERIFY-18 | Nop after `mfc2`/`cfc2` when the next instruction reads the register | yes |
 | VERIFY-19 | `mflo` · load · `mult` | one nop before the `mult`, shared with any load delay |
 | VERIFY-20 | A multi-word macro other than `li` between `mflo` and `mult` | no nop |
-| VERIFY-21 | Where `L<non-digit>` debugging labels bind when a nop is inserted before the next instruction | before the nop, like any other label |
+| VERIFY-21 | Where `LM<digits>` debugging labels bind when a nop is inserted before the next instruction | before the nop, like any other label |
 | VERIFY-22 | `mflo` · `mfhi` · `mult` | two nops before the `mult` |
 | VERIFY-23 | Alignment of `.lcomm` allocations of each size | the size rounded up to a power of two, at most 16 |

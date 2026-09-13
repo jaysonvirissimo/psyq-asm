@@ -95,9 +95,9 @@ function following(items: readonly Item[], from: number, count: number): Next[] 
       if (item.option === 'noreorder' && noreorderAt === undefined) noreorderAt = index;
       continue;
     }
-    // Every transparent label, `L`-prefixed debugging markers included, stays
+    // Every transparent label, `LM` line markers included, stays
     // before a nop inserted ahead of the next group, as ASPSX 2.81 does (maspsx
-    // leaves `L` markers after it).
+    // leaves those markers after it).
     if (item.kind === 'label' && item.transparent) continue;
     if (item.kind !== 'group') break;
     found.push({ group: item, index, noreorderAt });
