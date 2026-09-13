@@ -42,6 +42,12 @@ it; the test then requires those `.text` words exactly. Until then it asserts
 only that the fixture assembles without error and that every word has
 provenance.
 
+## `regressions/`
+
+Minimal hand-written sources for discrepancies an oracle found, each with the
+words it must assemble to. See `regressions/README.md`. Nothing in them comes
+from a matched project or its executable.
+
 ## `probes/`
 
 Minimal sources for the open `VERIFY-n` items in `docs/ASPSX-2.81.md`, for a
