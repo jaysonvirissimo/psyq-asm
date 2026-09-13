@@ -74,6 +74,10 @@ add code from a game, an SDK, or a decompilation project.
 - `test/fixtures/compiler/` holds `psyq-wasm`'s compiler output fixtures, copied
   unchanged. A file gains a `.words.json` companion once an oracle has verified
   its words.
+- `test/fixtures/corpus/` holds original C and its compiler output. After adding
+  or changing a source, run `npm run corpus:compile`, then record what the real
+  assembler emits with `ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> --docker
+--only 'test/fixtures/corpus/**/*.s'`.
 - `test/fixtures/probes/` holds a minimal source for every `VERIFY-n` item, with
   the real assembler's words beside each settled one.
 

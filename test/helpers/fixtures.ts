@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { basename } from 'node:path';
 import { fromRoot } from './paths.js';
 
@@ -43,22 +43,34 @@ export function loadAspsxFixture(name: string): AspsxFixture {
   return fixture;
 }
 
-export function loadCompilerFixtures(): CompilerFixture[] {
+function loadAssemblyFixtures(set: 'compiler' | 'corpus'): CompilerFixture[] {
   // g/ holds -G 8 output compiled with -g (debugging information).
-  return (['g0', 'g8', 'g'] as const).flatMap((dir) =>
-    readdirSync(fromRoot('test', 'fixtures', 'compiler', dir))
+  return (['g0', 'g8', 'g'] as const).flatMap((dir) => {
+    const root = fromRoot('test', 'fixtures', set, dir);
+    if (!existsSync(root)) return [];
+    return readdirSync(root)
       .filter((f) => f.endsWith('.s'))
       .sort()
       .map((f) => {
-        const path = fromRoot('test', 'fixtures', 'compiler', dir, f);
+        const path = fromRoot('test', 'fixtures', set, dir, f);
         return {
           name: `${basename(f, '.s')}-${dir}`,
           gpSize: dir === 'g0' ? 0 : 8,
           path,
           text: readFileSync(path, 'utf8'),
         } as const;
-      }),
-  );
+      });
+  });
+}
+
+/** psyq-wasm's compiler output fixtures (see test/fixtures/README.md). */
+export function loadCompilerFixtures(): CompilerFixture[] {
+  return loadAssemblyFixtures('compiler');
+}
+
+/** The real-assembler corpus: this repository's own C, compiled by scripts/compile-corpus.mjs. */
+export function loadCorpusFixtures(): CompilerFixture[] {
+  return loadAssemblyFixtures('corpus');
 }
 
 /** Parse a fixture word string such as `0x0086001A`. */

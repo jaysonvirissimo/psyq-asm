@@ -159,9 +159,9 @@ describe('layout: commons', () => {
   });
 
   it('derives alignment from size unless one is given', () => {
-    expect([1, 2, 3, 4, 7, 8, 100].map((size) => commonAlignment(size, undefined))).toEqual([
-      1, 2, 2, 4, 4, 8, 8,
-    ]);
+    expect(
+      [1, 2, 3, 4, 5, 8, 9, 16, 17, 100].map((size) => commonAlignment(size, undefined)),
+    ).toEqual([1, 2, 4, 4, 8, 8, 16, 16, 16, 16]);
     expect(commonAlignment(100, 16)).toBe(16);
   });
 });

@@ -1,0 +1,192 @@
+{
+  "origin": "ASPSX 2.81 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x3C020000",
+    "0x24450000",
+    "0x2C820003",
+    "0x10400002",
+    "0x24030008",
+    "0x00041880",
+    "0x00651021",
+    "0x8C420000",
+    "0x03E00008",
+    "0x00000000",
+    "0x00002021",
+    "0x00801821",
+    "0x3C020000",
+    "0x24450000",
+    "0x00651021",
+    "0x90420000",
+    "0x24630001",
+    "0x00822021",
+    "0x28620010",
+    "0x1440FFFA",
+    "0x00000000",
+    "0x87820000",
+    "0x03E00008",
+    "0x00821021",
+    "0x3C020000",
+    "0x24420000",
+    "0x30840007",
+    "0x00822021",
+    "0x90820000",
+    "0x03E00008",
+    "0x00000000"
+  ],
+  "data": {
+    "sections": {
+      ".data": 40,
+      ".rdata": 14,
+      ".sdata": 36
+    },
+    "relocations": [
+      {
+        "section": ".data",
+        "offset": 0,
+        "kind": "WORD32",
+        "target": {
+          "section": ".sdata",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 4,
+        "kind": "WORD32",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".sdata",
+        "offset": 32,
+        "kind": "WORD32",
+        "target": {
+          "symbol": "external_value",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 48,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 52,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 84,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 18
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 96,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 100,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "greeting",
+          "section": ".rdata",
+          "offset": 0
+        },
+        {
+          "name": "greeting_char",
+          "section": ".text",
+          "offset": 96
+        },
+        {
+          "name": "lookup",
+          "section": ".sdata",
+          "offset": 16
+        },
+        {
+          "name": "message",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "messages",
+          "section": ".data",
+          "offset": 0
+        },
+        {
+          "name": "offsets",
+          "section": ".data",
+          "offset": 28
+        },
+        {
+          "name": "palette",
+          "section": ".data",
+          "offset": 12
+        },
+        {
+          "name": "palette_sum",
+          "section": ".text",
+          "offset": 40
+        },
+        {
+          "name": "pointer_table",
+          "section": ".sdata",
+          "offset": 24
+        },
+        {
+          "name": "points_outside",
+          "section": ".sdata",
+          "offset": 32
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

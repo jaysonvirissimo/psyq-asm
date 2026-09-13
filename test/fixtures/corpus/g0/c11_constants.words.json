@@ -1,0 +1,121 @@
+{
+  "origin": "ASPSX 2.81 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x3C051F80",
+    "0x34A51070",
+    "0x3C061F80",
+    "0x34C61074",
+    "0x8CA20000",
+    "0x00041827",
+    "0xACA30000",
+    "0x8CC30000",
+    "0x00000000",
+    "0x00641825",
+    "0xACC30000",
+    "0x03E00008",
+    "0x00000000",
+    "0x3C021F80",
+    "0x34421810",
+    "0xAC440000",
+    "0x03E00008",
+    "0x00000000",
+    "0x30840003",
+    "0x24020001",
+    "0x1082000F",
+    "0x28820002",
+    "0x10400005",
+    "0x00000000",
+    "0x10800008",
+    "0x00000000",
+    "0x08000000",
+    "0x3C027FFF",
+    "0x24020002",
+    "0x10820008",
+    "0x3C027FFF",
+    "0x08000000",
+    "0x00000000",
+    "0x3C02DEAD",
+    "0x03E00008",
+    "0x3442BEEF",
+    "0x03E00008",
+    "0x34028000",
+    "0x03E00008",
+    "0x3402FFFF",
+    "0x03E00008",
+    "0x3442FFFF",
+    "0x3C02FFFE",
+    "0x03E00008",
+    "0x3442DCBB",
+    "0x3C02FF00",
+    "0x3442FFF0",
+    "0x00821024",
+    "0x03E00008",
+    "0x34428001",
+    "0x34028000",
+    "0x00822021",
+    "0x3402FFFF",
+    "0x0044102B",
+    "0x03E00008",
+    "0x38420001"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 104,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 160
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 124,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 160
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "ack_interrupts",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "gpu_write",
+          "section": ".text",
+          "offset": 52
+        },
+        {
+          "name": "in_range",
+          "section": ".text",
+          "offset": 200
+        },
+        {
+          "name": "magic",
+          "section": ".text",
+          "offset": 72
+        },
+        {
+          "name": "masks",
+          "section": ".text",
+          "offset": 180
+        },
+        {
+          "name": "negative",
+          "section": ".text",
+          "offset": 168
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

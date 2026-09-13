@@ -246,7 +246,8 @@ export function readPsyqObject(bytes) {
         // definition with dimensions
         skip(14, 'SECTION_DEF2');
         const dims = u16('SECTION_DEF2 dimensions');
-        skip(dims * 2, 'SECTION_DEF2 dimensions');
+        // Each dimension is four bytes (short m[3][3] is 03 00 00 00 03 00 00 00).
+        skip(dims * 4, 'SECTION_DEF2 dimensions');
         string('SECTION_DEF2 tag');
         string('SECTION_DEF2 name');
         break;

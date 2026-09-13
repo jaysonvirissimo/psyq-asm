@@ -102,8 +102,7 @@ error, never skipped.
 ## Hazard nops
 
 "The next instruction" is the first word of the next statement's expansion,
-looking past `.set` options, `.loc`, COFF debugging records, and labels named
-`$L<digits>` or `L<non-digit>...`. Any other directive, a section switch, and
+looking past `.set` options, `.loc`, COFF debugging records, and labels named `$L<digits>` or `L<non-digit>...`, and numeric local labels (`1:`). **[aspsx: c04_longlong]** for the last Any other directive, a section switch, and
 any other label end the search. So a consumer whose expansion begins with
 `lui $at` does not read the register, while a one-word `$gp` rewrite may.
 **[fixture: addu_at, v0_at, expand_sb]**
@@ -186,7 +185,9 @@ holds data. `.align n` pads to 2ⁿ, with nop words in code. `.word` accepts
 numbers, symbols with addends, and labels; `.half`, `.short`, and `.byte` accept
 numbers. `.ascii` decodes C escapes; `.asciiz` appends a zero byte.
 
-`.lcomm` allocates, in order of appearance after the section's other contents, into `.sbss` when no larger than `gpSize` and `.bss` otherwise, aligned to 8, 4, 2, or 1 by size unless an alignment is given. `.comm` allocates nothing: the linker places the symbol, and the object records only its size and whether it belongs to `.sbss` or `.bss`. **[aspsx: VERIFY-5]**
+`.lcomm` allocates, in order of appearance after the section's other contents, into `.sbss` when no larger than `gpSize` and `.bss` otherwise, aligned to its size rounded up to a power of two, at most 16, unless an alignment is given. `.comm` allocates nothing: the linker places the symbol, and the object records only its size and whether it belongs to `.sbss` or `.bss`. **[aspsx: VERIFY-5, VERIFY-23]**
+
+GNU numeric local labels may be defined any number of times (`1:`); a reference `1f` or `1b` names the nearest definition after or before it. **[aspsx: c04_longlong]**
 
 `.ent`/`.end` delimit functions; `.frame`, `.mask`, and `.fmask` are recorded on
 them.
@@ -238,3 +239,4 @@ probe test holds `psyq-asm` to them.
 | VERIFY-20 | A multi-word macro other than `li` between `mflo` and `mult` | no nop |
 | VERIFY-21 | Where `L<non-digit>` debugging labels bind when a nop is inserted before the next instruction | before the nop, like any other label |
 | VERIFY-22 | `mflo` · `mfhi` · `mult` | two nops before the `mult` |
+| VERIFY-23 | Alignment of `.lcomm` allocations of each size | the size rounded up to a power of two, at most 16 |

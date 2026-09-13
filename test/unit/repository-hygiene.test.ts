@@ -33,7 +33,9 @@ function firstLines(file: string, n: number): string {
 describe('repository hygiene', () => {
   it('marks every hand-written source, script, and config file as MIT', () => {
     const sources = files.filter(
-      (f) => /\.(ts|mts|js|mjs|rb)$/.test(f) && !f.startsWith('test/fixtures/'),
+      (f) =>
+        (/\.(ts|mts|js|mjs|rb)$/.test(f) && !f.startsWith('test/fixtures/')) ||
+        /^test\/fixtures\/corpus\/src\/.*\.[ch]$/.test(f),
     );
     expect(sources.length).toBeGreaterThan(0);
     const missing = sources.filter(

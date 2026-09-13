@@ -58,6 +58,8 @@
     "test:differential": "vitest run --project differential",
     "test:browser": "playwright test",
     "test:package": "node test/package/run.mjs",
+    "corpus:compile": "node scripts/compile-corpus.mjs",
+    "corpus:verify": "node scripts/compile-corpus.mjs --verify",
     "build": "tsc -p tsconfig.build.json",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:coverage",
     "bench": "node scripts/bench.mjs",

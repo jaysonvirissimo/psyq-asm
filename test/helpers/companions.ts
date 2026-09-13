@@ -127,8 +127,36 @@ export function dataOf(result: AssembleResult): ObjectData | undefined {
   };
 }
 
-/** Hold an assembled result to everything its companion recorded. */
+/** Every named local label of this package's object, where it is placed. */
+function allLocals(result: AssembleResult): PlacedSymbol[] {
+  if (!result.success) return [];
+  return result.object.symbols
+    .filter((s) => s.binding === 'local' && s.section !== undefined)
+    .map(placed);
+}
+
+/**
+ * Hold an assembled result to everything its companion recorded. ASPSX writes
+ * local symbols for `.lcomm` and static functions, and with -g for other named
+ * statics as well, while psyq-asm lists every named label. So the locals are
+ * compared both ways: each local `dataOf` requires must be recorded, and each
+ * recorded local must be one of psyq-asm's labels, in the same place.
+ */
 export function expectMatchesCompanion(result: AssembleResult, companion: WordsCompanion): void {
   expect(textWords(result)).toEqual(companion.words);
-  if (companion.data !== undefined) expect(dataOf(result)).toEqual(companion.data);
+  const recorded = companion.data;
+  if (recorded === undefined) return;
+  const data = dataOf(result);
+  const withoutLocals = (d: ObjectData | undefined): unknown =>
+    d === undefined ? undefined : { ...d, symbols: { ...d.symbols, locals: [] } };
+  expect(withoutLocals(data)).toEqual(withoutLocals(recorded));
+  const known = new Map(allLocals(result).map((s) => [s.name, s]));
+  expect(
+    recorded.symbols.locals.filter((l) => {
+      const k = known.get(l.name);
+      return k?.section !== l.section || k.offset !== l.offset;
+    }),
+  ).toEqual([]);
+  const recordedNames = new Set(recorded.symbols.locals.map((l) => l.name));
+  expect((data?.symbols.locals ?? []).filter((l) => !recordedNames.has(l.name))).toEqual([]);
 }

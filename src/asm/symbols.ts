@@ -28,7 +28,16 @@ export interface SymbolTable {
  * against their section rather than exported.
  */
 export function isLocalLabel(name: string): boolean {
-  return name.startsWith('$L') || /^L[^0-9]/.test(name);
+  return name.startsWith('$L') || /^L[^0-9]/.test(name) || isNumericLabel(name);
+}
+
+/**
+ * A GNU numeric local label as the parser renames it (`1:2` is the second
+ * `1:`), or a `1f`/`1b` reference left unresolved because no such definition
+ * exists.
+ */
+export function isNumericLabel(name: string): boolean {
+  return /^\d+(?::\d+|[fb])$/i.test(name);
 }
 
 /**
@@ -37,7 +46,7 @@ export function isLocalLabel(name: string): boolean {
  * lookahead.
  */
 export function isTransparentLabel(name: string): boolean {
-  return /^\$L[be]?\d+$/.test(name) || /^L[^0-9]/.test(name);
+  return /^\$L[be]?\d+$/.test(name) || /^L[^0-9]/.test(name) || isNumericLabel(name);
 }
 
 export function collectSymbols(

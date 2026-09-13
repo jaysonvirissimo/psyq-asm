@@ -26,14 +26,14 @@ export interface Layout {
 }
 
 /**
- * Alignment of an `.lcomm` allocation when none is given, from its size, as
- * ASPSX 2.81 lays them out.
+ * Alignment of an `.lcomm` allocation when none is given: its size rounded up to
+ * a power of two, at most 16, as ASPSX 2.81 lays them out (probe VERIFY-23).
  */
 export function commonAlignment(size: number, explicit: number | undefined): number {
   if (explicit !== undefined) return explicit;
-  if (size >= 8) return 8;
-  if (size >= 4) return 4;
-  return size >= 2 ? 2 : 1;
+  let alignment = 1;
+  while (alignment < size && alignment < 16) alignment *= 2;
+  return alignment;
 }
 
 function padding(offset: number, alignment: number): number {

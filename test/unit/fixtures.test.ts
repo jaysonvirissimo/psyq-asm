@@ -1,11 +1,15 @@
 // SPDX-License-Identifier: MIT
+import { readdirSync } from 'node:fs';
+import { basename } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   loadAspsxFixture,
   loadAspsxFixtures,
   loadCompilerFixtures,
+  loadCorpusFixtures,
   parseWord,
 } from '../helpers/fixtures.js';
+import { fromRoot } from '../helpers/paths.js';
 
 describe('ASPSX ground-truth fixtures', () => {
   const fixtures = loadAspsxFixtures();
@@ -67,6 +71,30 @@ describe('compiler fixtures', () => {
     expect(fixtures.filter((f) => f.name.endsWith('-g')).map((f) => [f.name, f.gpSize])).toEqual([
       ['t07_struct-g', 8],
     ]);
+  });
+
+  it('keeps the compiler CRLF line endings', () => {
+    for (const f of fixtures) {
+      const lines = f.text.split('\n').slice(0, -1);
+      expect(
+        lines.every((l) => l.endsWith('\r')),
+        f.name,
+      ).toBe(true);
+    }
+  });
+});
+
+describe('corpus fixtures', () => {
+  const fixtures = loadCorpusFixtures();
+  const sources = readdirSync(fromRoot('test', 'fixtures', 'corpus', 'src'))
+    .filter((f) => f.endsWith('.c'))
+    .map((f) => basename(f, '.c'));
+
+  it('compiles every source at -G 0, at -G 8, and at -G 8 with -g', () => {
+    expect(sources.length).toBeGreaterThan(0);
+    expect(fixtures.map((f) => f.name).sort()).toEqual(
+      sources.flatMap((s) => [`${s}-g`, `${s}-g0`, `${s}-g8`]).sort(),
+    );
   });
 
   it('keeps the compiler CRLF line endings', () => {

@@ -1,0 +1,96 @@
+{
+  "origin": "ASPSX 2.81 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x00041600",
+    "0x03E00008",
+    "0x00021603",
+    "0x03E00008",
+    "0x308200FF",
+    "0x00041400",
+    "0x03E00008",
+    "0x000213C3",
+    "0x3082FFFF",
+    "0x03E00008",
+    "0x24420001",
+    "0x308200FF",
+    "0x00042400",
+    "0x00042403",
+    "0x03E00008",
+    "0x00441021",
+    "0x0085102B",
+    "0x14400002",
+    "0x00000000",
+    "0x24420002",
+    "0x03E00008",
+    "0x00000000",
+    "0x03E00008",
+    "0x0085102A",
+    "0x00851021",
+    "0x03E00008",
+    "0x304200FF",
+    "0x90830001",
+    "0x90850000",
+    "0x80820002",
+    "0x00031A00",
+    "0x00A32825",
+    "0x00021400",
+    "0x03E00008",
+    "0x00A21025"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "add_bytes",
+          "section": ".text",
+          "offset": 96
+        },
+        {
+          "name": "compare_mixed",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "compare_unsigned",
+          "section": ".text",
+          "offset": 64
+        },
+        {
+          "name": "load_fields",
+          "section": ".text",
+          "offset": 108
+        },
+        {
+          "name": "narrow",
+          "section": ".text",
+          "offset": 44
+        },
+        {
+          "name": "sign_char",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "sign_short",
+          "section": ".text",
+          "offset": 20
+        },
+        {
+          "name": "zero_char",
+          "section": ".text",
+          "offset": 12
+        },
+        {
+          "name": "zero_short",
+          "section": ".text",
+          "offset": 32
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

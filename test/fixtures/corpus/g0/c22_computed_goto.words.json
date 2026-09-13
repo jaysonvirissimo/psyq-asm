@@ -1,0 +1,258 @@
+{
+  "origin": "ASPSX 2.81 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x3C020000",
+    "0x24420000",
+    "0x30840003",
+    "0x00042080",
+    "0x00822021",
+    "0x8C820000",
+    "0x00000000",
+    "0x00400008",
+    "0x00000000",
+    "0x08000000",
+    "0x24A50001",
+    "0x08000000",
+    "0x24A5FFFF",
+    "0x00052823",
+    "0x03E00008",
+    "0x00A01021",
+    "0x00803021",
+    "0x90C30000",
+    "0x3C02AAAA",
+    "0x3442AAAB",
+    "0x00620019",
+    "0x00003821",
+    "0x3C050000",
+    "0x24A50000",
+    "0x00004010",
+    "0x00082042",
+    "0x00041040",
+    "0x00441021",
+    "0x00621823",
+    "0x306300FF",
+    "0x00031880",
+    "0x00651821",
+    "0x8C620000",
+    "0x00000000",
+    "0x00400008",
+    "0x24C60001",
+    "0x90C30000",
+    "0x3C02AAAA",
+    "0x3442AAAB",
+    "0x00620019",
+    "0x24E70001",
+    "0x3C050000",
+    "0x24A50000",
+    "0x00004010",
+    "0x00082042",
+    "0x00041040",
+    "0x00441021",
+    "0x00621823",
+    "0x306300FF",
+    "0x00031880",
+    "0x00651821",
+    "0x8C620000",
+    "0x00000000",
+    "0x00400008",
+    "0x24C60001",
+    "0x90C30000",
+    "0x3C02AAAA",
+    "0x3442AAAB",
+    "0x00620019",
+    "0x00073840",
+    "0x3C050000",
+    "0x24A50000",
+    "0x00004010",
+    "0x00082042",
+    "0x00041040",
+    "0x00441021",
+    "0x00621823",
+    "0x306300FF",
+    "0x00031880",
+    "0x00651821",
+    "0x8C620000",
+    "0x00000000",
+    "0x00400008",
+    "0x24C60001",
+    "0x03E00008",
+    "0x00E01021"
+  ],
+  "data": {
+    "sections": {
+      ".data": 28
+    },
+    "relocations": [
+      {
+        "section": ".data",
+        "offset": 0,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 36
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 4,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 44
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 8,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 52
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 12,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 56
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 16,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 296
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 20,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 144
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 24,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 220
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 36,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 56
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 44,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 56
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 88,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 92,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 164,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 168,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 240,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 244,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "dispatch",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "interpreter",
+          "section": ".text",
+          "offset": 64
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

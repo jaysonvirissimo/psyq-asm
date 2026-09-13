@@ -60,7 +60,7 @@ const SYNTHETIC = object(
   [78, new Array<number>(10).fill(0)],
   [80, new Array<number>(10).fill(0)],
   [82, new Array<number>(14).fill(0), 'def'],
-  [84, new Array<number>(14).fill(0), u16(2), u16(3), u16(4), 'tag', 'def2'],
+  [84, new Array<number>(14).fill(0), u16(2), u32(3), u32(4), 'tag', 'def2'],
   [86, new Array<number>(36).fill(0), 'probe2'],
   [0],
   [0xff], // after END: ignored

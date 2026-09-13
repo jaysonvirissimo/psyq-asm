@@ -26,6 +26,8 @@ jobs:
       - run: npm run format:check
       - run: npm run lint
       - run: npm run typecheck
+      # The corpus .s files must be exactly what psyq-wasm compiles today.
+      - run: npm run corpus:verify
       - run: npm run test:coverage
       - uses: actions/upload-artifact@v7
         if: always()

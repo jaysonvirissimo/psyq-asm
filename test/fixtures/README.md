@@ -44,6 +44,15 @@ it; the test then requires those `.text` words exactly. Until then it asserts
 only that the fixture assembles without error and that every word has
 provenance.
 
+## `corpus/`
+
+Original C written for this repository (`src/*.c`, MIT) and the assembly PsyQ
+4.4 `cc1psx` emits for it, compiled by `scripts/compile-corpus.mjs` with
+psyq-wasm at `-O2 -G 0 -g0`, `-O2 -G 8 -g0`, and `-O2 -G 8 -g`, all with
+`-Wall`, into `g0/`, `g8/`, and `g/`. The `.s` files are byte-exact compiler
+output, and `npm run corpus:verify` checks them. Each has a `.words.json`
+companion recorded from the real ASPSX 2.81, which the tests require.
+
 ## `regressions/`
 
 Minimal hand-written sources for discrepancies an oracle found, each with the

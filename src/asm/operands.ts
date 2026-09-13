@@ -8,6 +8,7 @@
  *   expr     := '%hi(' simple ')' | '%lo(' simple ')' | '%gp_rel(' simple ')'
  *             | '.' [('+'|'-') integer] | simple
  *   simple   := integer | symbol [('+'|'-') integer]
+ *   symbol   := name | digits ('f'|'b')                 the latter a numeric-label reference
  *   integer  := ['-'|'+'] ('0x' hex+ | digits)      32-bit, two's complement
  */
 import { parseRegister } from '../isa/registers.js';
@@ -45,7 +46,7 @@ export type Parsed<T> =
   | { readonly ok: false; readonly code: ParseFailureCode; readonly message: string };
 
 const INTEGER = /^([-+]?)\s*(0x[0-9a-f]+|\d+)$/i;
-const SYMBOL_EXPR = /^([A-Za-z_.$][A-Za-z0-9_.$]*)\s*(?:([-+])\s*(0x[0-9a-f]+|\d+))?$/i;
+const SYMBOL_EXPR = /^([A-Za-z_.$][A-Za-z0-9_.$]*|\d+[fb])\s*(?:([-+])\s*(0x[0-9a-f]+|\d+))?$/i;
 const FLOAT = /^[-+]?(?:(?:\d+\.\d*|\.\d+)(?:e[-+]?\d+)?|\d+e[-+]?\d+)$/i;
 const RELOC = /^%(hi|lo|gp_rel)\s*\((.*)\)$/;
 const DOT = /^\.\s*(?:([-+])\s*(0x[0-9a-f]+|\d+))?$/i;

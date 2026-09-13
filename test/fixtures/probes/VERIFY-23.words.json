@@ -1,0 +1,279 @@
+{
+  "origin": "ASPSX 2.81 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x3C020000",
+    "0x24420000"
+  ],
+  "data": {
+    "sections": {
+      ".bss": 2440
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": [
+        {
+          "name": "pad0",
+          "section": ".bss",
+          "offset": 0
+        },
+        {
+          "name": "pad1",
+          "section": ".bss",
+          "offset": 4
+        },
+        {
+          "name": "pad10",
+          "section": ".bss",
+          "offset": 128
+        },
+        {
+          "name": "pad11",
+          "section": ".bss",
+          "offset": 161
+        },
+        {
+          "name": "pad12",
+          "section": ".bss",
+          "offset": 200
+        },
+        {
+          "name": "pad13",
+          "section": ".bss",
+          "offset": 239
+        },
+        {
+          "name": "pad14",
+          "section": ".bss",
+          "offset": 272
+        },
+        {
+          "name": "pad15",
+          "section": ".bss",
+          "offset": 321
+        },
+        {
+          "name": "pad16",
+          "section": ".bss",
+          "offset": 384
+        },
+        {
+          "name": "pad17",
+          "section": ".bss",
+          "offset": 464
+        },
+        {
+          "name": "pad18",
+          "section": ".bss",
+          "offset": 545
+        },
+        {
+          "name": "pad19",
+          "section": ".bss",
+          "offset": 660
+        },
+        {
+          "name": "pad2",
+          "section": ".bss",
+          "offset": 11
+        },
+        {
+          "name": "pad20",
+          "section": ".bss",
+          "offset": 800
+        },
+        {
+          "name": "pad21",
+          "section": ".bss",
+          "offset": 945
+        },
+        {
+          "name": "pad22",
+          "section": ".bss",
+          "offset": 1160
+        },
+        {
+          "name": "pad23",
+          "section": ".bss",
+          "offset": 1424
+        },
+        {
+          "name": "pad3",
+          "section": ".bss",
+          "offset": 21
+        },
+        {
+          "name": "pad4",
+          "section": ".bss",
+          "offset": 30
+        },
+        {
+          "name": "pad5",
+          "section": ".bss",
+          "offset": 39
+        },
+        {
+          "name": "pad6",
+          "section": ".bss",
+          "offset": 48
+        },
+        {
+          "name": "pad7",
+          "section": ".bss",
+          "offset": 73
+        },
+        {
+          "name": "pad8",
+          "section": ".bss",
+          "offset": 92
+        },
+        {
+          "name": "pad9",
+          "section": ".bss",
+          "offset": 111
+        },
+        {
+          "name": "size100",
+          "section": ".bss",
+          "offset": 560
+        },
+        {
+          "name": "size1000",
+          "section": ".bss",
+          "offset": 1440
+        },
+        {
+          "name": "size12",
+          "section": ".bss",
+          "offset": 80
+        },
+        {
+          "name": "size128",
+          "section": ".bss",
+          "offset": 672
+        },
+        {
+          "name": "size129",
+          "section": ".bss",
+          "offset": 816
+        },
+        {
+          "name": "size15",
+          "section": ".bss",
+          "offset": 96
+        },
+        {
+          "name": "size16",
+          "section": ".bss",
+          "offset": 112
+        },
+        {
+          "name": "size17",
+          "section": ".bss",
+          "offset": 144
+        },
+        {
+          "name": "size2",
+          "section": ".bss",
+          "offset": 2
+        },
+        {
+          "name": "size200",
+          "section": ".bss",
+          "offset": 960
+        },
+        {
+          "name": "size24",
+          "section": ".bss",
+          "offset": 176
+        },
+        {
+          "name": "size256",
+          "section": ".bss",
+          "offset": 1168
+        },
+        {
+          "name": "size3",
+          "section": ".bss",
+          "offset": 8
+        },
+        {
+          "name": "size31",
+          "section": ".bss",
+          "offset": 208
+        },
+        {
+          "name": "size32",
+          "section": ".bss",
+          "offset": 240
+        },
+        {
+          "name": "size33",
+          "section": ".bss",
+          "offset": 288
+        },
+        {
+          "name": "size48",
+          "section": ".bss",
+          "offset": 336
+        },
+        {
+          "name": "size5",
+          "section": ".bss",
+          "offset": 16
+        },
+        {
+          "name": "size6",
+          "section": ".bss",
+          "offset": 24
+        },
+        {
+          "name": "size64",
+          "section": ".bss",
+          "offset": 400
+        },
+        {
+          "name": "size65",
+          "section": ".bss",
+          "offset": 480
+        },
+        {
+          "name": "size7",
+          "section": ".bss",
+          "offset": 32
+        },
+        {
+          "name": "size8",
+          "section": ".bss",
+          "offset": 40
+        },
+        {
+          "name": "size9",
+          "section": ".bss",
+          "offset": 64
+        }
+      ]
+    }
+  }
+}

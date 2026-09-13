@@ -1,0 +1,402 @@
+{
+  "origin": "ASPSX 2.81 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x8F820000",
+    "0x87840000",
+    "0x24420001",
+    "0xAF820000",
+    "0x93830000",
+    "0x00000000",
+    "0xA3830000",
+    "0x03E00008",
+    "0x00441021",
+    "0x3C040000",
+    "0x3C020000",
+    "0x24420000",
+    "0x8F830000",
+    "0x90840000",
+    "0x3063003F",
+    "0x00031880",
+    "0x00621821",
+    "0x3C020000",
+    "0x8C420000",
+    "0x8C630000",
+    "0x00441021",
+    "0x03E00008",
+    "0x00431021",
+    "0x10800004",
+    "0x3C020000",
+    "0x27820000",
+    "0x03E00008",
+    "0x00000000",
+    "0x03E00008",
+    "0x24420000",
+    "0x3C030000",
+    "0x8C850000",
+    "0x8C620000",
+    "0x00000000",
+    "0x00A20018",
+    "0x24630000",
+    "0x8C850004",
+    "0x00003012",
+    "0x8C620004",
+    "0x00000000",
+    "0x00A20018",
+    "0x8C840008",
+    "0x00002812",
+    "0x8C620008",
+    "0x00000000",
+    "0x00820018",
+    "0x00C51021",
+    "0x00001812",
+    "0x03E00008",
+    "0x00431021",
+    "0x8F840000",
+    "0x8F850000",
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x00803021",
+    "0x0C000000",
+    "0x00A03821",
+    "0x8FBF0010",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x3C020000",
+    "0xAC440000",
+    "0x3C020000",
+    "0xAF840000",
+    "0x3C010000",
+    "0xAC240000",
+    "0x03E00008",
+    "0xAC440000"
+  ],
+  "data": {
+    "sections": {
+      ".data": 12,
+      ".sdata": 16
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "GPREL16",
+        "target": {
+          "symbol": "counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "GPREL16",
+        "target": {
+          "symbol": "counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 16,
+        "kind": "GPREL16",
+        "target": {
+          "symbol": "counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 24,
+        "kind": "GPREL16",
+        "target": {
+          "symbol": "small_char",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 36,
+        "kind": "HI16",
+        "target": {
+          "symbol": "shared_table",
+          "addend": 3
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 40,
+        "kind": "HI16",
+        "target": {
+          "symbol": "big_array",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 44,
+        "kind": "LO16",
+        "target": {
+          "symbol": "big_array",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 48,
+        "kind": "GPREL16",
+        "target": {
+          "symbol": "counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 52,
+        "kind": "LO16",
+        "target": {
+          "symbol": "shared_table",
+          "addend": 3
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 68,
+        "kind": "HI16",
+        "target": {
+          "symbol": "shared_total",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 72,
+        "kind": "LO16",
+        "target": {
+          "symbol": "shared_total",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 96,
+        "kind": "HI16",
+        "target": {
+          "symbol": "big_array",
+          "addend": 40
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 100,
+        "kind": "GPREL16",
+        "target": {
+          "symbol": "counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 116,
+        "kind": "LO16",
+        "target": {
+          "symbol": "big_array",
+          "addend": 40
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 120,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 128,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 140,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 200,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 204,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 220,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__adddf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 244,
+        "kind": "HI16",
+        "target": {
+          "symbol": "big_array",
+          "addend": 20
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 248,
+        "kind": "LO16",
+        "target": {
+          "symbol": "big_array",
+          "addend": 20
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 252,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 256,
+        "kind": "GPREL16",
+        "target": {
+          "symbol": "counter",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 260,
+        "kind": "HI16",
+        "target": {
+          "symbol": "shared_total",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 264,
+        "kind": "LO16",
+        "target": {
+          "symbol": "shared_total",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 272,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 4
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "address_of",
+          "section": ".text",
+          "offset": 92
+        },
+        {
+          "name": "bump",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "dot_origin",
+          "section": ".text",
+          "offset": 120
+        },
+        {
+          "name": "origin",
+          "section": ".data",
+          "offset": 0
+        },
+        {
+          "name": "pi_twice",
+          "section": ".text",
+          "offset": 200
+        },
+        {
+          "name": "pi_value",
+          "section": ".sdata",
+          "offset": 8
+        },
+        {
+          "name": "small_short",
+          "section": ".sdata",
+          "offset": 0
+        },
+        {
+          "name": "store_all",
+          "section": ".text",
+          "offset": 244
+        },
+        {
+          "name": "total",
+          "section": ".text",
+          "offset": 36
+        }
+      ],
+      "commons": [
+        {
+          "name": "big_array",
+          "section": ".bss",
+          "size": 256
+        },
+        {
+          "name": "counter",
+          "section": ".sbss",
+          "size": 4
+        },
+        {
+          "name": "small_char",
+          "section": ".sbss",
+          "size": 1
+        }
+      ],
+      "locals": []
+    }
+  }
+}

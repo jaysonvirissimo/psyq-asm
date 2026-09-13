@@ -2,7 +2,7 @@
 import type { Diagnostics } from './diagnostics.js';
 import { interpretDirective, type Directive } from './directives.js';
 import { lex, splitTopLevel } from './lexer.js';
-import { parseOperand, type SourceOperand } from './operands.js';
+import { parseOperand, type Expr, type SourceOperand } from './operands.js';
 
 export type Statement =
   | {
@@ -27,7 +27,9 @@ export type Statement =
       readonly column: number;
     };
 
-const LABEL = /^([A-Za-z_.$][A-Za-z0-9_.$]*)\s*:/;
+const LABEL = /^([A-Za-z_.$][A-Za-z0-9_.$]*|\d+)\s*:/;
+const NUMERIC_DEFINITION = /^\d+$/;
+const NUMERIC_REFERENCE = /^(\d+)([fb])$/i;
 const MNEMONIC = /^[a-z][a-z0-9_]*(?:\.[sd])?$/;
 
 /**
@@ -83,5 +85,70 @@ export function parse(source: string, diagnostics: Diagnostics): Statement[] {
       });
     }
   }
-  return statements;
+  return resolveNumericLabels(statements);
+}
+
+/**
+ * GNU numeric local labels: `1:` may be defined any number of times, and
+ * `1f`/`1b` name the nearest definition after or before the reference. Each
+ * definition gets a unique name (`1:2` is the second `1:`) and references are
+ * rewritten to it; a reference with no such definition keeps its spelling and
+ * is reported as an undefined label.
+ */
+function resolveNumericLabels(statements: readonly Statement[]): Statement[] {
+  const totals = new Map<string, number>();
+  for (const s of statements) {
+    if (s.kind === 'label' && NUMERIC_DEFINITION.test(s.name)) {
+      totals.set(s.name, (totals.get(s.name) ?? 0) + 1);
+    }
+  }
+  const seen = new Map<string, number>();
+  const rename = (name: string): string => {
+    const match = NUMERIC_REFERENCE.exec(name);
+    if (match === null) return name;
+    const label = String(match[1]);
+    const count = seen.get(label) ?? 0;
+    const index = String(match[2]).toLowerCase() === 'b' ? count : count + 1;
+    return index >= 1 && index <= (totals.get(label) ?? 0) ? `${label}:${String(index)}` : name;
+  };
+  const renameExpr = (expr: Expr): Expr => {
+    switch (expr.kind) {
+      case 'symbol':
+        return { ...expr, name: rename(expr.name) };
+      case 'reloc':
+        return expr.inner.kind === 'symbol'
+          ? { ...expr, inner: { ...expr.inner, name: rename(expr.inner.name) } }
+          : expr;
+      case 'number':
+      case 'dot':
+        return expr;
+    }
+  };
+  const renameOperand = (operand: SourceOperand): SourceOperand => {
+    switch (operand.kind) {
+      case 'expr':
+        return { ...operand, expr: renameExpr(operand.expr) };
+      case 'mem':
+        return { ...operand, offset: renameExpr(operand.offset) };
+      case 'reg':
+      case 'float':
+        return operand;
+    }
+  };
+  return statements.map((s): Statement => {
+    switch (s.kind) {
+      case 'label': {
+        if (!NUMERIC_DEFINITION.test(s.name)) return s;
+        const count = (seen.get(s.name) ?? 0) + 1;
+        seen.set(s.name, count);
+        return { ...s, name: `${s.name}:${String(count)}` };
+      }
+      case 'instruction':
+        return { ...s, operands: s.operands.map(renameOperand) };
+      case 'directive':
+        return s.directive.kind === 'values'
+          ? { ...s, directive: { ...s.directive, values: s.directive.values.map(renameExpr) } }
+          : s;
+    }
+  });
 }
