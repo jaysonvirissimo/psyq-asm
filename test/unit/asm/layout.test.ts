@@ -158,6 +158,15 @@ describe('layout: commons', () => {
     expect(object.symbols).toEqual([{ name: 'x', binding: 'local', section: '.data', offset: 0 }]);
   });
 
+  it('prefers a label over an .lcomm of the same name, which still reserves its space', () => {
+    const object = assembleOk(src('\t.lcomm\tx,4', '\t.data', 'x:', '\t.word\t1'));
+    expect(object.symbols).toEqual([{ name: 'x', binding: 'local', section: '.data', offset: 0 }]);
+    expect(object.sections.map((s) => [s.name, s.size])).toEqual([
+      ['.data', 4],
+      ['.bss', 4],
+    ]);
+  });
+
   it('derives alignment from size unless one is given', () => {
     expect(
       [1, 2, 3, 4, 5, 8, 9, 16, 17, 100].map((size) => commonAlignment(size, undefined)),

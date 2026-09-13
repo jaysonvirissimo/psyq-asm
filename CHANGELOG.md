@@ -10,6 +10,8 @@ A fidelity fix is not a breaking change even when it changes output.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-13
+
 ### Added
 
 - `assemble(source, options)`: PsyQ 4.4 `cc1psx` output to the words ASPSX 2.81
@@ -64,7 +66,7 @@ A fidelity fix is not a breaking change even when it changes output.
 - `break` carries two 10-bit codes. A single source code is split as maspsx does;
   the divide traps are `break 7,0` and `break 6,0`.
 - Checked against real ASPSX 2.81, run in Docker by `scripts/aspsx-oracle.rb`:
-  all 41 compiler fixtures (one compiled with `-g`) and all 19 probes match word for word, settling all 20 verification items (VERIFY-1 and 5 to 23). The rest of this list is what
+  all 41 compiler fixtures (one compiled with `-g`) and all 20 probes match word for word, settling all 20 verification items (VERIFY-1 and 5 to 23), and so do the 1,500 files of 500 fuzzing seeds. The rest of this list is what
   changed as a result.
 - Relocated fields against local labels hold 0: `j $L9`, `%lo($LC1)`, and
   jump-table `.word $L15` entries no longer carry the label's offset.
@@ -83,4 +85,5 @@ A fidelity fix is not a breaking change even when it changes output.
 - `b label` assembles as `bgez $0,label`, and `subu rd,rs,-32768` as a single
   `addiu rd,rs,-0x8000`.
 
-[Unreleased]: https://github.com/jaysonvirissimo/psyq-asm/commits/main
+[Unreleased]: https://github.com/jaysonvirissimo/psyq-asm/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/jaysonvirissimo/psyq-asm/releases/tag/v0.1.0

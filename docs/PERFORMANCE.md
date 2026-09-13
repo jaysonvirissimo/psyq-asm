@@ -17,8 +17,8 @@ Apple M1, Node.js 24.21.0.
 
 | Unit | Source lines | Words emitted | Iterations | Median | Min | Max |
 | --- | --- | --- | --- | --- | --- | --- |
-| `--lines 2000` | 3,885 | 1,303 | 50 | 5.0 ms | 4.2 ms | 9.8 ms |
-| `--lines 20000` | 23,310 | 7,818 | 20 | 65.6 ms | 61.5 ms | 81.0 ms |
+| `--lines 2000` | 3,885 | 1,303 | 50 | 5.2 ms | 4.3 ms | 10.3 ms |
+| `--lines 20000` | 23,310 | 7,818 | 20 | 65.9 ms | 61.9 ms | 85.3 ms |
 
 The target is a 20,000-line translation unit in under 200 ms on a laptop. A
 single function assembles in well under a millisecond, which is why the library

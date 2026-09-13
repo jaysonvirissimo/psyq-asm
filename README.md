@@ -135,6 +135,7 @@ What is verified today:
   [maspsx](https://github.com/mkst/maspsx) assemble word for word;
 - the 2.81-applicable unit tests of maspsx are ported and pass;
 - all 41 psyq-wasm compiler fixtures (t01 to t20 at `-G 0` and `-G 8`, plus `t07_struct` compiled with `-g`), the 75 files of a corpus of 25 original C programs (`-G 0`, `-G 8`, and `-G 8 -g`), and all 20 verification probes match what real ASPSX 2.81 emits for them (recorded with `scripts/aspsx-oracle.rb`): the words exactly, and the section sizes, relocations, and symbols; every word has provenance;
+- seeded fuzzing: 500 generated C programs (`npm run fuzz`, seeds 1 to 500), each compiled at `-G 0`, `-G 8`, and `-G 8 -g`, match the real ASPSX 2.81 in the same way;
 - property tests: every instruction encodes and decodes symmetrically, decoded
   programs re-assemble to their words, output is deterministic, and no input
   makes `assemble` throw.
