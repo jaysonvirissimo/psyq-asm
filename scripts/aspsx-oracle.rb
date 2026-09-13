@@ -6,6 +6,7 @@
 #
 #   ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> --docker [--only <glob>] [--check-only]
 #   ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> [--wine <command>] [--only <glob>] [--check-only]
+#   ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> --docker --files <dir>
 #
 # ASPSX.EXE comes from outside the repository and is never committed (keep it in
 # the ignored tmp/ directory). It is a 32-bit Windows program, so it runs under
@@ -24,6 +25,11 @@
 # .text words, plus the object's section sizes, relocations, and defined
 # symbols. Those come from the repository's own MIT sources, so they are safe to
 # commit. A source the real assembler rejects is reported and skipped.
+#
+# With --files, only the .s files directly in <dir> are recorded, beside
+# themselves: the -G value comes from a first-line comment naming one (as in
+# probes and regression fixtures), otherwise 0 for a name ending in -g0 and 8
+# for any other. scripts/fuzz-aspsx.mjs uses this for its generated sources.
 
 require 'fileutils'
 require 'json'
@@ -39,11 +45,12 @@ DOCKERFILE = File.join(ROOT, 'scripts', 'aspsx-wine.Dockerfile')
 options = { wine: 'wine' }
 parser = OptionParser.new do |o|
   o.banner = 'usage: ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> [--docker | --wine <command>] ' \
-             '[--only <glob>] [--check-only]'
+             '[--only <glob>] [--files <dir>] [--check-only]'
   o.on('--aspsx FILE') { |v| options[:aspsx] = File.expand_path(v) }
   o.on('--docker') { options[:docker] = true }
   o.on('--wine COMMAND') { |v| options[:wine] = v }
   o.on('--only GLOB') { |v| options[:only] = v }
+  o.on('--files DIR') { |v| options[:files] = File.expand_path(v) }
   o.on('--check-only') { options[:check_only] = true }
 end
 begin
@@ -115,8 +122,15 @@ def ground_truth
   Dir.glob(File.join(ROOT, 'test', 'fixtures', 'aspsx', '*.json')).sort.map { |f| JSON.parse(File.read(f)) }
 end
 
-# [source path relative to ROOT, -G value]
-def sources
+# [source path, relative to ROOT or absolute, -G value]
+def sources(files)
+  if files
+    return Dir.glob(File.join(files, '*.s')).sort.map do |path|
+      named = File.foreach(path).first.to_s[/\A#.*-G (\d+)/, 1]
+      [path, named ? Integer(named) : (path.end_with?('-g0.s') ? 0 : 8)]
+    end
+  end
+
   probes = Dir.glob('test/fixtures/probes/VERIFY-*.s', base: ROOT).sort.filter_map do |path|
     gp = File.foreach(File.join(ROOT, path)).first.to_s[/-G (\d+)/, 1]
     gp ? [path, Integer(gp)] : warn("no -G value on line 1, skipped: #{path}")
@@ -150,12 +164,13 @@ Dir.mktmpdir('aspsx-oracle') do |work|
 
     written = 0
     failed = []
-    sources.each do |path, gp|
+    sources(options[:files]).each do |path, gp|
       next if options[:only] && !File.fnmatch?(options[:only], path, File::FNM_PATHNAME | File::FNM_EXTGLOB)
 
-      text = File.binread(File.join(ROOT, path))
-      # A probe's first line is a comment for people; blank it and keep line numbers.
-      text = text.sub(/\A[^\n]*/, '') if path.include?('/probes/')
+      text = File.binread(File.expand_path(path, ROOT))
+      # A first-line comment (probes, regression fixtures) is for people; blank it
+      # and keep line numbers.
+      text = text.sub(/\A[^\n]*/, '') if text.start_with?('#')
       # ASPSX rejects a bare line feed; it reads DOS line endings.
       text = text.gsub(/\r?\n/, "\r\n")
       object, error = assembler.assemble(text, ["-G#{gp}"])
@@ -165,7 +180,7 @@ Dir.mktmpdir('aspsx-oracle') do |work|
         next
       end
       record = { 'origin' => ORIGIN, 'gpSize' => gp, 'words' => object.fetch('words'), 'data' => object.fetch('data') }
-      File.write(File.join(ROOT, path.sub(/\.s\z/, '.words.json')), "#{JSON.pretty_generate(record)}\n")
+      File.write(File.expand_path(path.sub(/\.s\z/, '.words.json'), ROOT), "#{JSON.pretty_generate(record)}\n")
       written += 1
       puts "#{path}: #{object.fetch('words').length} words"
     end

@@ -149,6 +149,23 @@ words derived from the rule (or measured with the real assembler). Never copy
 words, instructions, or code from the executable or the matched project. The
 fix, the fixture, and a CHANGELOG **Fidelity** entry land in one commit.
 
+## Fuzzing against the real assembler
+
+`scripts/fuzz-aspsx.mjs` generates C from seeds (`scripts/gen-corpus.mjs`),
+compiles it at `-G 0`, `-G 8`, and `-G 8 -g`, records what the real ASPSX 2.81
+emits for all of it (`scripts/aspsx-oracle.rb --files`), and compares
+`psyq-asm`'s output with that record the way the tests compare the corpus:
+
+```sh
+npm run build
+npm run fuzz -- --aspsx tmp/aspsx/2.81/ASPSX.EXE --seeds 1..200
+```
+
+Work files stay in `tmp/fuzz/`. Reduce a mismatch to a regression fixture (see
+"Oracle discrepancies"), record its words with `ruby scripts/aspsx-oracle.rb
+--aspsx <ASPSX.EXE> --docker --files test/fixtures/regressions`, and fix the
+rule.
+
 ## Style
 
 - TypeScript strict mode, ESM, no `any` outside a documented boundary.

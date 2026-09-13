@@ -44,6 +44,9 @@ A fidelity fix is not a breaking change even when it changes output.
   with the output of the real ASPSX 2.81 recorded beside it.
 - GNU numeric local labels (`1:`, `1f`, `1b`), which `cc1psx` emits in `long
   long` code.
+- `npm run fuzz` (`scripts/fuzz-aspsx.mjs`): seeded C from
+  `scripts/gen-corpus.mjs`, compiled at three settings and compared with what
+  the real ASPSX 2.81 emits for it.
 
 ### Removed
 

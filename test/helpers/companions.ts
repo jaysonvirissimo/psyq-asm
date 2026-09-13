@@ -1,41 +1,15 @@
 // SPDX-License-Identifier: MIT
 import { existsSync, readFileSync } from 'node:fs';
 import { expect } from 'vitest';
-import type { AssembleResult, SymbolEntry } from '../../src/public-types.js';
-import { hex8 } from './assembly.js';
+import {
+  assembledData,
+  localDifferences,
+  textWords as assembledWords,
+  type ObjectData,
+} from '../../scripts/object-data.mjs';
+import type { AssembleResult } from '../../src/public-types.js';
 
-/** A relocation target as scripts/psyq-object.mjs records it from a real object. */
-export type RecordedTarget =
-  | { readonly symbol: string; readonly addend: number }
-  | { readonly section: string; readonly offset: number }
-  | { readonly value: number }
-  | { readonly unsupported: string };
-
-interface PlacedSymbol {
-  readonly name: string;
-  readonly section: string;
-  readonly offset: number;
-}
-
-/** An object's section sizes, relocations, and defined symbols, as recorded. */
-export interface ObjectData {
-  readonly sections: Readonly<Record<string, number>>;
-  readonly relocations: readonly {
-    readonly section: string;
-    readonly offset: number;
-    readonly kind: string;
-    readonly target: RecordedTarget;
-  }[];
-  readonly symbols: {
-    readonly exports: readonly PlacedSymbol[];
-    readonly commons: readonly {
-      readonly name: string;
-      readonly section: string;
-      readonly size: number;
-    }[];
-    readonly locals: readonly PlacedSymbol[];
-  };
-}
+export type { ObjectData, RecordedTarget } from '../../scripts/object-data.mjs';
 
 /** What the real ASPSX emitted for a source, written by scripts/aspsx-oracle.rb. */
 export interface WordsCompanion {
@@ -66,97 +40,26 @@ export function loadCompanion(sourcePath: string): WordsCompanion | undefined {
 
 /** This package's `.text` words for a result, formatted as companions store them. */
 export function textWords(result: AssembleResult): string[] {
-  if (!result.success) return [];
-  const text = result.object.sections.find((s) => s.name === '.text');
-  return Array.from(text?.words ?? []).map(hex8);
+  return assembledWords(result);
 }
 
-const byName = (a: { name: string }, b: { name: string }): number =>
-  a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
-
-function placed(symbol: SymbolEntry): PlacedSymbol {
-  return { name: symbol.name, section: symbol.section ?? '', offset: symbol.offset ?? 0 };
-}
-
-/**
- * This package's object described the way scripts/psyq-object.mjs describes a
- * real one (see `dataOf` there): section sizes other than .text, relocations,
- * global definitions, commons, and the locals ASPSX writes: `.lcomm` symbols and
- * static functions (labels named by `.ent`).
- */
+/** This package's object described the way the real assembler's is recorded. */
 export function dataOf(result: AssembleResult): ObjectData | undefined {
-  if (!result.success) return undefined;
-  const { sections, symbols, functions } = result.object;
-  const functionNames = new Set(functions.map((f) => f.name));
-  const sizes: Record<string, number> = {};
-  for (const section of [...sections].sort(byName)) {
-    if (section.name !== '.text' && section.size > 0) sizes[section.name] = section.size;
-  }
-  const relocations = sections
-    .flatMap((section) =>
-      section.relocations.map((r) => ({
-        section: section.name,
-        offset: r.offset,
-        kind: r.kind,
-        target:
-          r.target.kind === 'symbol'
-            ? { symbol: r.target.name, addend: r.target.addend | 0 }
-            : { section: r.target.section, offset: r.target.offset >>> 0 },
-      })),
-    )
-    .sort((a, b) =>
-      a.section === b.section ? a.offset - b.offset : a.section < b.section ? -1 : 1,
-    );
-  return {
-    sections: sizes,
-    relocations,
-    symbols: {
-      exports: symbols
-        .filter((s) => s.binding === 'global' && s.section !== undefined)
-        .map(placed)
-        .sort(byName),
-      commons: symbols
-        .filter((s) => s.binding === 'common')
-        .map((s) => ({ name: s.name, section: s.section ?? '', size: s.size ?? 0 }))
-        .sort(byName),
-      locals: symbols
-        .filter((s) => s.binding === 'local' && (s.size !== undefined || functionNames.has(s.name)))
-        .map(placed)
-        .sort(byName),
-    },
-  };
-}
-
-/** Every named local label of this package's object, where it is placed. */
-function allLocals(result: AssembleResult): PlacedSymbol[] {
-  if (!result.success) return [];
-  return result.object.symbols
-    .filter((s) => s.binding === 'local' && s.section !== undefined)
-    .map(placed);
+  return assembledData(result);
 }
 
 /**
- * Hold an assembled result to everything its companion recorded. ASPSX writes
- * local symbols for `.lcomm` and static functions, and with -g for other named
- * statics as well, while psyq-asm lists every named label. So the locals are
- * compared both ways: each local `dataOf` requires must be recorded, and each
- * recorded local must be one of psyq-asm's labels, in the same place.
+ * Hold an assembled result to everything its companion recorded (the comparison
+ * scripts/fuzz-aspsx.mjs also uses, through scripts/object-data.mjs): the words,
+ * the section sizes, relocations, exports, and commons exactly, and the locals
+ * both ways, since neither side lists every one.
  */
 export function expectMatchesCompanion(result: AssembleResult, companion: WordsCompanion): void {
   expect(textWords(result)).toEqual(companion.words);
   const recorded = companion.data;
   if (recorded === undefined) return;
-  const data = dataOf(result);
   const withoutLocals = (d: ObjectData | undefined): unknown =>
     d === undefined ? undefined : { ...d, symbols: { ...d.symbols, locals: [] } };
-  expect(withoutLocals(data)).toEqual(withoutLocals(recorded));
-  const known = new Map(allLocals(result).map((s) => [s.name, s]));
-  expect(
-    recorded.symbols.locals.filter((l) => {
-      const k = known.get(l.name);
-      return k?.section !== l.section || k.offset !== l.offset;
-    }),
-  ).toEqual([]);
-  const recordedNames = new Set(recorded.symbols.locals.map((l) => l.name));
-  expect((data?.symbols.locals ?? []).filter((l) => !recordedNames.has(l.name))).toEqual([]);
+  expect(withoutLocals(dataOf(result))).toEqual(withoutLocals(recorded));
+  expect(localDifferences(result, recorded)).toEqual({ misplaced: [], unrecorded: [] });
 }
