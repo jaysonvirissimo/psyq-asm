@@ -1,12 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { describe, expect, it } from 'vitest';
 import { InvalidOptionsError } from '../../src/errors.js';
-import {
-  DEFAULT_EXPERIMENTAL,
-  decodeSource,
-  validateAssembleOptions,
-  validateFormatStyle,
-} from '../../src/options.js';
+import { decodeSource, validateAssembleOptions, validateFormatStyle } from '../../src/options.js';
 
 describe('validateAssembleOptions', () => {
   it('fills defaults', () => {
@@ -15,9 +10,7 @@ describe('validateAssembleOptions', () => {
       aspsxVersion: '2.81',
       partialDivExpansion: false,
       filename: 'input.s',
-      experimental: { externSmallData: false, copMoveDelayNop: true },
     });
-    expect(Object.isFrozen(DEFAULT_EXPERIMENTAL)).toBe(true);
   });
 
   it('accepts every option', () => {
@@ -27,14 +20,12 @@ describe('validateAssembleOptions', () => {
         aspsxVersion: '2.81',
         partialDivExpansion: true,
         filename: 'shadow moses.s',
-        experimental: { externSmallData: true },
       }),
     ).toEqual({
       gpSize: 999,
       aspsxVersion: '2.81',
       partialDivExpansion: true,
       filename: 'shadow moses.s',
-      experimental: { externSmallData: true, copMoveDelayNop: true },
     });
   });
 
@@ -57,12 +48,7 @@ describe('validateAssembleOptions', () => {
     [{ gpSize: 0, filename: 'a/b.s' }, 'filename "a/b.s" must be a single path segment.'],
     [{ gpSize: 0, filename: 'a\\b.s' }, 'filename "a\\\\b.s" must be a single path segment.'],
     [{ gpSize: 0, filename: 'a' }, 'filename "a\\u0001" must be a single path segment.'],
-    [{ gpSize: 0, experimental: 1 }, 'experimental must be an object.'],
-    [{ gpSize: 0, experimental: { codec: true } }, 'experimental.codec is not a known option.'],
-    [
-      { gpSize: 0, experimental: { copMoveDelayNop: 'no' } },
-      'experimental.copMoveDelayNop must be a boolean, not "no".',
-    ],
+    [{ gpSize: 0, experimental: {} }, 'options.experimental is not a known option.'],
   ])('rejects %j', (options, message) => {
     expect(() => validateAssembleOptions(options)).toThrow(new InvalidOptionsError(message));
   });

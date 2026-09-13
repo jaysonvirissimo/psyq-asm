@@ -7,7 +7,7 @@
  * - H2: after a load, when the next instruction's first word reads the loaded
  *   register. A `div`/`rem` expansion's final mflo/mfhi counts as a load.
  * - H3: between mflo/mfhi and the next mult/div there must be two instructions.
- * - H4: after mfc2/cfc2, like H2, when enabled.
+ * - H4: after mfc2/cfc2, like H2.
  *
  * The pass works on the expanded stream, so "the next instruction" is always
  * the first word of the next group: a macro that starts with `lui $at` does not
@@ -19,11 +19,6 @@ import { hazardReadsOf, registersOf } from '../isa/instruction.js';
 import { ISA_ROWS } from '../isa/table.js';
 import type { WordOriginKind } from '../public-types.js';
 import type { Group, Item, PendingWord } from './stream.js';
-
-export interface HazardOptions {
-  /** Apply the load-delay rule to mfc2/cfc2. */
-  readonly copMoveDelayNop: boolean;
-}
 
 /** The first row of the table is `sll`, whose all-zero word is the nop. */
 const SLL = ISA_ROWS[0];
@@ -171,21 +166,20 @@ function multiplyGap(
 /** The register whose load makes the next instruction wait, if any. */
 function delayedRegister(
   group: Group,
-  options: HazardOptions,
 ): { readonly register: number; readonly origin: WordOriginKind } | undefined {
   if (group.divMove !== undefined) return { register: group.divMove, origin: 'load-delay-nop' };
   const tail = endsOf(group)[1];
   const [written] = writesOf(tail);
   if (written === undefined) return undefined;
   if (tail.row.hazard === 'load') return { register: written, origin: 'load-delay-nop' };
-  if (tail.row.hazard === 'cop-from' && options.copMoveDelayNop) {
+  if (tail.row.hazard === 'cop-from') {
     return { register: written, origin: 'cop-delay-nop' };
   }
   return undefined;
 }
 
 /** Insert the nops ASPSX 2.81 would, returning a new stream. */
-export function insertNops(items: readonly Item[], options: HazardOptions): Item[] {
+export function insertNops(items: readonly Item[]): Item[] {
   const inserts = new Map<number, Group[]>();
   const insert: Insert = (before, group) => {
     inserts.set(before, [...(inserts.get(before) ?? []), group]);
@@ -205,8 +199,7 @@ export function insertNops(items: readonly Item[], options: HazardOptions): Item
     if (hazard === 'mflo' && multiplyGap(items, index, item, insert)) return;
 
     // A load under .set noreorder is left alone.
-    const delayed =
-      item.reorder || tail.row.hazard !== 'load' ? delayedRegister(item, options) : undefined;
+    const delayed = item.reorder || tail.row.hazard !== 'load' ? delayedRegister(item) : undefined;
     const [next] = following(items, index, 1);
     if (delayed === undefined || next === undefined) return;
     // A multiply-gap nop already in front of the reader serves as the delay too.

@@ -3,7 +3,6 @@
 // `types` condition, exercising the declarations a TS user actually resolves.
 // This is compiled with `tsc --noEmit`; it is never executed.
 import {
-  DEFAULT_EXPERIMENTAL,
   InvalidInstructionError,
   InvalidOptionsError,
   PsyqAsmError,
@@ -22,7 +21,6 @@ import {
   type DecodedProgram,
   type Diagnostic,
   type ErrorCode,
-  type ExperimentalBehaviours,
   type FunctionRange,
   type Instruction,
   type Mnemonic,
@@ -35,8 +33,7 @@ import {
 } from 'psyq-asm';
 
 export function textWords(source: string, gpSize: number): readonly number[] {
-  const experimental: ExperimentalBehaviours = DEFAULT_EXPERIMENTAL;
-  const options: AssembleOptions = { gpSize, experimental, partialDivExpansion: false };
+  const options: AssembleOptions = { gpSize, partialDivExpansion: false };
   const result: AssembleResult = assemble(source, options);
   if (!result.success) {
     const diagnostics: readonly Diagnostic[] = result.diagnostics;

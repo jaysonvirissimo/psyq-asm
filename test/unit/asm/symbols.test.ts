@@ -105,9 +105,8 @@ describe('classifySmallData', () => {
     '\t.word\t0',
   );
 
-  it('uses .sdata/.sbss labels, small commons, and, when enabled, small externs', () => {
-    expect([...classifySmallData(table(text).symbols, 8, true).values()]).toEqual([
-      { name: 'small_ext', reason: 'extern', size: 4 },
+  it('uses .sdata/.sbss labels and small commons, never .extern sizes', () => {
+    expect([...classifySmallData(table(text).symbols, 8).values()]).toEqual([
       { name: 'small_comm', reason: 'common', size: 4 },
       { name: 'local_comm', reason: 'common', size: 2 },
       { name: 'in_sdata', reason: 'sdata' },
@@ -115,9 +114,7 @@ describe('classifySmallData', () => {
     ]);
   });
 
-  it('can leave externs out, and has nothing small at -G 0', () => {
-    const { symbols } = table(text);
-    expect([...classifySmallData(symbols, 8, false).keys()]).not.toContain('small_ext');
-    expect(classifySmallData(symbols, 0, true).size).toBe(0);
+  it('has nothing small at -G 0', () => {
+    expect(classifySmallData(table(text).symbols, 0).size).toBe(0);
   });
 });

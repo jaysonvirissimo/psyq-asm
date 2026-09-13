@@ -13,25 +13,6 @@ export type ErrorCode = 'invalid-options' | 'invalid-instruction';
 
 // ---- assembling ------------------------------------------------------------
 
-/**
- * Behaviour switches that the differential oracle has not yet settled. Each
- * defaults to the value believed correct; overriding them is for fixture
- * experiments and is not covered by semver.
- */
-export interface ExperimentalBehaviours {
-  /**
-   * Treat `.extern sym,size` with `size <= gpSize` as small data, addressed
-   * through `$gp`. Default false, which is what ASPSX 2.81 does: it addresses
-   * external symbols with `lui`/`%lo` whatever their declared size.
-   */
-  readonly externSmallData: boolean;
-  /**
-   * Insert a nop after `mfc2`/`cfc2` when the next instruction reads the
-   * register just written. Default true, which is what ASPSX 2.81 does.
-   */
-  readonly copMoveDelayNop: boolean;
-}
-
 export interface AssembleOptions {
   /**
    * The small-data threshold, the -G value given to ASPSX. A non-negative
@@ -44,8 +25,6 @@ export interface AssembleOptions {
   readonly partialDivExpansion?: boolean;
   /** Logical file name used in diagnostics. A single path segment. Default 'input.s'. */
   readonly filename?: string;
-  /** Overrides for unsettled behaviours; see `ExperimentalBehaviours`. */
-  readonly experimental?: Partial<ExperimentalBehaviours>;
 }
 
 export type AssembleResult = AssembleSuccess | AssembleFailure;
@@ -190,8 +169,8 @@ export interface WordOrigin {
 
 export interface SmallDataEntry {
   readonly name: string;
-  /** Defined in `.sdata`/`.sbss`, declared by `.comm`/`.lcomm`, or (opt-in) by `.extern`. */
-  readonly reason: 'sdata' | 'sbss' | 'common' | 'extern';
+  /** Defined in `.sdata`/`.sbss`, or declared by `.comm`/`.lcomm`. */
+  readonly reason: 'sdata' | 'sbss' | 'common';
   readonly size?: number;
 }
 

@@ -23,20 +23,14 @@ export function assemble(source: string | Uint8Array, options: AssembleOptions):
 
   const statements = parse(text, diagnostics);
   const symbols = collectSymbols(statements, diagnostics);
-  const smallData = classifySmallData(
-    symbols,
-    normalized.gpSize,
-    normalized.experimental.externSmallData,
-  );
+  const smallData = classifySmallData(symbols, normalized.gpSize);
   const items = expand(statements, {
     gpSize: normalized.gpSize,
     smallData,
     partialDivExpansion: normalized.partialDivExpansion,
     diagnostics,
   });
-  const withNops = insertNops(items, {
-    copMoveDelayNop: normalized.experimental.copMoveDelayNop,
-  });
+  const withNops = insertNops(items);
   const laidOut = layout(withNops, symbols, normalized.gpSize, diagnostics);
 
   if (diagnostics.hasErrors) return { success: false, diagnostics: diagnostics.sorted() };

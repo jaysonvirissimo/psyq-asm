@@ -125,29 +125,21 @@ export function collectSymbols(
 
 /**
  * The symbols ASPSX addresses through `$gp` at this -G value: labels in
- * `.sdata`/`.sbss`, commons no larger than the threshold, and (only with
- * `experimental.externSmallData`) externs declared no larger than it.
+ * `.sdata`/`.sbss`, and commons no larger than the
+ * threshold. `.extern` sizes never count: ASPSX 2.81, like maspsx, ignores them.
  */
-export function classifySmallData(
-  table: SymbolTable,
-  gpSize: number,
-  externSmallData: boolean,
-): Map<string, SmallDataEntry> {
+export function classifySmallData(table: SymbolTable, gpSize: number): Map<string, SmallDataEntry> {
   const small = new Map<string, SmallDataEntry>();
   if (gpSize === 0) return small;
   for (const name of table.order) {
     const label = table.labels.get(name);
     const common = table.commons.get(name);
-    const externSize = table.externs.get(name);
     if (label !== undefined) {
       if (label.section === '.sdata' || label.section === '.sbss') {
         small.set(name, { name, reason: label.section === '.sdata' ? 'sdata' : 'sbss' });
       }
     } else if (common !== undefined) {
       if (common.size <= gpSize) small.set(name, { name, reason: 'common', size: common.size });
-    } else if (externSmallData && externSize !== undefined && externSize <= gpSize) {
-      // Off by default: ASPSX 2.81, like maspsx, ignores .extern sizes.
-      small.set(name, { name, reason: 'extern', size: externSize });
     }
   }
   return small;

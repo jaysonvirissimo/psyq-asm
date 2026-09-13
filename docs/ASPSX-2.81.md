@@ -147,7 +147,7 @@ When none of these applies to a divide expansion's `mflo`/`mfhi`, H2 applies to
 it as if it were a load. **[maspsx] test_div**
 
 **H4. Coprocessor moves.** After `mfc2`/`cfc2`, H2 applies to the register they
-write, behind `experimental.copMoveDelayNop` (default on). This is maspsx issue
+write. This is maspsx issue
 #118, reported against real ASPSX output. **[aspsx: VERIFY-18]**
 
 `mtc2`/`ctc2` followed by a GTE command gets nothing: PsyQ's inline macros write
@@ -164,8 +164,7 @@ With `gpSize` above 0, a symbol is addressed through `$gp` when it is:
 
 `.extern sym,size` never makes a symbol small, whatever its size: ASPSX 2.81
 addresses external symbols with `lui` and `%lo`, as maspsx does. **[aspsx:
-VERIFY-1]** `experimental.externSmallData` (default off) treats small externs
-as small data anyway.
+VERIFY-1]**
 
 `symbol+offset` forms and `la` use `$gp` too. With `gpSize` 0 nothing is small.
 

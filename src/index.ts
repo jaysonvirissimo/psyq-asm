@@ -15,7 +15,6 @@ export type {
   DiagnosticCode,
   EncodableInstruction,
   ErrorCode,
-  ExperimentalBehaviours,
   FormatStyle,
   FunctionRange,
   HazardClass,
@@ -35,7 +34,7 @@ export type {
   WordOriginKind,
 } from './public-types.js';
 export { InvalidInstructionError, InvalidOptionsError, PsyqAsmError } from './errors.js';
-export { DEFAULT_EXPERIMENTAL, SUPPORTED_ASPSX_VERSIONS } from './options.js';
+export { SUPPORTED_ASPSX_VERSIONS } from './options.js';
 export { assemble } from './asm/assemble.js';
 export { decode } from './isa/decode.js';
 export { encode } from './isa/encode.js';

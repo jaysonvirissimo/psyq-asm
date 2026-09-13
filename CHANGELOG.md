@@ -39,6 +39,13 @@ A fidelity fix is not a breaking change even when it changes output.
   objects are read with `scripts/psyq-object.mjs`, and tests require any
   recorded words exactly.
 
+### Removed
+
+- `options.experimental`, `ExperimentalBehaviours`, and `DEFAULT_EXPERIMENTAL`
+  (present in the 0.0.1 placeholder). Real ASPSX 2.81 settled both switches:
+  `.extern` sizes never make a symbol small data, and the `mfc2`/`cfc2` delay
+  nop is always inserted. `SmallDataEntry.reason` no longer includes `'extern'`.
+
 ### Fidelity
 
 - The initial rule set, [docs/ASPSX-2.81.md](docs/ASPSX-2.81.md): all 15 ASPSX
@@ -53,8 +60,7 @@ A fidelity fix is not a breaking change even when it changes output.
   changed as a result.
 - Relocated fields against local labels hold 0: `j $L9`, `%lo($LC1)`, and
   jump-table `.word $L15` entries no longer carry the label's offset.
-- `.extern sym,size` no longer makes a symbol small data;
-  `experimental.externSmallData` now defaults to false.
+- `.extern sym,size` no longer makes a symbol small data.
 - A load made under `.set noreorder` gets no delay nop.
 - The multiply gap: a load between `mflo`/`mfhi` and `mult`/`div` no longer
   cancels the gap nop, and that one nop also serves as the load delay; a

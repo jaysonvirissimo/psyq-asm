@@ -144,21 +144,18 @@ What is verified today:
 What is not verified yet: two items, VERIFY-5 (how `.comm` allocations are laid
 out in data sections) and VERIFY-21 (where debugging labels bind next to an
 inserted nop, invisible at `-g0`). Both are listed at the end of the rule set,
-with the 17 items real ASPSX 2.81 has settled. The switches in
-`options.experimental` default to what ASPSX 2.81 does. A differential oracle,
+with the 17 items real ASPSX 2.81 has settled. A differential oracle,
 which compares assembled words with an already-matched decompilation's original
 executable, is in place (`scripts/oracle.mjs`).
 
 ## Options
 
-| Option                         | Default     | Meaning                                                             |
-| ------------------------------ | ----------- | ------------------------------------------------------------------- |
-| `gpSize`                       | required    | The `-G` small-data threshold: a non-negative integer.              |
-| `aspsxVersion`                 | `'2.81'`    | The only accepted value.                                            |
-| `partialDivExpansion`          | `false`     | Reproduce `ASPSX -0`: `div`/`rem` without trap checks.              |
-| `filename`                     | `'input.s'` | The name diagnostics use. A single path segment.                    |
-| `experimental.externSmallData` | `false`     | Address small `.extern` symbols through `$gp`; ASPSX 2.81 does not. |
-| `experimental.copMoveDelayNop` | `true`      | A nop after `mfc2`/`cfc2` before a reader, as ASPSX 2.81 inserts.   |
+| Option                | Default     | Meaning                                                |
+| --------------------- | ----------- | ------------------------------------------------------ |
+| `gpSize`              | required    | The `-G` small-data threshold: a non-negative integer. |
+| `aspsxVersion`        | `'2.81'`    | The only accepted value.                               |
+| `partialDivExpansion` | `false`     | Reproduce `ASPSX -0`: `div`/`rem` without trap checks. |
+| `filename`            | `'input.s'` | The name diagnostics use. A single path segment.       |
 
 ## Output model
 
@@ -208,8 +205,7 @@ see the program. The same page is published to GitHub Pages.
 Semantic versioning covers the exported functions, types, options, and error
 codes. A change to the words emitted for some input is a fidelity fix, not a
 breaking change, and is listed under **Fidelity** in the
-[changelog](CHANGELOG.md). The defaults of `experimental` switches may change in
-any release.
+[changelog](CHANGELOG.md).
 
 ## License and credits
 

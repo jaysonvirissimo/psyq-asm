@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { endsOf } from '../../../src/asm/hazards.js';
 import type { AssembleOptions } from '../../../src/public-types.js';
 import { assembleOk, labelOffsets, sectionOf, src, wordsOf } from '../../helpers/assembly.js';
-import { listing, listingOf } from '../../helpers/listing.js';
+import { listing } from '../../helpers/listing.js';
 
 const NOP = 'sll $0,$0,0';
 
@@ -245,13 +245,9 @@ describe('H3: the mult/div gap after mflo/mfhi', () => {
 });
 
 describe('H4: coprocessor moves', () => {
-  it('delays a reader of an mfc2/cfc2 destination unless disabled', () => {
+  it('delays a reader of an mfc2/cfc2 destination', () => {
     const text = src('\tmfc2\t$4,$8', '\taddu\t$2,$4,$4');
     expect(kinds(text)).toEqual(['instruction', 'cop-delay-nop', 'instruction']);
-    expect(listing(text, { experimental: { copMoveDelayNop: false } })).toEqual([
-      'mfc2 $4,$8',
-      'addu $2,$4,$4',
-    ]);
     expect(listing(src('\tcfc2\t$4,$8', '\tlhu\t$8,370($18)'))).toEqual([
       'cfc2 $4,$8',
       'lhu $8,0x172($18)',
@@ -340,12 +336,6 @@ describe('the worked example', () => {
       ['glob', 6, 12],
     ]);
     expect(object.smallData).toEqual([]);
-  });
-
-  it('addresses the external through $gp only when asked to', () => {
-    const object = assembleOk(text, { gpSize: 8, experimental: { externSmallData: true } });
-    expect(listingOf(object).slice(6, 9)).toEqual(['lw $3,0x0($28)', NOP, 'sll $2,$3,1']);
-    expect(object.smallData).toEqual([{ name: 'g_counter', reason: 'extern', size: 4 }]);
   });
 });
 
