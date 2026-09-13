@@ -38,7 +38,12 @@ export default tseslint.config(
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
       '@typescript-eslint/explicit-module-boundary-types': 'error',
       '@typescript-eslint/no-unnecessary-condition': 'error',
-      '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      // An explicit `default` is a deliberate catch-all; switches without one
+      // (the instruction table's slots, for example) must list every case.
+      '@typescript-eslint/switch-exhaustiveness-check': [
+        'error',
+        { considerDefaultExhaustiveForUnions: true },
+      ],
       eqeqeq: ['error', 'always'],
       'no-console': 'error',
     },

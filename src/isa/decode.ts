@@ -5,18 +5,23 @@ import { COP_SLOTS, signExtend16, type Slot } from './fields.js';
 import { buildInstruction, reservedBits } from './instruction.js';
 import { ISA_ROWS, type IsaRow } from './table.js';
 
-const BY_OPCODE: ReadonlyMap<number, readonly IsaRow[]> = (() => {
-  const map = new Map<number, IsaRow[]>();
-  for (const r of ISA_ROWS) {
-    const op = r.value >>> 26;
+interface Candidate {
+  readonly row: IsaRow;
+  /** Bits that must be zero for a word to be this row. */
+  readonly reserved: number;
+}
+
+/** Rows grouped by primary opcode, each with its reserved bits precomputed. */
+const BY_OPCODE: ReadonlyMap<number, readonly Candidate[]> = (() => {
+  const map = new Map<number, Candidate[]>();
+  for (const row of ISA_ROWS) {
+    const op = row.value >>> 26;
     const bucket = map.get(op) ?? [];
-    bucket.push(r);
+    bucket.push({ row, reserved: reservedBits(row) });
     map.set(op, bucket);
   }
   return map;
 })();
-
-const RESERVED: ReadonlyMap<IsaRow, number> = new Map(ISA_ROWS.map((r) => [r, reservedBits(r)]));
 
 function hex(value: number, digits: number): string {
   return `0x${value.toString(16).toUpperCase().padStart(digits, '0')}`;
@@ -92,9 +97,9 @@ export function decode(word: number): Instruction | UnknownInstruction {
     throw new InvalidInstructionError(`word must be a 32-bit integer, not ${String(word)}.`);
   }
   const w = word >>> 0;
-  for (const r of BY_OPCODE.get(w >>> 26) ?? []) {
+  for (const { row: r, reserved } of BY_OPCODE.get(w >>> 26) ?? []) {
     if ((w & r.mask) >>> 0 !== r.value) continue;
-    if ((w & (RESERVED.get(r) ?? 0)) >>> 0 !== 0) {
+    if ((w & reserved) >>> 0 !== 0) {
       return { mnemonic: '.word', word: w, reason: `${r.mnemonic} with reserved bits set` };
     }
     return buildInstruction(
