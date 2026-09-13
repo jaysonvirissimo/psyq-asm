@@ -74,7 +74,8 @@ add code from a game, an SDK, or a decompilation project.
 - `test/fixtures/compiler/` holds `psyq-wasm`'s compiler output fixtures, copied
   unchanged. A file gains a `.words.json` companion once an oracle has verified
   its words.
-- `test/fixtures/probes/` holds minimal sources for open `VERIFY-n` items.
+- `test/fixtures/probes/` holds a minimal source for every `VERIFY-n` item, with
+  the real assembler's words beside each settled one.
 
 ## Closing a VERIFY item
 

@@ -2,7 +2,7 @@
 /**
  * Ported from mkst/maspsx (MIT), tests/test_break.py. maspsx rewrites a source
  * `break N` as GNU `break N>>10,N&0x3FF`; these tests pin the resulting words.
- * (VERIFY-13: settled for small codes by maspsx, not by an ASPSX fixture.)
+ * (Real ASPSX 2.81 agrees: test/fixtures/probes/VERIFY-13.words.json.)
  */
 import { describe, expect, it } from 'vitest';
 import { assembleOk, src, wordsOf } from '../../helpers/assembly.js';

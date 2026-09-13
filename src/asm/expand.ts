@@ -183,7 +183,7 @@ function upperLower(rd: number, bits: number): PendingWord[] {
 /** `li rd,value` as ASPSX 2.56 and later expand it. */
 export function loadImmediate(rd: number, n: number): PendingWord[] {
   if (fits16s(n)) return [word('addiu', gpr(rd), gpr(0), imm(n))];
-  // VERIFY-9: 0x8000 to 0xFFFF load with a single ori.
+  // 0x8000 to 0xFFFF load with a single ori.
   if (fits16u(n)) return [word('ori', gpr(rd), gpr(0), imm(n))];
   return upperLower(rd, n >>> 0);
 }
@@ -199,7 +199,7 @@ function loadDouble(rd: number, n: number): PendingWord[] {
   view.setFloat64(0, n);
   const high = view.getUint32(0);
   const low = view.getUint32(4);
-  // VERIFY-10: the low word goes in rd and the high word in rd+1.
+  // The low word goes in rd and the high word in rd+1.
   const first = low === 0 ? [word('addiu', gpr(rd), gpr(0), imm(0))] : upperLower(rd, low);
   return [...first, ...upperLower(rd + 1, high)];
 }
@@ -243,7 +243,7 @@ function expandLoadStore(m: TableMnemonic, ops: Operands, ctx: ExpandContext): O
       ]);
     }
     if (offset.kind === 'symbol') {
-      // VERIFY-15: a symbol with a base register never uses $gp.
+      // A symbol with a base register never uses $gp.
       return macro(m, [
         word('lui', gpr(AT), value(reloc('hi', offset))),
         word('addu', gpr(AT), gpr(AT), gpr(base)),
@@ -260,7 +260,7 @@ function expandLoadStore(m: TableMnemonic, ops: Operands, ctx: ExpandContext): O
   const temp = LOADS.has(m) && !cop ? first.number : AT;
   if (expr.kind === 'number') {
     if (fits16s(expr.value)) return macro(m, [access(0, expr)]);
-    // VERIFY-14 (loads) and VERIFY-16 (stores): an absolute address out of range.
+    // An absolute address out of range.
     return macro(m, [
       word('lui', gpr(temp), imm(hi16(expr.value))),
       access(temp, constant(signExtend16(lo16(expr.value)))),
@@ -286,11 +286,12 @@ function expandImmediate(m: string, ops: Operands): Outcome | undefined {
   if (operand.expr.kind !== 'number')
     return unsupported(`${m}: the immediate operand must be a number.`);
   const n = operand.expr.value;
-  const direct = form.negate ? -n | 0 : n;
+  // Negating -0x8000 wraps to itself, and ASPSX 2.81 keeps the one-word form.
+  const direct = form.negate && n !== -0x8000 ? -n | 0 : n;
   if (form.unsigned ? fits16u(direct) : fits16s(direct)) {
     return macro(m, [word(form.immediate, gpr(rd.number), gpr(rs.number), imm(direct))]);
   }
-  // VERIFY-11: out of range, the constant is loaded into $at first.
+  // Out of range, the constant is loaded into $at first.
   return macro(m, [
     ...loadImmediate(AT, n),
     word(form.register, gpr(rd.number), gpr(rs.number), gpr(AT)),
@@ -302,7 +303,7 @@ function expandDivide(
   ops: Operands,
   ctx: ExpandContext,
 ): Outcome | undefined {
-  // VERIFY-12: unsigned divides get only the divide-by-zero trap (five words).
+  // Unsigned divides get only the divide-by-zero trap (five words).
   const unsigned = m.endsWith('u');
   const divide: TableMnemonic = unsigned ? 'divu' : 'div';
   const move: TableMnemonic = m.startsWith('rem') ? 'mfhi' : 'mflo';
@@ -368,7 +369,7 @@ function expandMacro(m: string, ops: Operands, ctx: ExpandContext): Outcome | un
         : expects(m, 'two registers');
     }
     case 'negu': {
-      // VERIFY-8: negu, la with a number, and b follow GNU as semantics.
+      // negu rd alone negates rd in place.
       const [rd, rs = rd] = ops;
       return ops.length <= 2 && isReg(rd) && isReg(rs)
         ? macro(m, [word('subu', gpr(rd.number), gpr(0), gpr(rs.number))])
@@ -406,7 +407,7 @@ function expandMacro(m: string, ops: Operands, ctx: ExpandContext): Outcome | un
     case 'b': {
       const [target] = ops;
       return ops.length === 1 && isExpr(target)
-        ? macro(m, [word('beq', gpr(0), gpr(0), { kind: 'branch', target: target.expr })])
+        ? macro(m, [word('bgez', gpr(0), { kind: 'branch', target: target.expr })])
         : expects(m, 'a branch target');
     }
     case 'beqz':
@@ -430,7 +431,7 @@ function expandMacro(m: string, ops: Operands, ctx: ExpandContext): Outcome | un
           message: `break: the code ${String(n)} is outside 0 to 1048575.`,
         };
       }
-      // VERIFY-13: a single code is split as maspsx does (test_break): its high
+      // A single code is split as maspsx does (test_break): its high
       // bits in [25:16], its low 10 bits in [15:6].
       return {
         words: [{ ...word('break', imm(n >>> 10), imm(n & 0x3ff)), origin: 'instruction' }],

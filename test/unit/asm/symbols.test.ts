@@ -105,7 +105,7 @@ describe('classifySmallData', () => {
     '\t.word\t0',
   );
 
-  it('uses .sdata/.sbss labels, small commons, and small externs (VERIFY-1)', () => {
+  it('uses .sdata/.sbss labels, small commons, and, when enabled, small externs', () => {
     expect([...classifySmallData(table(text).symbols, 8, true).values()]).toEqual([
       { name: 'small_ext', reason: 'extern', size: 4 },
       { name: 'small_comm', reason: 'common', size: 4 },

@@ -47,5 +47,19 @@ A fidelity fix is not a breaking change even when it changes output.
   relocation, as the `lwlw` fixture shows for `lw $2,Savemap+2944`.
 - `break` carries two 10-bit codes. A single source code is split as maspsx does;
   the divide traps are `break 7,0` and `break 6,0`.
+- Checked against real ASPSX 2.81, run in Docker by `scripts/aspsx-oracle.rb`:
+  all 40 compiler fixtures and all 19 probes match word for word, settling 17
+  verification items (VERIFY-1, 6 to 20, and 22). The rest of this list is what
+  changed as a result.
+- Relocated fields against local labels hold 0: `j $L9`, `%lo($LC1)`, and
+  jump-table `.word $L15` entries no longer carry the label's offset.
+- `.extern sym,size` no longer makes a symbol small data;
+  `experimental.externSmallData` now defaults to false.
+- A load made under `.set noreorder` gets no delay nop.
+- The multiply gap: a load between `mflo`/`mfhi` and `mult`/`div` no longer
+  cancels the gap nop, and that one nop also serves as the load delay; a
+  multi-word expansion between them fills the gap.
+- `b label` assembles as `bgez $0,label`, and `subu rd,rs,-32768` as a single
+  `addiu rd,rs,-0x8000`.
 
 [Unreleased]: https://github.com/jaysonvirissimo/psyq-asm/commits/main

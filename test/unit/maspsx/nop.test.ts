@@ -8,7 +8,7 @@
  * Branch targets the upstream snippets leave undefined are given labels.
  */
 import { describe, expect, it } from 'vitest';
-import { assembleOk, bytesOf, src } from '../../helpers/assembly.js';
+import { assembleOk, labelOffsets, src } from '../../helpers/assembly.js';
 import { listing } from '../../helpers/listing.js';
 
 const NOP = 'sll $0,$0,0';
@@ -299,7 +299,7 @@ describe('maspsx test_nop', () => {
       '\t.word\t$L1,$L2,$L3',
     );
     expect(listing(text)).toEqual(['lw $9,0xBC($29)', NOP, 'lw $2,0x28($9)']);
-    expect(bytesOf(assembleOk(text), '.rdata')).toBe('04 00 00 00 04 00 00 00 04 00 00 00');
+    expect(labelOffsets(assembleOk(text), '.rdata')).toEqual([4, 4, 4]);
   });
 
   it('test_nop_macro_no_nop_afterwards', () => {

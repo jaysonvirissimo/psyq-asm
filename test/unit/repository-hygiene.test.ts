@@ -17,6 +17,15 @@ function repositoryFiles(): string[] {
 
 const files = repositoryFiles();
 
+/** The VERIFY items in the rule-set table under `heading`, up to `end` if given. */
+function verifyItems(heading: string, end?: string): string[] {
+  const doc = readFileSync(fromRoot('docs/ASPSX-2.81.md'), 'utf8');
+  const from = doc.indexOf(heading);
+  const section =
+    from === -1 ? '' : doc.slice(from, end === undefined ? undefined : doc.indexOf(end));
+  return [...section.matchAll(/^\| (VERIFY-\d+) \|/gm)].map((m) => String(m[1]));
+}
+
 function firstLines(file: string, n: number): string {
   return readFileSync(fromRoot(file), 'utf8').split(/\r?\n/).slice(0, n).join('\n');
 }
@@ -39,8 +48,7 @@ describe('repository hygiene', () => {
   });
 
   it('names every open VERIFY item of the rule set in a code comment and a probe', () => {
-    const doc = readFileSync(fromRoot('docs/ASPSX-2.81.md'), 'utf8');
-    const items = [...doc.matchAll(/^\| (VERIFY-\d+) \|/gm)].map((m) => String(m[1]));
+    const items = verifyItems('## Open verification items', '## Settled verification items');
     expect(items.length).toBeGreaterThan(0);
     const code = files
       .filter((f) => f.startsWith('src/'))
@@ -48,6 +56,19 @@ describe('repository hygiene', () => {
       .join('\n');
     expect(items.filter((item) => !new RegExp(`${item}\\b`).test(code))).toEqual([]);
     expect(items.filter((item) => !files.includes(`test/fixtures/probes/${item}.s`))).toEqual([]);
+  });
+
+  it('keeps real ASPSX words, and no code tag, for every settled VERIFY item', () => {
+    const items = verifyItems('## Settled verification items');
+    expect(items.length).toBeGreaterThan(0);
+    expect(
+      items.filter((item) => !files.includes(`test/fixtures/probes/${item}.words.json`)),
+    ).toEqual([]);
+    const code = files
+      .filter((f) => f.startsWith('src/'))
+      .map((f) => readFileSync(fromRoot(f), 'utf8'))
+      .join('\n');
+    expect(items.filter((item) => new RegExp(`${item}\b`).test(code))).toEqual([]);
   });
 
   it('commits only aggregate differential-oracle results', () => {

@@ -83,7 +83,7 @@ function spelling(
     return { name: mnemonic, operands: operands.slice(1) };
   }
   // A break keeps both codes unless both are zero: `break n` alone would be
-  // split into two codes when re-assembled (VERIFY-13).
+  // split into two codes when re-assembled.
   if (mnemonic === 'break' && operands.every(isZeroCode)) return { name: mnemonic, operands: [] };
   if (
     (mnemonic === 'syscall' || (mnemonic === 'tge' && operands.length === 3)) &&

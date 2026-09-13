@@ -15,7 +15,7 @@ describe('validateAssembleOptions', () => {
       aspsxVersion: '2.81',
       partialDivExpansion: false,
       filename: 'input.s',
-      experimental: { externSmallData: true, copMoveDelayNop: true },
+      experimental: { externSmallData: false, copMoveDelayNop: true },
     });
     expect(Object.isFrozen(DEFAULT_EXPERIMENTAL)).toBe(true);
   });
@@ -27,14 +27,14 @@ describe('validateAssembleOptions', () => {
         aspsxVersion: '2.81',
         partialDivExpansion: true,
         filename: 'shadow moses.s',
-        experimental: { externSmallData: false },
+        experimental: { externSmallData: true },
       }),
     ).toEqual({
       gpSize: 999,
       aspsxVersion: '2.81',
       partialDivExpansion: true,
       filename: 'shadow moses.s',
-      experimental: { externSmallData: false, copMoveDelayNop: true },
+      experimental: { externSmallData: true, copMoveDelayNop: true },
     });
   });
 

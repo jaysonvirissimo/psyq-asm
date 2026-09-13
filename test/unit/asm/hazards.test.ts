@@ -2,8 +2,8 @@
 import { describe, expect, it } from 'vitest';
 import { endsOf } from '../../../src/asm/hazards.js';
 import type { AssembleOptions } from '../../../src/public-types.js';
-import { assembleOk, bytesOf, sectionOf, src, wordsOf } from '../../helpers/assembly.js';
-import { listing } from '../../helpers/listing.js';
+import { assembleOk, labelOffsets, sectionOf, src, wordsOf } from '../../helpers/assembly.js';
+import { listing, listingOf } from '../../helpers/listing.js';
 
 const NOP = 'sll $0,$0,0';
 
@@ -38,7 +38,7 @@ describe('H1: branch and jump delay slots', () => {
 
   it('applies to branch macros, and labels after the branch follow the nop', () => {
     expect(listing(src('\tb\t$L1', '$L1:', '\tj\t$31'))).toEqual([
-      'beq $0,$0,.+8',
+      'bgez $0,.+8',
       NOP,
       'jr $31',
       NOP,
@@ -95,7 +95,7 @@ describe('H2: load delay', () => {
       '\t.word\t$L2',
     );
     expect(listing(text)).toEqual(['lw $9,0xBC($29)', NOP, 'lw $2,0x28($9)']);
-    expect(bytesOf(assembleOk(text), '.rdata')).toBe('04 00 00 00 04 00 00 00');
+    expect(labelOffsets(assembleOk(text), '.rdata')).toEqual([4, 4]);
   });
 
   it('checks the first word of the consumer and the last word of the producer', () => {
@@ -166,9 +166,29 @@ describe('H3: the mult/div gap after mflo/mfhi', () => {
       ['mflo $2', NOP, 'bgez $2,.+8', 'mult $17,$3'],
     ],
     [
-      'a load between (VERIFY-19)',
+      'a load between',
       ['\tmflo\t$2', '\tlw\t$3,0($4)', '\tmult\t$5,$6'],
-      ['mflo $2', 'lw $3,0x0($4)', 'mult $5,$6'],
+      ['mflo $2', 'lw $3,0x0($4)', NOP, 'mult $5,$6'],
+    ],
+    [
+      'a load the mult reads: one nop is both the gap and the load delay',
+      ['\tmflo\t$6', '\tlw\t$7,16($sp)', '\tmult\t$7,$2'],
+      ['mflo $6', 'lw $7,0x10($29)', NOP, 'mult $7,$2'],
+    ],
+    [
+      'a multi-word expansion between fills the gap',
+      ['\tmflo\t$2', '\tlw\t$3,sym', '\tmult\t$5,$6'],
+      ['mflo $2', 'lui $3,0x0', 'lw $3,0x0($3)', 'mult $5,$6'],
+    ],
+    [
+      'another mflo/mfhi between: its own gap applies',
+      ['\tmflo\t$2', '\tmfhi\t$3', '\tmult\t$5,$6'],
+      ['mflo $2', 'mfhi $3', NOP, NOP, 'mult $5,$6'],
+    ],
+    [
+      'a load under .set noreorder gets no delay',
+      ['\t.set\tnoreorder', '\tlw\t$2,0($4)', '\taddu\t$3,$2,$2'],
+      ['lw $2,0x0($4)', 'addu $3,$2,$2'],
     ],
     [
       'no mult or div within two',
@@ -189,7 +209,7 @@ describe('H3: the mult/div gap after mflo/mfhi', () => {
       '\t.rdata',
       '\t.word\t$L1',
     );
-    expect(bytesOf(assembleOk(li), '.rdata')).toBe('0c 00 00 00');
+    expect(labelOffsets(assembleOk(li), '.rdata')).toEqual([12]);
     const sll = src(
       '\tmflo\t$3',
       '\tsll\t$2,$17,12',
@@ -198,7 +218,7 @@ describe('H3: the mult/div gap after mflo/mfhi', () => {
       '\t.rdata',
       '\t.word\t$L1',
     );
-    expect(bytesOf(assembleOk(sll), '.rdata')).toBe('08 00 00 00');
+    expect(labelOffsets(assembleOk(sll), '.rdata')).toEqual([8]);
   });
 
   it('gives a div expansion the gap, or else the load-delay rule', () => {
@@ -224,7 +244,7 @@ describe('H3: the mult/div gap after mflo/mfhi', () => {
   });
 });
 
-describe('H4: coprocessor moves (VERIFY-18)', () => {
+describe('H4: coprocessor moves', () => {
   it('delays a reader of an mfc2/cfc2 destination unless disabled', () => {
     const text = src('\tmfc2\t$4,$8', '\taddu\t$2,$4,$4');
     expect(kinds(text)).toEqual(['instruction', 'cop-delay-nop', 'instruction']);
@@ -268,8 +288,9 @@ describe('the worked example', () => {
     '\t.end\tglob',
   );
 
-  it('assembles to the expected words, provenance, functions, and small data at -G 8', () => {
+  it('assembles to the expected words, provenance, functions, and relocations at -G 8', () => {
     const object = assembleOk(text, { gpSize: 8 });
+    // A small .extern is not small data: ASPSX 2.81 uses %hi/%lo whatever its size.
     expect(wordsOf(object)).toEqual([
       '0x90830004',
       '0x90820005',
@@ -277,7 +298,8 @@ describe('the worked example', () => {
       '0x000210C0',
       '0x03E00008',
       '0xA0830004',
-      '0x8F830000',
+      '0x3C030000',
+      '0x8C630000',
       '0x00000000',
       '0x00031040',
       '0x03E00008',
@@ -291,6 +313,7 @@ describe('the worked example', () => {
       [14, 'macro', 'j'],
       [15, 'instruction', undefined],
       [21, 'macro', 'lw'],
+      [21, 'macro', 'lw'],
       [21, 'load-delay-nop', undefined],
       [23, 'instruction', undefined],
       [24, 'macro', 'j'],
@@ -299,7 +322,14 @@ describe('the worked example', () => {
     expect(sectionOf(object, '.text').relocations).toEqual([
       {
         offset: 24,
-        kind: 'GPREL16',
+        kind: 'HI16',
+        fieldMask: 0xffff,
+        target: { kind: 'symbol', name: 'g_counter', addend: 0 },
+        fieldValue: 0,
+      },
+      {
+        offset: 28,
+        kind: 'LO16',
         fieldMask: 0xffff,
         target: { kind: 'symbol', name: 'g_counter', addend: 0 },
         fieldValue: 0,
@@ -307,18 +337,15 @@ describe('the worked example', () => {
     ]);
     expect(object.functions.map((f) => [f.name, f.start, f.end])).toEqual([
       ['inc', 0, 6],
-      ['glob', 6, 11],
+      ['glob', 6, 12],
     ]);
-    expect(object.smallData).toEqual([{ name: 'g_counter', reason: 'extern', size: 4 }]);
+    expect(object.smallData).toEqual([]);
   });
 
-  it('uses %hi/%lo for the external at -G 0', () => {
-    expect(listing(text, { gpSize: 0 }).slice(6, 10)).toEqual([
-      'lui $3,0x0',
-      'lw $3,0x0($3)',
-      NOP,
-      'sll $2,$3,1',
-    ]);
+  it('addresses the external through $gp only when asked to', () => {
+    const object = assembleOk(text, { gpSize: 8, experimental: { externSmallData: true } });
+    expect(listingOf(object).slice(6, 9)).toEqual(['lw $3,0x0($28)', NOP, 'sll $2,$3,1']);
+    expect(object.smallData).toEqual([{ name: 'g_counter', reason: 'extern', size: 4 }]);
   });
 });
 

@@ -125,8 +125,8 @@ export function collectSymbols(
 
 /**
  * The symbols ASPSX addresses through `$gp` at this -G value: labels in
- * `.sdata`/`.sbss`, commons no larger than the threshold, and (VERIFY-1)
- * externs declared no larger than it.
+ * `.sdata`/`.sbss`, commons no larger than the threshold, and (only with
+ * `experimental.externSmallData`) externs declared no larger than it.
  */
 export function classifySmallData(
   table: SymbolTable,
@@ -146,8 +146,7 @@ export function classifySmallData(
     } else if (common !== undefined) {
       if (common.size <= gpSize) small.set(name, { name, reason: 'common', size: common.size });
     } else if (externSmallData && externSize !== undefined && externSize <= gpSize) {
-      // VERIFY-1: maspsx ignores .extern sizes, but cc1psx emits them so the
-      // assembler can use $gp for small globals defined in other files.
+      // Off by default: ASPSX 2.81, like maspsx, ignores .extern sizes.
       small.set(name, { name, reason: 'extern', size: externSize });
     }
   }

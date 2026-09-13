@@ -1,0 +1,14 @@
+{
+  "origin": "ASPSX 2.81 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x3C030000",
+    "0x8C630000",
+    "0x3C010000",
+    "0xAC230000",
+    "0x3C020000",
+    "0x24420000",
+    "0x3C040000",
+    "0x8C840000"
+  ]
+}

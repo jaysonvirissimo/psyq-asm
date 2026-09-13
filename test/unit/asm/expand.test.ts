@@ -11,7 +11,7 @@ describe('expansion: pseudo-instructions', () => {
     ['move $2,$6', ['addu $2,$6,$0']],
     ['negu $2,$3', ['subu $2,$0,$3']],
     ['negu $4', ['subu $4,$0,$4']],
-    ['b .+8', ['beq $0,$0,.+8']],
+    ['b .+8', ['bgez $0,.+8']],
     ['beqz $2,.+8', ['beq $2,$0,.+8']],
     ['bnez $2,.-4', ['bne $2,$0,.-4']],
     ['j $31', ['jr $31']],
@@ -105,7 +105,7 @@ describe('expansion: immediate operands', () => {
     ['addu $2,$2,40000', ['ori $1,$0,0x9C40', 'addu $2,$2,$1']],
     ['add $2,$2,5', ['addi $2,$2,0x5']],
     ['subu $sp,$sp,48', ['addiu $29,$29,-0x30']],
-    ['subu $2,$2,-32768', ['addiu $1,$0,-0x8000', 'subu $2,$2,$1']],
+    ['subu $2,$2,-32768', ['addiu $2,$2,-0x8000']],
     ['sub $2,$2,5', ['addi $2,$2,-0x5']],
     ['and $2,$2,255', ['andi $2,$2,0xFF']],
     ['or $2,$2,-1', ['addiu $1,$0,-0x1', 'or $2,$2,$1']],
@@ -190,7 +190,7 @@ describe('expansion: loads and stores', () => {
   });
 });
 
-describe('expansion: break codes (VERIFY-13)', () => {
+describe('expansion: break codes', () => {
   it('splits a single code as maspsx does and takes two codes as written', () => {
     expect(listing(src('\tbreak\t7', '\tbreak\t0x407', '\tbreak\t1,2', '\tbreak'))).toEqual([
       'break 0,7',

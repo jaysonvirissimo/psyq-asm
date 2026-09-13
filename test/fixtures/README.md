@@ -50,5 +50,6 @@ from a matched project or its executable.
 
 ## `probes/`
 
-Minimal sources for the open `VERIFY-n` items in `docs/ASPSX-2.81.md`, for a
-maintainer with access to the real assembler to run.
+One minimal source for each `VERIFY-n` item in `docs/ASPSX-2.81.md`. A settled
+item keeps the words real ASPSX 2.81 emitted for its probe beside it; an open
+one waits for them.

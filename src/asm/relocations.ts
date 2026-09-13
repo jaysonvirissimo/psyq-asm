@@ -4,9 +4,9 @@
  * become relocation records, and every value is range-checked before it
  * reaches the encoder.
  *
- * A relocated field holds the addend's field bits (for a local label, the
- * label's section offset plus the addend); consumers compare words under
- * `fieldMask`.
+ * A relocated field holds 0, whether the target is a symbol or a local label:
+ * ASPSX 2.81 leaves the target and its addend to the relocation. Consumers
+ * compare words under `fieldMask`.
  */
 import { hi16, lo16, signExtend16, type Slot } from '../isa/fields.js';
 import type { DiagnosticCode, Operand, Relocation, RelocationTarget } from '../public-types.js';
@@ -58,8 +58,8 @@ function targetOf(
   ctx: ResolveContext,
 ): { readonly target: RelocationTarget; readonly base: number } | ResolveError {
   if (!isLocalLabel(symbol.name)) {
-    // VERIFY-7: against a symbol, ASPSX leaves the field 0 and carries the
-    // addend in the relocation (lwlw.yaml: `lw $2,Savemap+2944` is 0x8C420000).
+    // The addend lives in the relocation and the field holds 0 (lwlw.yaml:
+    // `lw $2,Savemap+2944` is 0x8C420000).
     return {
       target: { kind: 'symbol', name: symbol.name, addend: symbol.addend },
       base: 0,
@@ -103,8 +103,7 @@ export function resolveField(expr: Expr, signed: boolean, ctx: ResolveContext): 
       }
       const resolved = targetOf(inner, ctx);
       if ('code' in resolved) return resolved;
-      // VERIFY-7: a $gp-relative field holds 0; the addend lives in the target.
-      const field = fn === 'hi' ? hi16(resolved.base) : fn === 'lo' ? lo16(resolved.base) : 0;
+      const field = 0;
       const kind = fn === 'hi' ? 'HI16' : fn === 'lo' ? 'LO16' : 'GPREL16';
       return {
         value: toValue(field),
@@ -153,15 +152,13 @@ function resolveTarget(expr: Expr, ctx: ResolveContext): Resolution<Operand> {
     return failure('unsupported-syntax', 'a jump target must be a symbol or an address.');
   const resolved = targetOf(expr, ctx);
   if ('code' in resolved) return resolved;
-  // VERIFY-6: a jump to a local label carries the label's word index.
-  const index = resolved.target.kind === 'section' ? (resolved.base >>> 2) & 0x03ffffff : 0;
   return {
-    value: { kind: 'target', index },
+    value: { kind: 'target', index: 0 },
     relocation: {
       kind: 'MIPS26',
       fieldMask: 0x03ffffff,
       target: resolved.target,
-      fieldValue: index,
+      fieldValue: 0,
     },
   };
 }
@@ -264,14 +261,13 @@ export function resolveData(unit: 1 | 2 | 4, expr: Expr, ctx: ResolveContext): R
     return failure('unsupported-syntax', 'data values must be numbers, symbols, or labels.');
   const resolved = targetOf(expr, ctx);
   if ('code' in resolved) return resolved;
-  const field = resolved.base >>> 0;
   return {
-    value: field,
+    value: 0,
     relocation: {
       kind: 'WORD32',
       fieldMask: 0xffffffff,
       target: resolved.target,
-      fieldValue: field,
+      fieldValue: 0,
     },
   };
 }

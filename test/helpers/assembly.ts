@@ -64,3 +64,14 @@ export function wordsOf(object: AssembledObject, name = '.text'): string[] {
 export function bytesOf(object: AssembledObject, name: string): string {
   return [...sectionOf(object, name).bytes].map((b) => b.toString(16).padStart(2, '0')).join(' ');
 }
+
+/**
+ * The section offsets a section's relocations against local labels point at.
+ * Relocated fields hold 0, so this is where a test sees which address a label
+ * received.
+ */
+export function labelOffsets(object: AssembledObject, name: string): (number | undefined)[] {
+  return sectionOf(object, name).relocations.map((r) =>
+    r.target.kind === 'section' ? r.target.offset : undefined,
+  );
+}

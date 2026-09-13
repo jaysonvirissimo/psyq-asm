@@ -31,7 +31,7 @@ describe('relocations', () => {
       '0x24420000',
       '0x8C430000',
       '0x0C000000',
-      '0x08000005',
+      '0x08000000',
       '0x8F840000',
     ]);
     expect(sectionOf(object, '.text').relocations).toEqual([
@@ -68,7 +68,7 @@ describe('relocations', () => {
         kind: 'MIPS26',
         fieldMask: 0x03ffffff,
         target: { kind: 'section', section: '.text', offset: 20, label: '$L9' },
-        fieldValue: 5,
+        fieldValue: 0,
       },
       {
         offset: 20,
@@ -78,14 +78,14 @@ describe('relocations', () => {
         fieldValue: 0,
       },
     ]);
-    expect(bytesOf(object, '.rdata')).toBe('14 00 00 00 00 00 00 00');
+    expect(bytesOf(object, '.rdata')).toBe('00 00 00 00 00 00 00 00');
     expect(sectionOf(object, '.rdata').relocations).toEqual([
       {
         offset: 0,
         kind: 'WORD32',
         fieldMask: 0xffffffff,
         target: { kind: 'section', section: '.text', offset: 20, label: '$L9' },
-        fieldValue: 20,
+        fieldValue: 0,
       },
       {
         offset: 4,
@@ -191,8 +191,8 @@ describe('relocations', () => {
     expect(
       sectionOf(object, '.rdata').relocations.map((r) => [r.kind, r.target, r.fieldValue]),
     ).toEqual([
-      ['WORD32', { kind: 'section', section: '.text', offset: 40, label: '$L15' }, 40],
-      ['WORD32', { kind: 'section', section: '.text', offset: 48, label: '$L16' }, 48],
+      ['WORD32', { kind: 'section', section: '.text', offset: 40, label: '$L15' }, 0],
+      ['WORD32', { kind: 'section', section: '.text', offset: 48, label: '$L16' }, 0],
     ]);
     expect(object.functions).toEqual([{ name: 'classify', section: '.text', start: 0, end: 16 }]);
     expect(object.symbols).toEqual([

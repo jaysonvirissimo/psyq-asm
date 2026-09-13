@@ -20,13 +20,14 @@ export type ErrorCode = 'invalid-options' | 'invalid-instruction';
  */
 export interface ExperimentalBehaviours {
   /**
-   * VERIFY-1: `.extern sym,size` with `size <= gpSize` makes `sym` small data,
-   * addressed through `$gp`. Default true.
+   * Treat `.extern sym,size` with `size <= gpSize` as small data, addressed
+   * through `$gp`. Default false, which is what ASPSX 2.81 does: it addresses
+   * external symbols with `lui`/`%lo` whatever their declared size.
    */
   readonly externSmallData: boolean;
   /**
-   * VERIFY-18: insert a nop after `mfc2`/`cfc2` when the next instruction reads
-   * the register just written. Default true.
+   * Insert a nop after `mfc2`/`cfc2` when the next instruction reads the
+   * register just written. Default true, which is what ASPSX 2.81 does.
    */
   readonly copMoveDelayNop: boolean;
 }
@@ -189,7 +190,7 @@ export interface WordOrigin {
 
 export interface SmallDataEntry {
   readonly name: string;
-  /** Defined in `.sdata`/`.sbss`, declared by `.comm`/`.lcomm`, or by `.extern` (VERIFY-1). */
+  /** Defined in `.sdata`/`.sbss`, declared by `.comm`/`.lcomm`, or (opt-in) by `.extern`. */
   readonly reason: 'sdata' | 'sbss' | 'common' | 'extern';
   readonly size?: number;
 }

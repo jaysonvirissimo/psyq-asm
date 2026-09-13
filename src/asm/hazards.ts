@@ -7,7 +7,7 @@
  * - H2: after a load, when the next instruction's first word reads the loaded
  *   register. A `div`/`rem` expansion's final mflo/mfhi counts as a load.
  * - H3: between mflo/mfhi and the next mult/div there must be two instructions.
- * - H4 (VERIFY-18): after mfc2/cfc2, like H2, when enabled.
+ * - H4: after mfc2/cfc2, like H2, when enabled.
  *
  * The pass works on the expanded stream, so "the next instruction" is always
  * the first word of the next group: a macro that starts with `lui $at` does not
@@ -21,7 +21,7 @@ import type { WordOriginKind } from '../public-types.js';
 import type { Group, Item, PendingWord } from './stream.js';
 
 export interface HazardOptions {
-  /** VERIFY-18: apply the load-delay rule to mfc2/cfc2. */
+  /** Apply the load-delay rule to mfc2/cfc2. */
   readonly copMoveDelayNop: boolean;
 }
 
@@ -143,8 +143,8 @@ function multiplyGap(
   if (second === undefined || !isMultiplyOrDivide(second.group)) return false;
 
   const between = endsOf(first.group)[0];
-  // VERIFY-19: a load or another mflo/mfhi in between restarts the count.
-  if (between.row.hazard === 'load' || between.row.hazard === 'mflo') return false;
+  // Another mflo/mfhi in between restarts the count.
+  if (between.row.hazard === 'mflo') return false;
   if (first.group.macro === 'li') {
     if (first.group.words.length === 1) insert(first.index + 1, gap());
     return true;
@@ -162,7 +162,8 @@ function multiplyGap(
     if (!first.group.reorder) insert(first.index + 1, gap());
     return true;
   }
-  // VERIFY-20: any other instruction, even a multi-word macro, gets one nop.
+  // A multi-word expansion fills the gap, as a two-word li does.
+  if (first.group.words.length > 1) return true;
   insert(second.index, gap());
   return true;
 }
@@ -203,10 +204,13 @@ export function insertNops(items: readonly Item[], options: HazardOptions): Item
     }
     if (hazard === 'mflo' && multiplyGap(items, index, item, insert)) return;
 
-    // VERIFY-17: loads are checked whatever the reorder mode, as in maspsx.
-    const delayed = delayedRegister(item, options);
+    // A load under .set noreorder is left alone.
+    const delayed =
+      item.reorder || tail.row.hazard !== 'load' ? delayedRegister(item, options) : undefined;
     const [next] = following(items, index, 1);
     if (delayed === undefined || next === undefined) return;
+    // A multiply-gap nop already in front of the reader serves as the delay too.
+    if (inserts.has(next.index)) return;
     const reader = endsOf(next.group)[0];
     if (!readsOf(reader).includes(delayed.register)) return;
     insert(

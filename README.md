@@ -134,30 +134,31 @@ What is verified today:
 - all 15 ASPSX 2.81 ground-truth word lists from
   [maspsx](https://github.com/mkst/maspsx) assemble word for word;
 - the 2.81-applicable unit tests of maspsx are ported and pass;
-- all 40 psyq-wasm compiler fixtures (t01 to t20 at `-G 0` and `-G 8`) assemble,
-  with provenance for every word;
+- all 40 psyq-wasm compiler fixtures (t01 to t20 at `-G 0` and `-G 8`) and all
+  19 verification probes match, word for word, what real ASPSX 2.81 emits for
+  them (recorded with `scripts/aspsx-oracle.rb`), with provenance for every word;
 - property tests: every instruction encodes and decodes symmetrically, decoded
   programs re-assemble to their words, output is deterministic, and no input
   makes `assemble` throw.
 
-What is not verified yet: behaviour with no fixture behind it carries a
-`VERIFY-n` tag. The open items, their defaults, and how each will be settled are
-listed at the end of the rule set. Three of them are switches in
-`options.experimental`, so a caller can pin a value once it is settled. A
-differential oracle, which compares assembled words with an already-matched
-decompilation's original executable, is in place (`scripts/oracle.mjs`) and will
-drive the first release.
+What is not verified yet: two items, VERIFY-5 (how `.comm` allocations are laid
+out in data sections) and VERIFY-21 (where debugging labels bind next to an
+inserted nop, invisible at `-g0`). Both are listed at the end of the rule set,
+with the 17 items real ASPSX 2.81 has settled. The switches in
+`options.experimental` default to what ASPSX 2.81 does. A differential oracle,
+which compares assembled words with an already-matched decompilation's original
+executable, is in place (`scripts/oracle.mjs`).
 
 ## Options
 
-| Option                         | Default     | Meaning                                                |
-| ------------------------------ | ----------- | ------------------------------------------------------ |
-| `gpSize`                       | required    | The `-G` small-data threshold: a non-negative integer. |
-| `aspsxVersion`                 | `'2.81'`    | The only accepted value.                               |
-| `partialDivExpansion`          | `false`     | Reproduce `ASPSX -0`: `div`/`rem` without trap checks. |
-| `filename`                     | `'input.s'` | The name diagnostics use. A single path segment.       |
-| `experimental.externSmallData` | `true`      | VERIFY-1: small `.extern` symbols use `$gp`.           |
-| `experimental.copMoveDelayNop` | `true`      | VERIFY-18: a nop after `mfc2`/`cfc2` before a reader.  |
+| Option                         | Default     | Meaning                                                             |
+| ------------------------------ | ----------- | ------------------------------------------------------------------- |
+| `gpSize`                       | required    | The `-G` small-data threshold: a non-negative integer.              |
+| `aspsxVersion`                 | `'2.81'`    | The only accepted value.                                            |
+| `partialDivExpansion`          | `false`     | Reproduce `ASPSX -0`: `div`/`rem` without trap checks.              |
+| `filename`                     | `'input.s'` | The name diagnostics use. A single path segment.                    |
+| `experimental.externSmallData` | `false`     | Address small `.extern` symbols through `$gp`; ASPSX 2.81 does not. |
+| `experimental.copMoveDelayNop` | `true`      | A nop after `mfc2`/`cfc2` before a reader, as ASPSX 2.81 inserts.   |
 
 ## Output model
 
