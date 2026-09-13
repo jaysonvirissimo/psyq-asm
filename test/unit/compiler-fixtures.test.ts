@@ -7,7 +7,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { assemble } from '../../src/asm/assemble.js';
-import { loadCompanion, textWords } from '../helpers/companions.js';
+import { expectMatchesCompanion, loadCompanion } from '../helpers/companions.js';
 import { loadCompilerFixtures } from '../helpers/fixtures.js';
 
 describe('compiler fixtures', () => {
@@ -21,7 +21,7 @@ describe('compiler fixtures', () => {
     const companion = loadCompanion(fixture.path);
     if (companion !== undefined) {
       expect(companion.gpSize).toBe(fixture.gpSize);
-      expect(textWords(result)).toEqual(companion.words);
+      expectMatchesCompanion(result, companion);
     }
   });
 });

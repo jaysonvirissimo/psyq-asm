@@ -2,26 +2,27 @@
 # SPDX-License-Identifier: MIT
 #
 # Oracle B: assemble this repository's own sources with the real ASPSX 2.81 and
-# record the .text words it emits, so tests can hold psyq-asm to them.
+# record what it emits, so tests can hold psyq-asm to it.
 #
 #   ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> --docker [--only <glob>] [--check-only]
 #   ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> [--wine <command>] [--only <glob>] [--check-only]
 #
-# ASPSX.EXE comes from outside the repository and is never committed. It is a
-# 32-bit Windows program, so it runs under wine: with --docker, inside an
-# x86-64 Linux container built from scripts/aspsx-wine.Dockerfile (built on
-# first use; the binary is mounted read-only, never copied into the image), or
-# otherwise under a local wine.
+# ASPSX.EXE comes from outside the repository and is never committed (keep it in
+# the ignored tmp/ directory). It is a 32-bit Windows program, so it runs under
+# wine: with --docker, inside an x86-64 Linux container built from
+# scripts/aspsx-wine.Dockerfile (built on first use; the binary is mounted
+# read-only, never copied into the image), or otherwise under a local wine.
 #
 # Before recording anything, the script replays every ASPSX ground-truth
 # fixture (test/fixtures/aspsx/*.json) and stops unless the assembler it was
 # given reproduces all of them word for word. --check-only stops after that.
 #
 # Then, for every VERIFY probe (test/fixtures/probes/VERIFY-n.s, -G value from
-# its first line) and every compiler fixture (test/fixtures/compiler/g0, g8, and g),
-# it assembles a copy in a scratch directory, reads the object with
-# scripts/psyq-object.mjs, and writes <source>.words.json beside the source.
-# Those words come from the repository's own MIT sources, so they are safe to
+# its first line) and every compiler fixture (test/fixtures/compiler/g0, g8, and
+# g), it assembles a copy in a scratch directory, reads the object with
+# scripts/psyq-object.mjs, and writes <source>.words.json beside the source: the
+# .text words, plus the object's section sizes, relocations, and defined
+# symbols. Those come from the repository's own MIT sources, so they are safe to
 # commit. A source the real assembler rejects is reported and skipped.
 
 require 'fileutils'
@@ -72,7 +73,8 @@ class Assembler
     start_container if options[:docker]
   end
 
-  # Returns [words, nil] or [nil, message].
+  # Returns [object, nil] or [nil, message], where object is the JSON
+  # scripts/psyq-object.mjs prints: { "words" => [...], "data" => {...} }.
   def assemble(source_text, flags)
     File.binwrite(File.join(@work, 'IN.S'), source_text)
     FileUtils.rm_f(File.join(@work, 'IN.OBJ'))
@@ -81,12 +83,14 @@ class Assembler
     command = @options[:docker] ? ['docker', 'exec', '-w', '/work', @container, *args] : [@options[:wine], *args[1..]]
     out, err, status = Open3.capture3(*command, chdir: @work)
     object = File.join(@work, 'IN.OBJ')
-    return [nil, (err + out).lines.map(&:strip).reject(&:empty?).last(4).join(' | ')] unless status.success? && File.file?(object)
+    unless status.success? && File.file?(object)
+      return [nil, (err + out).lines.map(&:strip).reject(&:empty?).last(4).join(' | ')]
+    end
 
     json, err, status = Open3.capture3('node', File.join(ROOT, 'scripts', 'psyq-object.mjs'), object)
     return [nil, "could not read the object: #{err.strip}"] unless status.success?
 
-    [JSON.parse(json).fetch('words'), nil]
+    [JSON.parse(json), nil]
   end
 
   def close
@@ -131,7 +135,8 @@ Dir.mktmpdir('aspsx-oracle') do |work|
     # without one imported as gpSize 0.
     failures = ground_truth.filter_map do |fixture|
       flags = fixture['gpSize'].zero? ? [] : ["-G#{fixture['gpSize']}"]
-      words, error = assembler.assemble(fixture['source'], flags)
+      object, error = assembler.assemble(fixture['source'], flags)
+      words = object && object['words']
       next if words == fixture['expectedWords']
 
       "#{fixture['name']}: #{error || "got #{words.inspect}, expected #{fixture['expectedWords'].inspect}"}"
@@ -153,16 +158,16 @@ Dir.mktmpdir('aspsx-oracle') do |work|
       text = text.sub(/\A[^\n]*/, '') if path.include?('/probes/')
       # ASPSX rejects a bare line feed; it reads DOS line endings.
       text = text.gsub(/\r?\n/, "\r\n")
-      words, error = assembler.assemble(text, ["-G#{gp}"])
-      if words.nil?
+      object, error = assembler.assemble(text, ["-G#{gp}"])
+      if object.nil?
         failed << path
         warn "skipped #{path}: #{error}"
         next
       end
-      companion = File.join(ROOT, path.sub(/\.s\z/, '.words.json'))
-      File.write(companion, "#{JSON.pretty_generate('origin' => ORIGIN, 'gpSize' => gp, 'words' => words)}\n")
+      record = { 'origin' => ORIGIN, 'gpSize' => gp, 'words' => object.fetch('words'), 'data' => object.fetch('data') }
+      File.write(File.join(ROOT, path.sub(/\.s\z/, '.words.json')), "#{JSON.pretty_generate(record)}\n")
       written += 1
-      puts "#{path}: #{words.length} words"
+      puts "#{path}: #{object.fetch('words').length} words"
     end
     puts "#{written} companions written, #{failed.length} sources skipped"
     exit(failed.empty? ? 0 : 1)

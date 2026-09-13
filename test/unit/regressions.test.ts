@@ -7,7 +7,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { assemble } from '../../src/asm/assemble.js';
-import { loadCompanion, textWords } from '../helpers/companions.js';
+import { expectMatchesCompanion, loadCompanion } from '../helpers/companions.js';
 import { fromRoot } from '../helpers/paths.js';
 
 const DIR = fromRoot('test', 'fixtures', 'regressions');
@@ -30,6 +30,6 @@ describe('regression fixtures', () => {
     expect(companion?.gpSize).toBe(Number(header?.[1]));
     const result = assemble(text, { gpSize: Number(header?.[1]), filename: name });
     expect(result.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
-    expect(textWords(result)).toEqual(companion?.words);
+    if (companion !== undefined) expectMatchesCompanion(result, companion);
   });
 });

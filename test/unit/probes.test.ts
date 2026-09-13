@@ -9,7 +9,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { assemble } from '../../src/asm/assemble.js';
-import { loadCompanion, textWords } from '../helpers/companions.js';
+import { expectMatchesCompanion, loadCompanion } from '../helpers/companions.js';
 import { fromRoot } from '../helpers/paths.js';
 
 const PROBES = fromRoot('test', 'fixtures', 'probes');
@@ -30,6 +30,6 @@ describe('VERIFY probes', () => {
     const result = assemble(text, { gpSize: Number(gp?.[1]), filename: name });
     expect(result.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
     const companion = loadCompanion(fromRoot('test', 'fixtures', 'probes', name));
-    if (companion !== undefined) expect(textWords(result)).toEqual(companion.words);
+    if (companion !== undefined) expectMatchesCompanion(result, companion);
   });
 });
