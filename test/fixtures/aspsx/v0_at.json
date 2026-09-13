@@ -1,0 +1,20 @@
+{
+  "name": "v0_at",
+  "origin": "mkst/maspsx aspsx/fixtures/v0_at.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "V0_AT.S",
+  "source": "\t$L2:\r\n\t\tlw\t$2,D_801C3544\r\n\t$L3:\r\n\t\tsw\t$2,D_801C34D4\r\n",
+  "gpSize": 8,
+  "expectedWords": [
+    "0x3C020000",
+    "0x8C420000",
+    "0x3C010000",
+    "0xAC220000"
+  ],
+  "disassembly": [
+    "lui $v0, 0x0",
+    "lw $v0, 0x0($v0)",
+    "lui $at, 0x0",
+    "sw $v0, 0x0($at)"
+  ]
+}

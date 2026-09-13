@@ -1,0 +1,30 @@
+{
+  "name": "addu_at",
+  "origin": "mkst/maspsx aspsx/fixtures/addu_at.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "ADDU.S",
+  "source": "\tlh\t$2,32767($2)\r\n\tlh\t$2,32768($2)\r\n\tlh\t$2,-32768($2)\r\n\tlh\t$2,-32769($2)\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0x84427FFF",
+    "0x3C010001",
+    "0x00410821",
+    "0x84228000",
+    "0x00000000",
+    "0x84428000",
+    "0x3C01FFFF",
+    "0x00410821",
+    "0x84227FFF"
+  ],
+  "disassembly": [
+    "lh $v0, 0x7FFF($v0)",
+    "lui $at, 0x1",
+    "addu $at, $v0, $at",
+    "lh $v0, -0x8000($at)",
+    "nop",
+    "lh $v0, -0x8000($v0)",
+    "lui $at, 0xFFFF",
+    "addu $at, $v0, $at",
+    "lh $v0, 0x7FFF($at)"
+  ]
+}

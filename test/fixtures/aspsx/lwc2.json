@@ -1,0 +1,16 @@
+{
+  "name": "lwc2",
+  "origin": "mkst/maspsx aspsx/fixtures/lwc2.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "LWC2.S",
+  "source": "\t#APP\r\n\tlwc2 $5, 4( $4 )\r\n\t#NO_APP\r\nLM439:\r\n\taddu $4,$5,8\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0xC8850004",
+    "0x24A40008"
+  ],
+  "disassembly": [
+    "lwc2 $5, 0x4($a0)",
+    "addiu $a0, $a1, 0x8"
+  ]
+}

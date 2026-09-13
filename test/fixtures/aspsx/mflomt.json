@@ -1,0 +1,20 @@
+{
+  "name": "mflomt",
+  "origin": "mkst/maspsx aspsx/fixtures/mflomt.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "MFLOMT.S",
+  "source": "\tmflo\t$2\r\n\tmult\t$3,$4\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0x00001012",
+    "0x00000000",
+    "0x00000000",
+    "0x00640018"
+  ],
+  "disassembly": [
+    "mflo $v0",
+    "nop",
+    "nop",
+    "mult $v1, $a0"
+  ]
+}

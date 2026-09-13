@@ -1,0 +1,18 @@
+{
+  "name": "expand_lw",
+  "origin": "mkst/maspsx aspsx/fixtures/expand_lw.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "EXPND_LW.S",
+  "source": "\tlw\t$2,ctlbuf($2)\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0x3C010000",
+    "0x00220821",
+    "0x8C220000"
+  ],
+  "disassembly": [
+    "lui $at, 0x0",
+    "addu $at, $at, $v0",
+    "lw $v0, 0x0($at)"
+  ]
+}

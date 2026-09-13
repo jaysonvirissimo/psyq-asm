@@ -1,0 +1,18 @@
+{
+  "name": "expand_sb",
+  "origin": "mkst/maspsx aspsx/fixtures/expand_sb.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "EXPND_SB.S",
+  "source": "\tlhu\t$2,16($sp)\r\n\tsb\t$2,10000\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0x97A20010",
+    "0x00000000",
+    "0xA0022710"
+  ],
+  "disassembly": [
+    "lhu $v0, 0x10($sp)",
+    "nop",
+    "sb $v0, 0x2710($zero)"
+  ]
+}

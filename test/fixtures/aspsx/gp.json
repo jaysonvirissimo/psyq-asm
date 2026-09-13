@@ -1,0 +1,16 @@
+{
+  "name": "gp",
+  "origin": "mkst/maspsx aspsx/fixtures/gp.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "GP.S",
+  "source": "\t.comm\tcommonVar,40\r\n\r\n\tlw\t$2,commonVar\r\n\tlw\t$4,commonVar+8\r\n",
+  "gpSize": 999,
+  "expectedWords": [
+    "0x8F820000",
+    "0x8F840000"
+  ],
+  "disassembly": [
+    "lw $v0, 0x0($gp)",
+    "lw $a0, 0x0($gp)"
+  ]
+}

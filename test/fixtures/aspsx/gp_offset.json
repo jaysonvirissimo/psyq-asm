@@ -1,0 +1,16 @@
+{
+  "name": "gp_offset",
+  "origin": "mkst/maspsx aspsx/fixtures/gp_offset.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "GP_OFFST.S",
+  "source": "\t.comm\tcommonVar,40\r\n\t.lcomm\tlocalCommonVar,40\r\n\r\n\tlw\t$4,commonVar+8\r\n\tlw\t$6,localCommonVar+4\r\n",
+  "gpSize": 999,
+  "expectedWords": [
+    "0x8F840000",
+    "0x8F860000"
+  ],
+  "disassembly": [
+    "lw $a0, 0x0($gp)",
+    "lw $a2, 0x0($gp)"
+  ]
+}

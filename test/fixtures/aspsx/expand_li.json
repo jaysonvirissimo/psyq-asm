@@ -1,0 +1,36 @@
+{
+  "name": "expand_li",
+  "origin": "mkst/maspsx aspsx/fixtures/expand_li.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "EXPND_LI.S",
+  "source": "\tli\t$2,0\r\n\tli\t$2,0x10000\r\n\tli\t$2,0x10001\r\n\tli\t$2,0x11000\r\n\tli\t$2,-1\r\n\tli\t$2,-0x8000\r\n\tli\t$2,-0x8001\r\n\tli\t$2,-0x9000\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0x24020000",
+    "0x3C020001",
+    "0x3C020001",
+    "0x34420001",
+    "0x3C020001",
+    "0x34421000",
+    "0x2402FFFF",
+    "0x24028000",
+    "0x3C02FFFF",
+    "0x34427FFF",
+    "0x3C02FFFF",
+    "0x34427000"
+  ],
+  "disassembly": [
+    "addiu $v0, $zero, 0x0",
+    "lui $v0, 0x1",
+    "lui $v0, 0x1",
+    "ori $v0, $v0, 0x1",
+    "lui $v0, 0x1",
+    "ori $v0, $v0, 0x1000",
+    "addiu $v0, $zero, -0x1",
+    "addiu $v0, $zero, -0x8000",
+    "lui $v0, 0xFFFF",
+    "ori $v0, $v0, 0x7FFF",
+    "lui $v0, 0xFFFF",
+    "ori $v0, $v0, 0x7000"
+  ]
+}

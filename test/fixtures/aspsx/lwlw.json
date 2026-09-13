@@ -1,0 +1,18 @@
+{
+  "name": "lwlw",
+  "origin": "mkst/maspsx aspsx/fixtures/lwlw.yaml @ 3629944",
+  "aspsxVersion": "2.81",
+  "sourceFile": "LWLW.S",
+  "source": "\tlw\t$2,Savemap+2944\r\n\tlw\t$2,0($3)\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0x3C020000",
+    "0x8C420000",
+    "0x8C620000"
+  ],
+  "disassembly": [
+    "lui $v0, 0x0",
+    "lw $v0, 0x0($v0)",
+    "lw $v0, 0x0($v1)"
+  ]
+}
