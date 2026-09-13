@@ -10,6 +10,8 @@ A fidelity fix is not a breaking change even when it changes output.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-13
+
 ### Added
 
 - `aspsxVersion: '2.77'` (`--aspsx-version 2.77` on the command line): ASPSX
@@ -106,5 +108,6 @@ A fidelity fix is not a breaking change even when it changes output.
 - `b label` assembles as `bgez $0,label`, and `subu rd,rs,-32768` as a single
   `addiu rd,rs,-0x8000`.
 
-[Unreleased]: https://github.com/jaysonvirissimo/psyq-asm/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/jaysonvirissimo/psyq-asm/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/jaysonvirissimo/psyq-asm/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/jaysonvirissimo/psyq-asm/releases/tag/v0.1.0

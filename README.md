@@ -1,6 +1,6 @@
 # psyq-asm
 
-An ASPSX 2.81-compatible assembler and R3000 encoder/decoder in TypeScript, for
+An ASPSX 2.77- and 2.81-compatible assembler and R3000 encoder/decoder in TypeScript, for
 PlayStation 1 matching-decompilation tooling in the browser and Node.js.
 
 [psyq-wasm](https://github.com/jaysonvirissimo/psyq-wasm) produces the exact
@@ -135,12 +135,16 @@ What is verified today:
   [maspsx](https://github.com/mkst/maspsx) assemble word for word;
 - the 2.81-applicable unit tests of maspsx are ported and pass;
 - all 41 psyq-wasm compiler fixtures (t01 to t20 at `-G 0` and `-G 8`, plus `t07_struct` compiled with `-g`), the 81 files of a corpus of 27 original C programs (`-G 0`, `-G 8`, and `-G 8 -g`), and all 24 verification probes match what real ASPSX 2.81 and 2.77 emit for them (recorded with `scripts/aspsx-oracle.rb`): the words exactly, and the section sizes, relocations, and symbols; every word has provenance;
-- seeded fuzzing: 500 generated C programs (`npm run fuzz`, seeds 1 to 500), each compiled at `-G 0`, `-G 8`, and `-G 8 -g`, match the real ASPSX 2.81 in the same way;
+- seeded fuzzing: 500 generated C programs (`npm run fuzz`, seeds 1 to 500), each compiled at `-G 0`, `-G 8`, and `-G 8 -g`, match the real ASPSX 2.81 in the same way, and seeds 1 to 200 match ASPSX 2.77;
+- a matched PsyQ 4.4 game decompilation: all 688 of its native `cc1psx`
+  assembly files, checked locally (none of them are in this repository),
+  assemble identically to both ASPSX 2.77 and 2.81, in words, section sizes,
+  relocations, and symbols;
 - property tests: every instruction encodes and decodes symmetrically, decoded
   programs re-assemble to their words, output is deterministic, and no input
   makes `assemble` throw.
 
-What is not verified yet: nothing in the rule set. Real ASPSX 2.81 output settled all 24 verification items, listed at the end of it. A differential oracle,
+What is not verified yet: nothing in the rule set. Real ASPSX output settled all 24 verification items, listed at the end of it. A differential oracle,
 which compares assembled words with an already-matched decompilation's original
 executable, is in place (`scripts/oracle.mjs`).
 

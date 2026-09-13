@@ -1,7 +1,7 @@
 {
   "name": "psyq-asm",
-  "version": "0.1.0",
-  "description": "ASPSX 2.81-compatible assembler and R3000 encoder/decoder in TypeScript, for PlayStation 1 matching-decompilation tooling in the browser and Node.js",
+  "version": "0.2.0",
+  "description": "ASPSX 2.77/2.81-compatible assembler and R3000 encoder/decoder in TypeScript, for PlayStation 1 matching-decompilation tooling in the browser and Node.js",
   "keywords": [
     "psyq",
     "aspsx",
