@@ -222,7 +222,6 @@ The numbering follows the project's original plan, so it has gaps.
 | Item | Question | Default | How to settle |
 | --- | --- | --- | --- |
 | VERIFY-5 | Alignment and order of `.comm`/`.lcomm` allocations | by size, in order of appearance | real assembler; data sections only |
-| VERIFY-21 | Where `L<non-digit>` debugging labels bind when a nop is inserted before the next instruction | before the nop (maspsx places them after) | real assembler; invisible at `-g0` |
 
 ## Settled verification items
 
@@ -248,4 +247,5 @@ probe test holds `psyq-asm` to them.
 | VERIFY-18 | Nop after `mfc2`/`cfc2` when the next instruction reads the register | yes |
 | VERIFY-19 | `mflo` · load · `mult` | one nop before the `mult`, shared with any load delay |
 | VERIFY-20 | A multi-word macro other than `li` between `mflo` and `mult` | no nop |
+| VERIFY-21 | Where `L<non-digit>` debugging labels bind when a nop is inserted before the next instruction | before the nop, like any other label |
 | VERIFY-22 | `mflo` · `mfhi` · `mult` | two nops before the `mult` |

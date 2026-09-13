@@ -44,7 +44,8 @@ export function loadAspsxFixture(name: string): AspsxFixture {
 }
 
 export function loadCompilerFixtures(): CompilerFixture[] {
-  return (['g0', 'g8'] as const).flatMap((dir) =>
+  // g/ holds -G 8 output compiled with -g (debugging information).
+  return (['g0', 'g8', 'g'] as const).flatMap((dir) =>
     readdirSync(fromRoot('test', 'fixtures', 'compiler', dir))
       .filter((f) => f.endsWith('.s'))
       .sort()

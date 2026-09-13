@@ -18,7 +18,7 @@
 # given reproduces all of them word for word. --check-only stops after that.
 #
 # Then, for every VERIFY probe (test/fixtures/probes/VERIFY-n.s, -G value from
-# its first line) and every compiler fixture (test/fixtures/compiler/g0 and g8),
+# its first line) and every compiler fixture (test/fixtures/compiler/g0, g8, and g),
 # it assembles a copy in a scratch directory, reads the object with
 # scripts/psyq-object.mjs, and writes <source>.words.json beside the source.
 # Those words come from the repository's own MIT sources, so they are safe to
@@ -117,8 +117,9 @@ def sources
     gp = File.foreach(File.join(ROOT, path)).first.to_s[/-G (\d+)/, 1]
     gp ? [path, Integer(gp)] : warn("no -G value on line 1, skipped: #{path}")
   end
-  compiler = %w[g0 g8].flat_map do |dir|
-    Dir.glob("test/fixtures/compiler/#{dir}/*.s", base: ROOT).sort.map { |path| [path, Integer(dir[1..])] }
+  # g/ is -G 8 output compiled with -g.
+  compiler = { 'g0' => 0, 'g8' => 8, 'g' => 8 }.flat_map do |dir, gp|
+    Dir.glob("test/fixtures/compiler/#{dir}/*.s", base: ROOT).sort.map { |path| [path, gp] }
   end
   probes + compiler
 end

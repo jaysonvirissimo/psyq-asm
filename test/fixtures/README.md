@@ -33,7 +33,9 @@ the `.text` section back out of the PSYQ object file.
 `g0/*.s` and `g8/*.s` are the compiler output fixtures of
 [psyq-wasm](https://github.com/jaysonvirissimo/psyq-wasm) (MIT), copied
 unchanged: the assembly the PsyQ 4.4 `cc1psx` emits at `-O2 -g0 -Wall` with
-`-G 0` and `-G 8` for that project's original C test programs. They keep the
+`-G 0` and `-G 8` for that project's original C test programs. `g/t07_struct.s` is the one fixture with debugging
+information, emitted at `-O2 -G 8 -g -Wall`: it carries `LM` line labels and
+COFF `.def` records. They keep the
 compiler's CRLF line endings. The C sources live in the psyq-wasm repository.
 
 A fixture gains a `<name>.words.json` companion beside it once

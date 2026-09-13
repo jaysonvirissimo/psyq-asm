@@ -2,5 +2,4 @@
 	lw	$2,0($4)
 LM1:
 	addu	$3,$2,$2
-	.rdata
-	.word	LM1
+	beq	$0,$0,LM1

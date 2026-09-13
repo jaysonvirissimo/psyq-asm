@@ -134,17 +134,14 @@ What is verified today:
 - all 15 ASPSX 2.81 ground-truth word lists from
   [maspsx](https://github.com/mkst/maspsx) assemble word for word;
 - the 2.81-applicable unit tests of maspsx are ported and pass;
-- all 40 psyq-wasm compiler fixtures (t01 to t20 at `-G 0` and `-G 8`) and all
+- all 41 psyq-wasm compiler fixtures (t01 to t20 at `-G 0` and `-G 8`, plus `t07_struct` compiled with `-g`) and all
   19 verification probes match, word for word, what real ASPSX 2.81 emits for
   them (recorded with `scripts/aspsx-oracle.rb`), with provenance for every word;
 - property tests: every instruction encodes and decodes symmetrically, decoded
   programs re-assemble to their words, output is deterministic, and no input
   makes `assemble` throw.
 
-What is not verified yet: two items, VERIFY-5 (how `.comm` allocations are laid
-out in data sections) and VERIFY-21 (where debugging labels bind next to an
-inserted nop, invisible at `-g0`). Both are listed at the end of the rule set,
-with the 17 items real ASPSX 2.81 has settled. A differential oracle,
+What is not verified yet: one item, VERIFY-5 (how `.comm` allocations are laid out in data sections), listed at the end of the rule set with the 18 items real ASPSX 2.81 has settled. A differential oracle,
 which compares assembled words with an already-matched decompilation's original
 executable, is in place (`scripts/oracle.mjs`).
 

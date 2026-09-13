@@ -60,10 +60,13 @@ describe('ASPSX ground-truth fixtures', () => {
 describe('compiler fixtures', () => {
   const fixtures = loadCompilerFixtures();
 
-  it('holds t01 to t20 at -G 0 and -G 8', () => {
-    expect(fixtures).toHaveLength(40);
-    expect(fixtures.filter((f) => f.gpSize === 8)).toHaveLength(20);
+  it('holds t01 to t20 at -G 0 and -G 8, and t07_struct compiled with -g', () => {
+    expect(fixtures).toHaveLength(41);
+    expect(fixtures.filter((f) => f.gpSize === 8)).toHaveLength(21);
     expect(fixtures[0]?.name).toBe('t01_arith-g0');
+    expect(fixtures.filter((f) => f.name.endsWith('-g')).map((f) => [f.name, f.gpSize])).toEqual([
+      ['t07_struct-g', 8],
+    ]);
   });
 
   it('keeps the compiler CRLF line endings', () => {
