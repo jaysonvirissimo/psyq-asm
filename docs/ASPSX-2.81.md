@@ -30,8 +30,8 @@ rule, kept in `src/asm/versions.ts`:
 | --- | --- | --- |
 | `la` of a small-data symbol | `lui rd,%hi(sym)`; `addiu rd,rd,%lo(sym)` | `addiu rd,$gp,%gp_rel(sym)` |
 
-**[fixture: la, both versions; aspsx: every probe, compiler fixture, corpus
-file, and regression, recorded with both]** Everything else in this document
+**[fixture: la, both versions; aspsx: every probe, compiler fixture, and corpus
+file, recorded with both]** Everything else in this document
 holds for both versions.
 
 ## Scope

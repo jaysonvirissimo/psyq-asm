@@ -18,7 +18,7 @@ by `scripts/import-maspsx-fixtures.rb`. Each JSON file holds:
 | --------------- | ---------------------------------------------------------------------------- |
 | `name`          | the upstream fixture name                                                    |
 | `origin`        | upstream file and commit                                                     |
-| `aspsxVersion`  | always `2.81`; other versions' cases are not imported                        |
+| `aspsxVersion`  | `2.81` in `<name>.json`, `2.77` in `<name>.aspsx-2.77.json`                   |
 | `sourceFile`    | the upstream assembly source name under `aspsx/ASM/`                         |
 | `source`        | that source, verbatim (CRLF line endings, as upstream)                       |
 | `gpSize`        | the `-G` value ASPSX was run with (0 when upstream passed none)              |
@@ -40,7 +40,7 @@ compiler's CRLF line endings. The C sources live in the psyq-wasm repository.
 
 A fixture gains a `<name>.words.json` companion beside it once
 `scripts/aspsx-oracle.rb` has recorded the words the real `ASPSX` 2.81 emits for
-it; the test then requires those `.text` words exactly. Until then it asserts
+it, and a `<name>.aspsx-2.77.words.json` companion for ASPSX 2.77; the test then requires those `.text` words exactly. Until then it asserts
 only that the fixture assembles without error and that every word has
 provenance.
 
@@ -51,7 +51,8 @@ Original C written for this repository (`src/*.c`, MIT) and the assembly PsyQ
 psyq-wasm at `-O2 -G 0 -g0`, `-O2 -G 8 -g0`, and `-O2 -G 8 -g`, all with
 `-Wall`, into `g0/`, `g8/`, and `g/`. The `.s` files are byte-exact compiler
 output, and `npm run corpus:verify` checks them. Each has a `.words.json`
-companion recorded from the real ASPSX 2.81, which the tests require.
+companion recorded from the real ASPSX 2.81 and an `.aspsx-2.77.words.json`
+companion from ASPSX 2.77, both of which the tests require.
 
 ## `regressions/`
 
@@ -62,5 +63,5 @@ from a matched project or its executable.
 ## `probes/`
 
 One minimal source for each `VERIFY-n` item in `docs/ASPSX-2.81.md`. A settled
-item keeps the words real ASPSX 2.81 emitted for its probe beside it; an open
+item keeps the words real ASPSX 2.81 and 2.77 emitted for its probe beside it; an open
 one waits for them.

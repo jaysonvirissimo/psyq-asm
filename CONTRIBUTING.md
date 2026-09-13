@@ -71,16 +71,23 @@ add code from a game, an SDK, or a decompilation project.
 - `test/fixtures/aspsx/` holds ground truth from real `ASPSX` binaries, imported
   from maspsx. To refresh it after a maspsx upgrade, clone maspsx at the new
   commit and run `ruby scripts/import-maspsx-fixtures.rb <clone> <commit>`.
-  Only the `2.81` case of each fixture is kept.
+  The `2.81` case of each fixture becomes `<name>.json` and the `2.77` case
+  `<name>.aspsx-2.77.json`.
 - `test/fixtures/compiler/` holds `psyq-wasm`'s compiler output fixtures, copied
   unchanged. A file gains a `.words.json` companion once an oracle has verified
-  its words.
+  its words: `<name>.words.json` from ASPSX 2.81 and
+  `<name>.aspsx-2.77.words.json` from ASPSX 2.77.
 - `test/fixtures/corpus/` holds original C and its compiler output. After adding
   or changing a source, run `npm run corpus:compile`, then record what the real
   assembler emits with `ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> --docker
---only 'test/fixtures/corpus/**/*.s'`.
+--only 'test/fixtures/corpus/**/*.s'`, once with ASPSX 2.81 and once with
+  ASPSX 2.77 and `--version 2.77`; the tests require both.
 - `test/fixtures/probes/` holds a minimal source for every `VERIFY-n` item, with
   the real assembler's words beside each settled one.
+
+Every recording is made with both versions. `aspsx-oracle.rb --version 2.77`
+replays the 2.77 ground truth and writes `.aspsx-2.77.words.json` companions;
+without it, the tool expects ASPSX 2.81.
 
 ## Closing a VERIFY item
 
@@ -153,16 +160,21 @@ fix, the fixture, and a CHANGELOG **Fidelity** entry land in one commit.
 ## Fuzzing against the real assembler
 
 `scripts/fuzz-aspsx.mjs` generates C from seeds (`scripts/gen-corpus.mjs`),
-compiles it at `-G 0`, `-G 8`, and `-G 8 -g`, records what the real ASPSX 2.81
+compiles it at `-G 0`, `-G 8`, and `-G 8 -g`, records what the real ASPSX
 emits for all of it (`scripts/aspsx-oracle.rb --files`), and compares
 `psyq-asm`'s output with that record the way the tests compare the corpus:
 
 ```sh
 npm run build
 npm run fuzz -- --aspsx tmp/aspsx/2.81/ASPSX.EXE --seeds 1..200
+npm run fuzz -- --aspsx tmp/aspsx/2.77/ASPSX.EXE --version 2.77 --seeds 1..200
 ```
 
-Work files stay in `tmp/fuzz/`. Reduce a mismatch to a regression fixture (see
+`--sources <dir>` compares the `.s` files in a directory instead of generated
+ones (`-G 0` for names ending in `-g0.s`, `-G 8` otherwise). Keep such a
+directory under `tmp/` if its files must not be committed.
+
+Work files stay in `tmp/fuzz/` unless `--out` says otherwise. Reduce a mismatch to a regression fixture (see
 "Oracle discrepancies"), record its words with `ruby scripts/aspsx-oracle.rb
 --aspsx <ASPSX.EXE> --docker --files test/fixtures/regressions`, and fix the
 rule.

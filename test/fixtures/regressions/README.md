@@ -10,6 +10,8 @@ copies code, instructions, or words from a matched project or its executable.
 - `<slug>.words.json`: `{ "origin", "gpSize", "words" }`, the `.text` words the
   source must assemble to. `origin` says where they come from: the rule in
   `docs/ASPSX-2.81.md` they follow, or `ASPSX 2.81 via scripts/aspsx-oracle.rb`.
+- `<slug>.aspsx-2.77.words.json` (optional): the same for ASPSX 2.77, checked
+  when present.
 
 `test/unit/regressions.test.ts` requires every source to have its words and to
 reproduce them exactly. The fix, the fixture, and a CHANGELOG **Fidelity**

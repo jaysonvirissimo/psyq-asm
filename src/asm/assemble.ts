@@ -11,7 +11,8 @@ import { classifySmallData, collectSymbols } from './symbols.js';
 import { rulesFor } from './versions.js';
 
 /**
- * Assemble PsyQ 4.4 `cc1psx` output into the words ASPSX 2.81 produces.
+ * Assemble PsyQ 4.4 `cc1psx` output into the words ASPSX produces: 2.81 unless
+ * `options.aspsxVersion` asks for 2.77.
  *
  * Problems in the input are reported as diagnostics in a failed result; this
  * function throws only `InvalidOptionsError`, for a malformed `options` or a
