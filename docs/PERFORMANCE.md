@@ -26,20 +26,21 @@ is synchronous and needs no worker.
 
 ## Bundle size
 
-The library bundled on its own with Vite's default minifier.
+`npm run build && npm run size` bundles the library on its own with Vite's default
+minifier (`scripts/bundle-size.mjs`).
 
 | Measure | Size |
 | --- | --- |
-| `dist/**/*.js`, unminified | 114.7 KB |
-| Minified | 62.0 KB |
-| Minified and gzipped | 17.4 KB |
+| `dist/**/*.js`, unminified | 116.9 KB |
+| Minified | 62.9 KB |
+| Minified and gzipped | 17.8 KB |
 
-The informational target is 60 KB minified; the current build is about 2 KB
+The informational target is 60 KB minified; the current build is about 3 KB
 over it. Most of the size is the assembler: the expansion rules, the nop pass,
 and diagnostic messages. A consumer that imports only `decode` and `format`
 bundles none of it:
 
 | Measure | Size |
 | --- | --- |
-| `decode` and `format` only, minified | 12.1 KB |
-| `decode` and `format` only, minified and gzipped | 3.8 KB |
+| `decode` and `format` only, minified | 11.8 KB |
+| `decode` and `format` only, minified and gzipped | 3.7 KB |

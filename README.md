@@ -126,7 +126,7 @@ no nop into them (no loads, `mflo`/`mfhi`, or `mfc2`/`cfc2` followed by a reader
 ## The fidelity contract
 
 `psyq-asm` emulates one version pair: PsyQ 4.4 `cc1psx` output assembled by
-ASPSX 2.81, invoked as `aspsx -q -G <n>`. The rule set is
+ASPSX 2.81, invoked as `aspsx -G<n>`. The rule set is
 [docs/ASPSX-2.81.md](docs/ASPSX-2.81.md), with the evidence for every rule.
 
 What is verified today:

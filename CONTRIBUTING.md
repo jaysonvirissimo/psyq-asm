@@ -20,6 +20,7 @@ npm run test:browser      # Chromium, Firefox, WebKit
 npm run test:package      # npm pack + consumer apps (needs network)
 npm run test:differential # the oracle; skips unless configured (see below)
 npm run bench             # informational timings for docs/PERFORMANCE.md
+npm run size              # informational bundle sizes for docs/PERFORMANCE.md
 npm run serve             # http://127.0.0.1:4173/demo/
 ```
 
