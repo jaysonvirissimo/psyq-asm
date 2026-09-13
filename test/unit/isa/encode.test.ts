@@ -50,9 +50,10 @@ describe('encode', () => {
     expect(encode(insn('rfe'))).toBe(0x42000010);
   });
 
-  it('splits break codes: low 10 bits in [25:16], high bits in [15:6] (VERIFY-13)', () => {
-    expect(encode(insn('break', imm(7, 20, false)))).toBe(0x0007000d);
-    expect(encode(insn('break', imm(0x407, 20, false)))).toBe(0x0007004d);
+  it('places the two break codes in [25:16] and [15:6]', () => {
+    expect(encode(insn('break', imm(7, 10, false)))).toBe(0x0007000d);
+    expect(encode(insn('break', imm(7, 10, false), imm(1, 10, false)))).toBe(0x0007004d);
+    expect(encode(insn('break', imm(0, 10, false), imm(7, 10, false)))).toBe(0x000001cd);
   });
 
   it('fills omitted optional operands', () => {
@@ -125,8 +126,8 @@ describe('encode', () => {
       'syscall operand 1: code must be an integer from 0 to 1048575, not 1048576.',
     ],
     [
-      insn('break', imm(-1, 20, false)),
-      'break operand 1: code must be an integer from 0 to 1048575, not -1.',
+      insn('break', imm(-1, 10, false)),
+      'break operand 1: code must be an integer from 0 to 1023, not -1.',
     ],
     [
       insn('tge', gpr(0), gpr(0), imm(1024, 10, false)),

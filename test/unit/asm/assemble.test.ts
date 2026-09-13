@@ -204,8 +204,8 @@ describe('assemble: errors', () => {
       'mtc2 operand 2 must be a coprocessor register such as $8.',
     ],
     ['\tbeq $2,$3,$2', 'invalid-operand', 'beq operand 3 must be a branch target.'],
-    ['\tsll $2,$2,$3', 'invalid-operand', 'sll operand 3 must be an immediate value.'],
-    ['\tjal $2,$3', 'invalid-operand', 'jal takes 1 operand, not 2.'],
+    ['\tsll $2,$2,0($3)', 'invalid-operand', 'sll operand 3 must be an immediate value.'],
+    ['\tjal sym,$3', 'invalid-operand', 'jal expects a target, a register, or two registers.'],
     ['\tjal 0($4)', 'invalid-operand', 'jal operand 1 must be a jump target.'],
     [
       '\taddiu $2,$2,1.5',

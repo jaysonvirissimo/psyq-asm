@@ -82,17 +82,20 @@ function spelling(
   ) {
     return { name: mnemonic, operands: operands.slice(1) };
   }
-  const last = operands.at(-1);
+  // A break keeps both codes unless both are zero: `break n` alone would be
+  // split into two codes when re-assembled (VERIFY-13).
+  if (mnemonic === 'break' && operands.every(isZeroCode)) return { name: mnemonic, operands: [] };
   if (
-    (mnemonic === 'syscall' ||
-      mnemonic === 'break' ||
-      (mnemonic === 'tge' && operands.length === 3)) &&
-    last?.kind === 'imm' &&
-    last.value === 0
+    (mnemonic === 'syscall' || (mnemonic === 'tge' && operands.length === 3)) &&
+    isZeroCode(operands.at(-1))
   ) {
     return { name: mnemonic, operands: operands.slice(0, -1) };
   }
   return { name: mnemonic, operands };
+}
+
+function isZeroCode(operand: Operand | undefined): boolean {
+  return operand?.kind === 'imm' && operand.value === 0;
 }
 
 /**

@@ -49,14 +49,8 @@ function operandFor(slot: Slot, word: number): Operand {
       return { kind: 'target', index: word & 0x03ffffff };
     case 'code20':
       return { kind: 'imm', value: (word >>> 6) & 0xfffff, bits: 20, signed: false };
-    case 'break20':
-      // VERIFY-13: low 10 bits of the code in [25:16], high 10 bits in [15:6].
-      return {
-        kind: 'imm',
-        value: ((word >>> 16) & 0x3ff) | (((word >>> 6) & 0x3ff) << 10),
-        bits: 20,
-        signed: false,
-      };
+    case 'code10hi':
+      return { kind: 'imm', value: (word >>> 16) & 0x3ff, bits: 10, signed: false };
     case 'code10':
       return { kind: 'imm', value: (word >>> 6) & 0x3ff, bits: 10, signed: false };
     case 'imm25':

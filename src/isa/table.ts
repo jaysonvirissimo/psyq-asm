@@ -153,7 +153,8 @@ export const ISA_ROWS = [
   special('jr', 0x08, ['rs'], ['rs'], [], { hazard: 'jump' }),
   special('jalr', 0x09, ['rd', 'rs'], ['rs'], ['rd'], { hazard: 'jump', optional: 'leading-ra' }),
   special('syscall', 0x0c, ['code20'], [], [], { optional: 'trailing-zero' }),
-  special('break', 0x0d, ['break20'], [], [], { optional: 'trailing-zero' }),
+  // Two 10-bit codes, as GNU as and rabbitizer write them: `break 7,0`.
+  special('break', 0x0d, ['code10hi', 'code10'], [], [], { optional: 'trailing-zero' }),
   special('mfhi', 0x10, ['rd'], [], ['rd'], { hazard: 'mflo' }),
   special('mthi', 0x11, ['rs'], ['rs'], [], { hazard: 'mtlo' }),
   special('mflo', 0x12, ['rd'], [], ['rd'], { hazard: 'mflo' }),

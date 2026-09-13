@@ -16,7 +16,7 @@ const EXPECTED_KIND: Readonly<Record<Slot, Operand['kind']>> = {
   branch: 'branch',
   target: 'target',
   code20: 'imm',
-  break20: 'imm',
+  code10hi: 'imm',
   code10: 'imm',
   imm25: 'imm',
   cop0: 'cop',
@@ -71,11 +71,8 @@ function fieldBits(
       return field('index', 0, 0x03ffffff, 'jump index');
     case 'code20':
       return field('value', 0, 0xfffff, 'code') << 6;
-    case 'break20': {
-      // VERIFY-13: low 10 bits of the code in [25:16], high 10 bits in [15:6].
-      const code = field('value', 0, 0xfffff, 'code');
-      return ((code & 0x3ff) << 16) | ((code >>> 10) << 6);
-    }
+    case 'code10hi':
+      return field('value', 0, 0x3ff, 'code') << 16;
     case 'code10':
       return field('value', 0, 0x3ff, 'code') << 6;
     case 'imm25':
@@ -98,9 +95,12 @@ function fieldBits(
 
 /** Fill omitted optional operands so the list matches the row's syntax. */
 function canonicalOperands(row: IsaRow, operands: readonly unknown[]): readonly unknown[] {
-  if (operands.length === row.syntax.length - 1) {
-    if (row.optional === 'leading-ra') return [{ kind: 'gpr', number: 31 }, ...operands];
-    if (row.optional === 'trailing-zero') return [...operands, { kind: 'imm', value: 0 }];
+  if (row.optional === 'trailing-zero' && operands.length < row.syntax.length) {
+    const missing = row.syntax.length - operands.length;
+    return [...operands, ...Array<unknown>(missing).fill({ kind: 'imm', value: 0 })];
+  }
+  if (row.optional === 'leading-ra' && operands.length === row.syntax.length - 1) {
+    return [{ kind: 'gpr', number: 31 }, ...operands];
   }
   return operands;
 }

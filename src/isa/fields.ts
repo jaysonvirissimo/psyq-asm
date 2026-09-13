@@ -18,8 +18,8 @@ export type Slot =
   | 'branch' // signed 16-bit displacement in instructions, relative to pc+4
   | 'target' // 26-bit jump index
   | 'code20' // syscall code in [25:6]
-  | 'break20' // break code, low 10 bits in [25:16] and high 10 bits in [15:6] (VERIFY-13)
-  | 'code10' // trap code in [15:6]
+  | 'code10hi' // first break code in [25:16]
+  | 'code10' // trap code, or second break code, in [15:6]
   | 'imm25' // coprocessor 2 command
   | CopSlot;
 
@@ -54,7 +54,7 @@ export const SLOT_BITS: Readonly<Record<Slot, number>> = Object.freeze({
   branch: 0x0000ffff,
   target: 0x03ffffff,
   code20: 0x03ffffc0,
-  break20: 0x03ffffc0,
+  code10hi: 0x03ff0000,
   code10: 0x0000ffc0,
   imm25: 0x01ffffff,
   cop0: 0x0000f800,

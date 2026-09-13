@@ -13,12 +13,12 @@ const KNOWN: readonly (readonly [number, string])[] = [
   [0xafbf0054, 'sw $ra,0x54($sp)'],
   [0x0086001a, 'div $a0,$a2'],
   [0x14c00002, 'bne $a2,$zero,.+12'],
-  [0x0007000d, 'break 7'],
+  [0x0007000d, 'break 7,0'],
   [0x2401ffff, 'addiu $at,$zero,-0x1'],
   [0x14c10004, 'bne $a2,$at,.+20'],
   [0x3c018000, 'lui $at,0x8000'],
   [0x14810002, 'bne $a0,$at,.+12'],
-  [0x0006000d, 'break 6'],
+  [0x0006000d, 'break 6,0'],
   [0x00001012, 'mflo $v0'],
   [0x24020000, 'addiu $v0,$zero,0x0'],
   [0x3c020001, 'lui $v0,0x1'],
@@ -127,13 +127,11 @@ describe('decode', () => {
     });
   });
 
-  it('decodes break codes of 1024 and above with the high bits in [15:6] (VERIFY-13)', () => {
-    expect(known(0x0007004d).operands[0]).toEqual({
-      kind: 'imm',
-      value: 0x407,
-      bits: 20,
-      signed: false,
-    });
+  it('decodes the two break codes from [25:16] and [15:6]', () => {
+    expect(known(0x0007004d).operands).toEqual([
+      { kind: 'imm', value: 7, bits: 10, signed: false },
+      { kind: 'imm', value: 1, bits: 10, signed: false },
+    ]);
   });
 
   it.each([

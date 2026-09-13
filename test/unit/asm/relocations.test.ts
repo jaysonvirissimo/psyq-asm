@@ -27,7 +27,7 @@ describe('relocations', () => {
     expect(object.sections.map((s) => s.name)).toEqual(['.data', '.text', '.rdata']);
     expect(wordsOf(object)).toEqual([
       '0x3C020000',
-      '0x24420004',
+      '0x24420000',
       '0x8C430000',
       '0x0C000000',
       '0x08000005',
@@ -46,7 +46,7 @@ describe('relocations', () => {
         kind: 'LO16',
         fieldMask: 0xffff,
         target: { kind: 'symbol', name: 'tbl', addend: 4 },
-        fieldValue: 4,
+        fieldValue: 0,
       },
       {
         offset: 8,
@@ -77,7 +77,7 @@ describe('relocations', () => {
         fieldValue: 0,
       },
     ]);
-    expect(bytesOf(object, '.rdata')).toBe('14 00 00 00 08 00 00 00');
+    expect(bytesOf(object, '.rdata')).toBe('14 00 00 00 00 00 00 00');
     expect(sectionOf(object, '.rdata').relocations).toEqual([
       {
         offset: 0,
@@ -91,7 +91,7 @@ describe('relocations', () => {
         kind: 'WORD32',
         fieldMask: 0xffffffff,
         target: { kind: 'symbol', name: 'ext', addend: 8 },
-        fieldValue: 8,
+        fieldValue: 0,
       },
     ]);
     expect(object.symbols).toEqual([
@@ -101,7 +101,7 @@ describe('relocations', () => {
     ]);
   });
 
-  it('adjusts %hi for a negative %lo half, and folds numeric %hi/%lo', () => {
+  it('leaves symbol addends to the relocation (VERIFY-7), and folds numeric %hi/%lo', () => {
     const object = assembleOk(
       src(
         '\tlui\t$2,%hi(tbl+0x8000)',
@@ -114,17 +114,17 @@ describe('relocations', () => {
       ),
     );
     expect(wordsOf(object)).toEqual([
-      '0x3C020001',
-      '0x24428000',
-      '0x34428000',
+      '0x3C020000',
+      '0x24420000',
+      '0x34420000',
       '0x24020002',
       '0x24028000',
       '0x08000040',
     ]);
     expect(sectionOf(object, '.text').relocations.map((r) => [r.kind, r.fieldValue])).toEqual([
-      ['HI16', 1],
-      ['LO16', 0x8000],
-      ['LO16', 0x8000],
+      ['HI16', 0],
+      ['LO16', 0],
+      ['LO16', 0],
     ]);
     expect(object.symbols).toEqual([{ name: 'tbl', binding: 'extern', size: 4 }]);
   });

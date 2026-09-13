@@ -58,9 +58,11 @@ function targetOf(
   ctx: ResolveContext,
 ): { readonly target: RelocationTarget; readonly base: number } | ResolveError {
   if (!isLocalLabel(symbol.name)) {
+    // VERIFY-7: against a symbol, ASPSX leaves the field 0 and carries the
+    // addend in the relocation (lwlw.yaml: `lw $2,Savemap+2944` is 0x8C420000).
     return {
       target: { kind: 'symbol', name: symbol.name, addend: symbol.addend },
-      base: symbol.addend,
+      base: 0,
     };
   }
   const label = ctx.labels.get(symbol.name);
@@ -219,6 +221,7 @@ export function resolveArg(slot: Slot, pending: Pending, ctx: ResolveContext): R
             value,
           }));
         case 'code10':
+        case 'code10hi':
           return plainNumber(pending.expr, 0x3ff, 'code', (value) => ({
             kind: 'imm',
             value,
@@ -226,7 +229,6 @@ export function resolveArg(slot: Slot, pending: Pending, ctx: ResolveContext): R
             signed: false,
           }));
         case 'code20':
-        case 'break20':
           return plainNumber(pending.expr, 0xfffff, 'code', (value) => ({
             kind: 'imm',
             value,

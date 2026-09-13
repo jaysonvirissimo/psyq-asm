@@ -36,11 +36,11 @@ function operandArbitrary(slot: Slot): fc.Arbitrary<Operand> {
     case 'target':
       return fc.integer({ min: 0, max: 0x03ffffff }).map((index) => ({ kind: 'target', index }));
     case 'code20':
-    case 'break20':
       return fc
         .integer({ min: 0, max: 0xfffff })
         .map((value) => ({ kind: 'imm', value, bits: 20, signed: false }));
     case 'code10':
+    case 'code10hi':
       return fc
         .integer({ min: 0, max: 0x3ff })
         .map((value) => ({ kind: 'imm', value, bits: 10, signed: false }));

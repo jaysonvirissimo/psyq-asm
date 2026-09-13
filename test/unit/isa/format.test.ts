@@ -34,7 +34,8 @@ describe('format', () => {
 
   it('keeps codes decimal and omits them at zero', () => {
     expect(f(0x0000000d)).toBe('break');
-    expect(f(0x0007000d, { hex: true })).toBe('break 7');
+    expect(f(0x0007000d, { hex: true })).toBe('break 7,0');
+    expect(f(0x000001cd)).toBe('break 0,7');
     expect(f(0x0000014c)).toBe('syscall 5');
     expect(f(0x00220030)).toBe('tge $at,$v0');
   });

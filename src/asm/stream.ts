@@ -47,6 +47,8 @@ export interface Group {
   readonly words: readonly PendingWord[];
   /** The macro mnemonic, when the statement expanded. */
   readonly macro?: string;
+  /** For a `div`/`rem` expansion, the register its final `mflo`/`mfhi` writes. */
+  readonly divMove?: number;
 }
 
 export type Item =
