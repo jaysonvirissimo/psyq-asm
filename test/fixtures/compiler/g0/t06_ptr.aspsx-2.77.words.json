@@ -1,0 +1,160 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x8C820000",
+    "0x03E00008",
+    "0x00000000",
+    "0x84820000",
+    "0x03E00008",
+    "0x00000000",
+    "0x94820000",
+    "0x03E00008",
+    "0x00000000",
+    "0x90820000",
+    "0x03E00008",
+    "0x00000000",
+    "0x80820000",
+    "0x03E00008",
+    "0x00000000",
+    "0x90820000",
+    "0x03E00008",
+    "0x00000000",
+    "0x03E00008",
+    "0xAC850000",
+    "0x03E00008",
+    "0xA4850000",
+    "0x03E00008",
+    "0xA0850000",
+    "0x8C83000C",
+    "0x8C82FFF8",
+    "0x03E00008",
+    "0x00621021",
+    "0x8CA20000",
+    "0x8C830000",
+    "0xAC820000",
+    "0x03E00008",
+    "0xACA30000",
+    "0x00052880",
+    "0x00A42821",
+    "0x8CA20000",
+    "0x03E00008",
+    "0x00000000",
+    "0x00063080",
+    "0x00052900",
+    "0x00A42821",
+    "0x00C53021",
+    "0x8CC20000",
+    "0x03E00008",
+    "0x00000000",
+    "0x3C020000",
+    "0x24420000",
+    "0x30840007",
+    "0x00042080",
+    "0x00822021",
+    "0x8C820000",
+    "0x03E00008",
+    "0x00000000"
+  ],
+  "data": {
+    "sections": {
+      ".data": 32
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 180,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 184,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "arr2",
+          "section": ".text",
+          "offset": 152
+        },
+        {
+          "name": "arr_idx",
+          "section": ".text",
+          "offset": 132
+        },
+        {
+          "name": "ld_c",
+          "section": ".text",
+          "offset": 36
+        },
+        {
+          "name": "ld_i",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "ld_off",
+          "section": ".text",
+          "offset": 96
+        },
+        {
+          "name": "ld_s",
+          "section": ".text",
+          "offset": 12
+        },
+        {
+          "name": "ld_sc",
+          "section": ".text",
+          "offset": 48
+        },
+        {
+          "name": "ld_uc",
+          "section": ".text",
+          "offset": 60
+        },
+        {
+          "name": "ld_us",
+          "section": ".text",
+          "offset": 24
+        },
+        {
+          "name": "st_c",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "st_i",
+          "section": ".text",
+          "offset": 72
+        },
+        {
+          "name": "st_s",
+          "section": ".text",
+          "offset": 80
+        },
+        {
+          "name": "swap",
+          "section": ".text",
+          "offset": 112
+        },
+        {
+          "name": "tbl",
+          "section": ".text",
+          "offset": 180
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

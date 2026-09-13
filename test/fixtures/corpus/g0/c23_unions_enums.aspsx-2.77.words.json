@@ -1,0 +1,117 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x8C830000",
+    "0x24020005",
+    "0x1062000F",
+    "0x2C620006",
+    "0x10400005",
+    "0x24020004",
+    "0x10620008",
+    "0x2402FFFF",
+    "0x08000000",
+    "0x00000000",
+    "0x24020064",
+    "0x1062000B",
+    "0x00000000",
+    "0x08000000",
+    "0x2402FFFF",
+    "0x8C820004",
+    "0x08000000",
+    "0x00000000",
+    "0x8C840004",
+    "0x0C000000",
+    "0x00000000",
+    "0x08000000",
+    "0x00000000",
+    "0x8C820004",
+    "0x00000000",
+    "0x0002102B",
+    "0x8FBF0010",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x308200FF",
+    "0x00042602",
+    "0x00042600",
+    "0x03E00008",
+    "0x00441025",
+    "0x0004102B",
+    "0x03E00008",
+    "0x00021080"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 40,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 112
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 60,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 112
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 72,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 112
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 84,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixsfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 92,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 112
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "bytes_of",
+          "section": ".text",
+          "offset": 128
+        },
+        {
+          "name": "describe",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "kind_size",
+          "section": ".text",
+          "offset": 148
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x03E00008",
+    "0x24820001"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "otacon",
+          "section": ".text",
+          "offset": 0
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

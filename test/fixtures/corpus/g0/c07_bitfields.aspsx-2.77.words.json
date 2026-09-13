@@ -1,0 +1,80 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x8C820000",
+    "0x03E00008",
+    "0x30420001",
+    "0x2403FFF1",
+    "0x30A50007",
+    "0x8C820000",
+    "0x00052840",
+    "0x00431024",
+    "0x00451025",
+    "0x03E00008",
+    "0xAC820000",
+    "0x8C820000",
+    "0x00000000",
+    "0x000215C0",
+    "0x03E00008",
+    "0x000216C3",
+    "0x3C03FFFF",
+    "0x346301FF",
+    "0x30A5007F",
+    "0x8C820000",
+    "0x00052A40",
+    "0x00431024",
+    "0x00451025",
+    "0xAC820000",
+    "0xA4860002",
+    "0x8C820000",
+    "0x2403FE0F",
+    "0x00431024",
+    "0x344201D0",
+    "0x03E00008",
+    "0xAC820000",
+    "0x8C820000",
+    "0x00000000",
+    "0x000219C0",
+    "0x30630700",
+    "0x00021242",
+    "0x3042007F",
+    "0x03E00008",
+    "0x00621025"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "combine",
+          "section": ".text",
+          "offset": 124
+        },
+        {
+          "name": "get_depth",
+          "section": ".text",
+          "offset": 44
+        },
+        {
+          "name": "is_visible",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "pack",
+          "section": ".text",
+          "offset": 64
+        },
+        {
+          "name": "set_layer",
+          "section": ".text",
+          "offset": 12
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

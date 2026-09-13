@@ -1,0 +1,202 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x00052840",
+    "0x00A42821",
+    "0x84A20000",
+    "0x03E00008",
+    "0x00000000",
+    "0x00052840",
+    "0x00A42821",
+    "0x94A20000",
+    "0x03E00008",
+    "0x00000000",
+    "0x00052840",
+    "0x00A42821",
+    "0x03E00008",
+    "0xA4A60000",
+    "0x00052840",
+    "0x00A42821",
+    "0x03E00008",
+    "0xA4A60000",
+    "0x84820000",
+    "0x84830002",
+    "0x84840004",
+    "0x00431021",
+    "0x03E00008",
+    "0x00441021",
+    "0x94820000",
+    "0x94830002",
+    "0x94840004",
+    "0x00431021",
+    "0x03E00008",
+    "0x00441021",
+    "0x00042400",
+    "0x00042403",
+    "0x00052C00",
+    "0x00052C03",
+    "0x0085102A",
+    "0x10400003",
+    "0x00A4102A",
+    "0x03E00008",
+    "0x2402FFFF",
+    "0x03E00008",
+    "0x00000000",
+    "0x3084FFFF",
+    "0x30A5FFFF",
+    "0x0085102B",
+    "0x10400003",
+    "0x00A4102B",
+    "0x03E00008",
+    "0x2402FFFF",
+    "0x03E00008",
+    "0x00000000",
+    "0x3C025555",
+    "0x34425556",
+    "0x00820018",
+    "0x000417C3",
+    "0x30850003",
+    "0x00052840",
+    "0x3C060000",
+    "0x24C60000",
+    "0x00003810",
+    "0x00E21023",
+    "0x00021840",
+    "0x00621821",
+    "0x00831823",
+    "0x00031840",
+    "0x3C020000",
+    "0x24420000",
+    "0x00621821",
+    "0x94620000",
+    "0x00A62821",
+    "0x00441821",
+    "0x24840001",
+    "0x30840003",
+    "0x00042040",
+    "0x00862021",
+    "0xA4A30000",
+    "0x94830000",
+    "0x00000000",
+    "0x00431023",
+    "0x00021400",
+    "0x03E00008",
+    "0x00021403",
+    "0x2402FFFF",
+    "0xA482FFFE",
+    "0x2402FFFE",
+    "0x03E00008",
+    "0xA482FFFC"
+  ],
+  "data": {
+    "sections": {
+      ".sdata": 6
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 224,
+        "kind": "HI16",
+        "target": {
+          "symbol": "codec_mask",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 228,
+        "kind": "LO16",
+        "target": {
+          "symbol": "codec_mask",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 256,
+        "kind": "HI16",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 260,
+        "kind": "LO16",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "codec_freq",
+          "section": ".sdata",
+          "offset": 0
+        },
+        {
+          "name": "compare_signed",
+          "section": ".text",
+          "offset": 120
+        },
+        {
+          "name": "compare_unsigned",
+          "section": ".text",
+          "offset": 164
+        },
+        {
+          "name": "load_signed",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "load_unsigned",
+          "section": ".text",
+          "offset": 20
+        },
+        {
+          "name": "negative_half",
+          "section": ".text",
+          "offset": 324
+        },
+        {
+          "name": "store_half",
+          "section": ".text",
+          "offset": 40
+        },
+        {
+          "name": "store_uhalf",
+          "section": ".text",
+          "offset": 56
+        },
+        {
+          "name": "tune",
+          "section": ".text",
+          "offset": 200
+        },
+        {
+          "name": "widen_signed",
+          "section": ".text",
+          "offset": 72
+        },
+        {
+          "name": "widen_unsigned",
+          "section": ".text",
+          "offset": 96
+        }
+      ],
+      "commons": [
+        {
+          "name": "codec_mask",
+          "section": ".sbss",
+          "size": 8
+        }
+      ],
+      "locals": []
+    }
+  }
+}

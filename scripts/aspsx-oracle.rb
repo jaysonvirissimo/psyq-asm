@@ -26,6 +26,10 @@
 # symbols. Those come from the repository's own MIT sources, so they are safe to
 # commit. A source the real assembler rejects is reported and skipped.
 #
+# --version names the version of the ASPSX.EXE given (2.81 by default): the
+# ground truth replayed is that version's, and its companions are named
+# <source>.words.json for 2.81 and <source>.aspsx-<version>.words.json otherwise.
+#
 # With --files, only the .s files directly in <dir> are recorded, beside
 # themselves: the -G value comes from a first-line comment naming one (as in
 # probes and regression fixtures), otherwise 0 for a name ending in -g0 and 8
@@ -38,20 +42,20 @@ require 'optparse'
 require 'tmpdir'
 
 ROOT = File.expand_path('..', __dir__)
-ORIGIN = 'ASPSX 2.81 via scripts/aspsx-oracle.rb'
 IMAGE = 'psyq-asm-aspsx-wine'
 DOCKERFILE = File.join(ROOT, 'scripts', 'aspsx-wine.Dockerfile')
 
-options = { wine: 'wine' }
+options = { wine: 'wine', version: '2.81' }
 parser = OptionParser.new do |o|
   o.banner = 'usage: ruby scripts/aspsx-oracle.rb --aspsx <ASPSX.EXE> [--docker | --wine <command>] ' \
-             '[--only <glob>] [--files <dir>] [--check-only]'
+             '[--version 2.77|2.81] [--only <glob>] [--files <dir>] [--check-only]'
   o.on('--aspsx FILE') { |v| options[:aspsx] = File.expand_path(v) }
   o.on('--docker') { options[:docker] = true }
   o.on('--wine COMMAND') { |v| options[:wine] = v }
   o.on('--only GLOB') { |v| options[:only] = v }
   o.on('--files DIR') { |v| options[:files] = File.expand_path(v) }
   o.on('--check-only') { options[:check_only] = true }
+  o.on('--version VERSION', %w[2.77 2.81]) { |v| options[:version] = v }
 end
 begin
   parser.parse!
@@ -118,8 +122,10 @@ class Assembler
   end
 end
 
-def ground_truth
-  Dir.glob(File.join(ROOT, 'test', 'fixtures', 'aspsx', '*.json')).sort.map { |f| JSON.parse(File.read(f)) }
+def ground_truth(version)
+  Dir.glob(File.join(ROOT, 'test', 'fixtures', 'aspsx', '*.json')).sort
+     .map { |f| JSON.parse(File.read(f)) }
+     .select { |fixture| fixture['aspsxVersion'] == version }
 end
 
 # [source path, relative to ROOT or absolute, -G value]
@@ -147,7 +153,9 @@ Dir.mktmpdir('aspsx-oracle') do |work|
   begin
     # maspsx passed -G only when its fixture named one, and every fixture
     # without one imported as gpSize 0.
-    failures = ground_truth.filter_map do |fixture|
+    truth = ground_truth(options[:version])
+    abort "no ground truth for ASPSX #{options[:version]}" if truth.empty?
+    failures = truth.filter_map do |fixture|
       flags = fixture['gpSize'].zero? ? [] : ["-G#{fixture['gpSize']}"]
       object, error = assembler.assemble(fixture['source'], flags)
       words = object && object['words']
@@ -156,10 +164,10 @@ Dir.mktmpdir('aspsx-oracle') do |work|
       "#{fixture['name']}: #{error || "got #{words.inspect}, expected #{fixture['expectedWords'].inspect}"}"
     end
     if failures.any?
-      warn 'the assembler does not reproduce the ASPSX 2.81 ground truth; nothing recorded:', *failures
+      warn "the assembler does not reproduce the ASPSX #{options[:version]} ground truth; nothing recorded:", *failures
       exit 1
     end
-    puts "ground truth: all #{ground_truth.length} fixtures reproduced"
+    puts "ground truth: all #{truth.length} ASPSX #{options[:version]} fixtures reproduced"
     exit 0 if options[:check_only]
 
     written = 0
@@ -179,8 +187,9 @@ Dir.mktmpdir('aspsx-oracle') do |work|
         warn "skipped #{path}: #{error}"
         next
       end
-      record = { 'origin' => ORIGIN, 'gpSize' => gp, 'words' => object.fetch('words'), 'data' => object.fetch('data') }
-      File.write(File.expand_path(path.sub(/\.s\z/, '.words.json'), ROOT), "#{JSON.pretty_generate(record)}\n")
+      record = { 'origin' => "ASPSX #{options[:version]} via scripts/aspsx-oracle.rb", 'gpSize' => gp, 'words' => object.fetch('words'), 'data' => object.fetch('data') }
+      suffix = options[:version] == '2.81' ? '.words.json' : ".aspsx-#{options[:version]}.words.json"
+      File.write(File.expand_path(path.sub(/\.s\z/, suffix), ROOT), "#{JSON.pretty_generate(record)}\n")
       written += 1
       puts "#{path}: #{object.fetch('words').length} words"
     end

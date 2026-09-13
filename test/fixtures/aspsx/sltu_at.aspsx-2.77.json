@@ -1,0 +1,16 @@
+{
+  "name": "sltu_at",
+  "origin": "mkst/maspsx aspsx/fixtures/sltu_at.yaml @ 3629944",
+  "aspsxVersion": "2.77",
+  "sourceFile": "SLTU_AT.S",
+  "source": "\tli  $3,100\r\n\tsltu    $3,$3,-23\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0x24030064",
+    "0x2C63FFE9"
+  ],
+  "disassembly": [
+    "addiu $v1, $zero, 0x64",
+    "sltiu $v1, $v1, -0x17"
+  ]
+}

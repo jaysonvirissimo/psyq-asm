@@ -1,0 +1,104 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x3C020000",
+    "0x24420000",
+    "0x3C030000",
+    "0x24630000",
+    "0x3C040000",
+    "0x24840000",
+    "0x3C050000",
+    "0x24A50000"
+  ],
+  "data": {
+    "sections": {
+      ".bss": 23
+    },
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 16,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 15
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 20,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 15
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 24,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 28,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": [
+        {
+          "name": "reserved",
+          "section": ".bss",
+          "offset": 0
+        }
+      ]
+    }
+  }
+}

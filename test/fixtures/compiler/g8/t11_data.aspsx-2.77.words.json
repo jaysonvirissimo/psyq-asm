@@ -1,0 +1,313 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x3C030000",
+    "0x24630000",
+    "0x00831821",
+    "0x30840001",
+    "0x00042040",
+    "0x8F850000",
+    "0x8F820000",
+    "0x90630000",
+    "0x00A22821",
+    "0x3C020000",
+    "0x24420000",
+    "0x00822021",
+    "0x84820000",
+    "0x00A32821",
+    "0x03E00008",
+    "0x00A21021",
+    "0x3C020000",
+    "0x03E00008",
+    "0x24420000",
+    "0x8F840000",
+    "0x8F850000",
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x00803021",
+    "0x0C000000",
+    "0x00A03821",
+    "0x8FBF0010",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x8F850000",
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x0C000000",
+    "0x00000000",
+    "0x8FBF0010",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x0C000000",
+    "0x00000000",
+    "0x8FBF0010",
+    "0x000217C2",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x0C000000",
+    "0x00000000",
+    "0x8FBF0010",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x0C000000",
+    "0x00000000",
+    "0x8FBF0010",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x3C022000",
+    "0x34420005",
+    "0x3C034202",
+    "0x3463A05F",
+    "0x03E00008",
+    "0x00000000"
+  ],
+  "data": {
+    "sections": {
+      ".rdata": 12,
+      ".sdata": 44
+    },
+    "relocations": [
+      {
+        "section": ".sdata",
+        "offset": 16,
+        "kind": "WORD32",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "symbol": "g_arr",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "LO16",
+        "target": {
+          "symbol": "g_arr",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 20,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 24,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 36,
+        "kind": "HI16",
+        "target": {
+          "section": ".sdata",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 40,
+        "kind": "LO16",
+        "target": {
+          "section": ".sdata",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 64,
+        "kind": "HI16",
+        "target": {
+          "section": ".sdata",
+          "offset": 36
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 72,
+        "kind": "LO16",
+        "target": {
+          "section": ".sdata",
+          "offset": 36
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 76,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 24
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 80,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 28
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 96,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__adddf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 120,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 32
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 132,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__addsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 164,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__ltsf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 196,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__fixdfsi",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 228,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsidf",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "consts",
+          "section": ".text",
+          "offset": 252
+        },
+        {
+          "name": "float_cmp",
+          "section": ".text",
+          "offset": 156
+        },
+        {
+          "name": "from_int",
+          "section": ".text",
+          "offset": 220
+        },
+        {
+          "name": "g_dbl",
+          "section": ".sdata",
+          "offset": 24
+        },
+        {
+          "name": "g_flt",
+          "section": ".sdata",
+          "offset": 32
+        },
+        {
+          "name": "g_int",
+          "section": ".sdata",
+          "offset": 0
+        },
+        {
+          "name": "g_small",
+          "section": ".sdata",
+          "offset": 8
+        },
+        {
+          "name": "g_str",
+          "section": ".sdata",
+          "offset": 16
+        },
+        {
+          "name": "get_dbl",
+          "section": ".text",
+          "offset": 76
+        },
+        {
+          "name": "get_flt",
+          "section": ".text",
+          "offset": 120
+        },
+        {
+          "name": "get_str",
+          "section": ".text",
+          "offset": 64
+        },
+        {
+          "name": "to_int",
+          "section": ".text",
+          "offset": 188
+        },
+        {
+          "name": "use_globals",
+          "section": ".text",
+          "offset": 0
+        }
+      ],
+      "commons": [
+        {
+          "name": "g_arr",
+          "section": ".bss",
+          "size": 100
+        }
+      ],
+      "locals": []
+    }
+  }
+}

@@ -10,6 +10,16 @@ A fidelity fix is not a breaking change even when it changes output.
 
 ## [Unreleased]
 
+### Added
+
+- `aspsxVersion: '2.77'` (`--aspsx-version 2.77` on the command line): ASPSX
+  2.77, the assembler in PsyQ 4.4's own `bin` directory, which addresses `la` of
+  small data with `lui`/`addiu` rather than through `$gp`. The maspsx ground
+  truth and every recorded companion now exist for both versions
+  (`*.aspsx-2.77.words.json`, `scripts/aspsx-oracle.rb --version`).
+- `npm run fuzz -- --version 2.77`, and `--sources <dir>` to compare a directory
+  of existing assembly instead of generated programs.
+
 ### Fidelity
 
 - A GTE command (`cop2`) that follows `lwc2`, `mtc2`, or `ctc2` within two words

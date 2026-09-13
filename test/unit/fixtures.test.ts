@@ -14,8 +14,10 @@ import { fromRoot } from '../helpers/paths.js';
 describe('ASPSX ground-truth fixtures', () => {
   const fixtures = loadAspsxFixtures();
 
-  it('imports every maspsx fixture, for ASPSX 2.81 only', () => {
-    expect(fixtures.map((f) => f.name)).toEqual([
+  it('imports every maspsx fixture, for ASPSX 2.77 and 2.81', () => {
+    const names = fixtures.filter((f) => f.aspsxVersion === '2.81').map((f) => f.name);
+    expect(fixtures.filter((f) => f.aspsxVersion === '2.77').map((f) => f.name)).toEqual(names);
+    expect(names).toEqual([
       'addu_at',
       'cfc2',
       'div',
@@ -32,7 +34,7 @@ describe('ASPSX ground-truth fixtures', () => {
       'sltu_at',
       'v0_at',
     ]);
-    for (const f of fixtures) expect(f.aspsxVersion).toBe('2.81');
+    expect(fixtures).toHaveLength(2 * names.length);
   });
 
   it('records well-formed words, one disassembly comment each, and the origin', () => {
@@ -48,7 +50,11 @@ describe('ASPSX ground-truth fixtures', () => {
   });
 
   it('keeps the upstream -G values and sources', () => {
-    expect(fixtures.filter((f) => f.gpSize !== 0).map((f) => [f.name, f.gpSize])).toEqual([
+    expect(
+      fixtures
+        .filter((f) => f.aspsxVersion === '2.81' && f.gpSize !== 0)
+        .map((f) => [f.name, f.gpSize]),
+    ).toEqual([
       ['gp', 999],
       ['gp_offset', 999],
       ['la', 999],
@@ -57,6 +63,9 @@ describe('ASPSX ground-truth fixtures', () => {
     const div = loadAspsxFixture('div');
     expect(div.source.trim()).toBe('div $2,$4,$6');
     expect(div.expectedWords.map(parseWord)[0]).toBe(0x0086001a);
+    // la is where the versions differ: 2.77 does not address small data through $gp.
+    expect(loadAspsxFixture('la', '2.77').expectedWords).toHaveLength(2);
+    expect(loadAspsxFixture('la').expectedWords).toHaveLength(1);
     expect(() => loadAspsxFixture('shadow-moses')).toThrow('no ASPSX fixture named shadow-moses');
   });
 });

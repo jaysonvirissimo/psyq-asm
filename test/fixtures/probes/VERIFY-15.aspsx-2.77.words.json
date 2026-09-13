@@ -1,0 +1,64 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x3C010000",
+    "0x00230821",
+    "0x8C220000",
+    "0x3C010000",
+    "0x00230821",
+    "0xAC220000"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 0,
+        "kind": "HI16",
+        "target": {
+          "symbol": "g",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "LO16",
+        "target": {
+          "symbol": "g",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "HI16",
+        "target": {
+          "symbol": "g",
+          "addend": 2
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 20,
+        "kind": "LO16",
+        "target": {
+          "symbol": "g",
+          "addend": 2
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [],
+      "commons": [
+        {
+          "name": "g",
+          "section": ".sbss",
+          "size": 4
+        }
+      ],
+      "locals": []
+    }
+  }
+}

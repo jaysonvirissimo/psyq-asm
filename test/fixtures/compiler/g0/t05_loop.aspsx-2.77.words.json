@@ -1,0 +1,84 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x00003021",
+    "0x10A00007",
+    "0x24A3FFFF",
+    "0x2405FFFF",
+    "0x8C820000",
+    "0x24840004",
+    "0x2463FFFF",
+    "0x1465FFFC",
+    "0x00C23021",
+    "0x03E00008",
+    "0x00C01021",
+    "0x00001821",
+    "0x18A00007",
+    "0x00603021",
+    "0x8C820000",
+    "0x24630001",
+    "0x00C23021",
+    "0x0065102A",
+    "0x1440FFFB",
+    "0x24840004",
+    "0x03E00008",
+    "0x00C01021",
+    "0x00001021",
+    "0x00441021",
+    "0x2484FFFF",
+    "0x1C80FFFE",
+    "0x00441021",
+    "0x03E00008",
+    "0x00441023",
+    "0x08000000",
+    "0x00A01021",
+    "0xA4860000",
+    "0x24840002",
+    "0x00A01021",
+    "0x1C40FFFC",
+    "0x24A5FFFF",
+    "0x03E00008",
+    "0x00000000"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 116,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 136
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "count_down",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "fill",
+          "section": ".text",
+          "offset": 116
+        },
+        {
+          "name": "sum",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "sum_for",
+          "section": ".text",
+          "offset": 44
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

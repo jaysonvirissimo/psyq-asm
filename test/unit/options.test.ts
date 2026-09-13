@@ -17,13 +17,13 @@ describe('validateAssembleOptions', () => {
     expect(
       validateAssembleOptions({
         gpSize: 999,
-        aspsxVersion: '2.81',
+        aspsxVersion: '2.77',
         partialDivExpansion: true,
         filename: 'shadow moses.s',
       }),
     ).toEqual({
       gpSize: 999,
-      aspsxVersion: '2.81',
+      aspsxVersion: '2.77',
       partialDivExpansion: true,
       filename: 'shadow moses.s',
     });
@@ -37,7 +37,7 @@ describe('validateAssembleOptions', () => {
     [{ gpSize: -1 }, 'gpSize is required and must be a non-negative integer.'],
     [{ gpSize: 1.5 }, 'gpSize is required and must be a non-negative integer.'],
     [{ gpSize: '8' }, 'gpSize is required and must be a non-negative integer.'],
-    [{ gpSize: 0, aspsxVersion: '2.56' }, `aspsxVersion must be '2.81', not "2.56".`],
+    [{ gpSize: 0, aspsxVersion: '2.56' }, `aspsxVersion must be '2.77' or '2.81', not "2.56".`],
     [
       { gpSize: 0, partialDivExpansion: 'yes' },
       'partialDivExpansion must be a boolean, not "yes".',

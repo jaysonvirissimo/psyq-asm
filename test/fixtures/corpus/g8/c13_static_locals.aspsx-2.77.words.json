@@ -1,0 +1,322 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x03E00008",
+    "0x00041040",
+    "0x8F820000",
+    "0x00000000",
+    "0x24420001",
+    "0xAF820000",
+    "0x3C020000",
+    "0x24450000",
+    "0x2C820004",
+    "0x10400002",
+    "0x00001821",
+    "0x00041880",
+    "0x00651021",
+    "0x8C420000",
+    "0x03E00008",
+    "0x00000000",
+    "0x97830000",
+    "0x8F820000",
+    "0x24630002",
+    "0xA7830000",
+    "0x00031C00",
+    "0x00031C03",
+    "0x00431021",
+    "0xAF820000",
+    "0x03E00008",
+    "0x00000000",
+    "0x3C020000",
+    "0x24420000",
+    "0x3084007F",
+    "0x00822021",
+    "0x24030078",
+    "0x03E00008",
+    "0xA0830000",
+    "0x27BDFFE8",
+    "0xAFB00010",
+    "0x00808021",
+    "0x8F840000",
+    "0xAFBF0014",
+    "0x0C000000",
+    "0x32100007",
+    "0x3C030000",
+    "0x24630000",
+    "0x00108040",
+    "0x02038021",
+    "0x86030000",
+    "0x8FBF0014",
+    "0x8FB00010",
+    "0x00621021",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x3C020000",
+    "0x24430000",
+    "0x00002021",
+    "0x90420000",
+    "0x00000000",
+    "0x10400006",
+    "0x24630001",
+    "0x24840001",
+    "0x90620000",
+    "0x00000000",
+    "0x1440FFFC",
+    "0x24630001",
+    "0x03E00008",
+    "0x00801021"
+  ],
+  "data": {
+    "sections": {
+      ".bss": 128,
+      ".data": 16,
+      ".rdata": 33,
+      ".sbss": 8,
+      ".sdata": 28
+    },
+    "relocations": [
+      {
+        "section": ".rdata",
+        "offset": 0,
+        "kind": "WORD32",
+        "target": {
+          "section": ".sdata",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 4,
+        "kind": "WORD32",
+        "target": {
+          "section": ".sdata",
+          "offset": 12
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 8,
+        "kind": "WORD32",
+        "target": {
+          "section": ".sdata",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 12,
+        "kind": "WORD32",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sbss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 20,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sbss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 24,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 28,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 64,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sbss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 68,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 24
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 76,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sbss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 92,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sdata",
+          "offset": 24
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 104,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 108,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 144,
+        "kind": "GPREL16",
+        "target": {
+          "section": ".sbss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 152,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 160,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 164,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 200,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 204,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 212,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 16
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "fib_table",
+          "section": ".text",
+          "offset": 132
+        },
+        {
+          "name": "literal_length",
+          "section": ".text",
+          "offset": 200
+        },
+        {
+          "name": "name_of",
+          "section": ".text",
+          "offset": 8
+        },
+        {
+          "name": "next_id",
+          "section": ".text",
+          "offset": 64
+        },
+        {
+          "name": "scratch",
+          "section": ".text",
+          "offset": 104
+        }
+      ],
+      "commons": [],
+      "locals": [
+        {
+          "name": "buffer",
+          "section": ".bss",
+          "offset": 0
+        },
+        {
+          "name": "calls",
+          "section": ".sbss",
+          "offset": 4
+        },
+        {
+          "name": "helper_twice",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "step.7",
+          "section": ".sbss",
+          "offset": 0
+        }
+      ]
+    }
+  }
+}

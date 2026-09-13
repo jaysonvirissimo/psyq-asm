@@ -1,0 +1,39 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x8C820000",
+    "0x03E00008",
+    "0x2442FFFF",
+    "0x03E00008",
+    "0x2402FFBA",
+    "0x94820004",
+    "0x03E00008",
+    "0x30420037"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "flagged",
+          "section": ".text",
+          "offset": 20
+        },
+        {
+          "name": "freq_delta",
+          "section": ".text",
+          "offset": 12
+        },
+        {
+          "name": "rations_left",
+          "section": ".text",
+          "offset": 0
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

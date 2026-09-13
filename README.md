@@ -125,33 +125,33 @@ no nop into them (no loads, `mflo`/`mfhi`, or `mfc2`/`cfc2` followed by a reader
 
 ## The fidelity contract
 
-`psyq-asm` emulates one version pair: PsyQ 4.4 `cc1psx` output assembled by
-ASPSX 2.81, invoked as `aspsx -G<n>`. The rule set is
+`psyq-asm` emulates PsyQ 4.4 `cc1psx` output assembled by ASPSX 2.81 (the
+default) or ASPSX 2.77 (`aspsxVersion: '2.77'`), invoked as `aspsx -G<n>`. The rule set is
 [docs/ASPSX-2.81.md](docs/ASPSX-2.81.md), with the evidence for every rule.
 
 What is verified today:
 
-- all 15 ASPSX 2.81 ground-truth word lists from
+- all 15 ASPSX 2.81 and 15 ASPSX 2.77 ground-truth word lists from
   [maspsx](https://github.com/mkst/maspsx) assemble word for word;
 - the 2.81-applicable unit tests of maspsx are ported and pass;
-- all 41 psyq-wasm compiler fixtures (t01 to t20 at `-G 0` and `-G 8`, plus `t07_struct` compiled with `-g`), the 75 files of a corpus of 25 original C programs (`-G 0`, `-G 8`, and `-G 8 -g`), and all 20 verification probes match what real ASPSX 2.81 emits for them (recorded with `scripts/aspsx-oracle.rb`): the words exactly, and the section sizes, relocations, and symbols; every word has provenance;
+- all 41 psyq-wasm compiler fixtures (t01 to t20 at `-G 0` and `-G 8`, plus `t07_struct` compiled with `-g`), the 81 files of a corpus of 27 original C programs (`-G 0`, `-G 8`, and `-G 8 -g`), and all 24 verification probes match what real ASPSX 2.81 and 2.77 emit for them (recorded with `scripts/aspsx-oracle.rb`): the words exactly, and the section sizes, relocations, and symbols; every word has provenance;
 - seeded fuzzing: 500 generated C programs (`npm run fuzz`, seeds 1 to 500), each compiled at `-G 0`, `-G 8`, and `-G 8 -g`, match the real ASPSX 2.81 in the same way;
 - property tests: every instruction encodes and decodes symmetrically, decoded
   programs re-assemble to their words, output is deterministic, and no input
   makes `assemble` throw.
 
-What is not verified yet: nothing in the rule set. Real ASPSX 2.81 output settled all 20 verification items, listed at the end of it. A differential oracle,
+What is not verified yet: nothing in the rule set. Real ASPSX 2.81 output settled all 24 verification items, listed at the end of it. A differential oracle,
 which compares assembled words with an already-matched decompilation's original
 executable, is in place (`scripts/oracle.mjs`).
 
 ## Options
 
-| Option                | Default     | Meaning                                                |
-| --------------------- | ----------- | ------------------------------------------------------ |
-| `gpSize`              | required    | The `-G` small-data threshold: a non-negative integer. |
-| `aspsxVersion`        | `'2.81'`    | The only accepted value.                               |
-| `partialDivExpansion` | `false`     | Reproduce `ASPSX -0`: `div`/`rem` without trap checks. |
-| `filename`            | `'input.s'` | The name diagnostics use. A single path segment.       |
+| Option                | Default     | Meaning                                                                                                                           |
+| --------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `gpSize`              | required    | The `-G` small-data threshold: a non-negative integer.                                                                            |
+| `aspsxVersion`        | `'2.81'`    | Or `'2.77'`, the ASPSX in PsyQ 4.4's own `bin` directory, which addresses `la` of small data with `lui`/`addiu` instead of `$gp`. |
+| `partialDivExpansion` | `false`     | Reproduce `ASPSX -0`: `div`/`rem` without trap checks.                                                                            |
+| `filename`            | `'input.s'` | The name diagnostics use. A single path segment.                                                                                  |
 
 ## Output model
 

@@ -1,0 +1,227 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x27BDFFE8",
+    "0xAFBF0010",
+    "0x0C000000",
+    "0x24850001",
+    "0x8FBF0010",
+    "0x00021040",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x00850018",
+    "0x27BDFFE0",
+    "0x2402002A",
+    "0x00853021",
+    "0x00853823",
+    "0xAFBF0018",
+    "0xAFA20014",
+    "0x00001812",
+    "0x0C000000",
+    "0xAFA30010",
+    "0x8FBF0018",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0020",
+    "0x27BDFFE0",
+    "0x24020005",
+    "0x27A40010",
+    "0xAFBF0018",
+    "0x0C000000",
+    "0xAFA20010",
+    "0x8FA20010",
+    "0x8FBF0018",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0020",
+    "0x27BDFFE8",
+    "0xAFB00010",
+    "0x00808021",
+    "0xAFBF0014",
+    "0x0C000000",
+    "0x24050001",
+    "0x02002021",
+    "0x24050002",
+    "0x0C000000",
+    "0x00408021",
+    "0x02002021",
+    "0x0C000000",
+    "0x00402821",
+    "0x8FBF0014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x00041040",
+    "0x00441021",
+    "0x03E00008",
+    "0x24420001",
+    "0x27BDFFE8",
+    "0xAFB00010",
+    "0xAFBF0014",
+    "0x0C000000",
+    "0x00A08021",
+    "0x02002021",
+    "0x0C000000",
+    "0x00408021",
+    "0x02021021",
+    "0x8FBF0014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x27BDFFE8",
+    "0xAFB00010",
+    "0x00808021",
+    "0x2A020002",
+    "0x14400007",
+    "0xAFBF0014",
+    "0x0C000000",
+    "0x2604FFFF",
+    "0x02020018",
+    "0x00001012",
+    "0x08000000",
+    "0x00000000",
+    "0x24020001",
+    "0x8FBF0014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0018"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 64,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee6",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 104,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "take_ptr",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 148,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 164,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 176,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "callee",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 228,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 200
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 240,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 200
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 292,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 268
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 308,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 320
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "call1",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "call_local",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "call_many",
+          "section": ".text",
+          "offset": 32
+        },
+        {
+          "name": "chain",
+          "section": ".text",
+          "offset": 132
+        },
+        {
+          "name": "recursive",
+          "section": ".text",
+          "offset": 268
+        },
+        {
+          "name": "use_helper",
+          "section": ".text",
+          "offset": 216
+        }
+      ],
+      "commons": [],
+      "locals": [
+        {
+          "name": "helper",
+          "section": ".text",
+          "offset": 200
+        }
+      ]
+    }
+  }
+}

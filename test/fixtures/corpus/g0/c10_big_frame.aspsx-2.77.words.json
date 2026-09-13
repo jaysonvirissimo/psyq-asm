@@ -1,0 +1,115 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x340C9C58",
+    "0x03ACE823",
+    "0x019D6821",
+    "0xADB0FFF8",
+    "0x00808021",
+    "0x27A40010",
+    "0xADBFFFFC",
+    "0x0C000000",
+    "0x34059C40",
+    "0x32107FFF",
+    "0x27A20010",
+    "0x00508021",
+    "0x34038000",
+    "0x00431021",
+    "0x340C9C58",
+    "0x019D6821",
+    "0x92030000",
+    "0x90421C3F",
+    "0x8DBFFFFC",
+    "0x8DB0FFF8",
+    "0x00621021",
+    "0x03E00008",
+    "0x03ACE821",
+    "0x3C0C0001",
+    "0x358C3880",
+    "0x03ACE823",
+    "0x24054E1F",
+    "0x3C020001",
+    "0x3442387C",
+    "0x03A21821",
+    "0x00041080",
+    "0x00441021",
+    "0x000210C0",
+    "0x00441023",
+    "0x00021100",
+    "0x00441021",
+    "0x00021140",
+    "0x00441023",
+    "0xAC620000",
+    "0x2463FFFC",
+    "0x24A5FFFF",
+    "0x04A1FFFC",
+    "0x00441023",
+    "0x30823FFF",
+    "0x00021080",
+    "0x03A21021",
+    "0x8C420000",
+    "0x3C0C0001",
+    "0x358C3880",
+    "0x03E00008",
+    "0x03ACE821",
+    "0x27BDF7E8",
+    "0x308203FF",
+    "0x00021040",
+    "0x27A30010",
+    "0x00621021",
+    "0xAFBF0810",
+    "0xA4440000",
+    "0x00602021",
+    "0x0C000000",
+    "0x24050800",
+    "0x8FBF0810",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0818"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 28,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "fill",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 236,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "fill",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "big_buffer",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "huge_locals",
+          "section": ".text",
+          "offset": 92
+        },
+        {
+          "name": "medium_frame",
+          "section": ".text",
+          "offset": 204
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

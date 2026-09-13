@@ -1,0 +1,59 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x03E00008",
+    "0x24820001",
+    "0x00851021",
+    "0x03E00008",
+    "0x00461023",
+    "0x00041023",
+    "0x00451024",
+    "0x00852026",
+    "0x03E00008",
+    "0x00441025",
+    "0x3C020001",
+    "0x344286A0",
+    "0x03E00008",
+    "0x00821021",
+    "0x3C02EDCB",
+    "0x3442A988",
+    "0x03E00008",
+    "0x00821021"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "add3",
+          "section": ".text",
+          "offset": 8
+        },
+        {
+          "name": "add_one",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "addk",
+          "section": ".text",
+          "offset": 40
+        },
+        {
+          "name": "neg_and",
+          "section": ".text",
+          "offset": 20
+        },
+        {
+          "name": "uaddk",
+          "section": ".text",
+          "offset": 56
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

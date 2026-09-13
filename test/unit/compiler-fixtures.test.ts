@@ -2,13 +2,16 @@
 /**
  * Every compiled fixture assembles without error at its -G value, and every
  * code word it produces carries provenance. When the real assembler's output
- * is recorded beside a fixture (<name>.words.json, from scripts/aspsx-oracle.rb),
- * psyq-asm must reproduce it: the .text words exactly, and the section sizes,
- * relocations, and symbols it records. Every corpus file must have one.
+ * is recorded beside a fixture (<name>.words.json for ASPSX 2.81 and
+ * <name>.aspsx-2.77.words.json for 2.77, from scripts/aspsx-oracle.rb),
+ * psyq-asm emulating that version must reproduce it: the .text words exactly,
+ * and the section sizes, relocations, and symbols it records. Every corpus file
+ * must have both.
  */
 import { describe, expect, it } from 'vitest';
 import { assemble } from '../../src/asm/assemble.js';
-import type { AssembleResult } from '../../src/public-types.js';
+import { SUPPORTED_ASPSX_VERSIONS } from '../../src/options.js';
+import type { AspsxVersion, AssembleResult } from '../../src/public-types.js';
 import { expectMatchesCompanion, loadCompanion } from '../helpers/companions.js';
 import {
   loadCompilerFixtures,
@@ -16,8 +19,12 @@ import {
   type CompilerFixture,
 } from '../helpers/fixtures.js';
 
-function assembleFixture(name: string, fixture: CompilerFixture): AssembleResult {
-  const result = assemble(fixture.text, { gpSize: fixture.gpSize, filename: `${name}.s` });
+function assembleFixture(fixture: CompilerFixture, aspsxVersion: AspsxVersion): AssembleResult {
+  const result = assemble(fixture.text, {
+    gpSize: fixture.gpSize,
+    filename: `${fixture.name}.s`,
+    aspsxVersion,
+  });
   expect(result.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
   const sections = result.success ? result.object.sections : [];
   for (const section of sections.filter((s) => s.kind === 'code')) {
@@ -26,10 +33,16 @@ function assembleFixture(name: string, fixture: CompilerFixture): AssembleResult
   return result;
 }
 
+function cases(fixtures: readonly CompilerFixture[]) {
+  return fixtures.flatMap((fixture) =>
+    SUPPORTED_ASPSX_VERSIONS.map((version) => [fixture.name, version, fixture] as const),
+  );
+}
+
 describe('compiler fixtures', () => {
-  it.each(loadCompilerFixtures().map((f) => [f.name, f] as const))('%s', (name, fixture) => {
-    const result = assembleFixture(name, fixture);
-    const companion = loadCompanion(fixture.path);
+  it.each(cases(loadCompilerFixtures()))('%s (ASPSX %s)', (_, version, fixture) => {
+    const result = assembleFixture(fixture, version);
+    const companion = loadCompanion(fixture.path, version);
     if (companion !== undefined) {
       expect(companion.gpSize).toBe(fixture.gpSize);
       expectMatchesCompanion(result, companion);
@@ -38,10 +51,10 @@ describe('compiler fixtures', () => {
 });
 
 describe('corpus', () => {
-  it.each(loadCorpusFixtures().map((f) => [f.name, f] as const))('%s', (name, fixture) => {
-    const result = assembleFixture(name, fixture);
-    const companion = loadCompanion(fixture.path);
-    expect(companion, `${name} has the real assembler's output recorded`).toBeDefined();
+  it.each(cases(loadCorpusFixtures()))('%s (ASPSX %s)', (name, version, fixture) => {
+    const result = assembleFixture(fixture, version);
+    const companion = loadCompanion(fixture.path, version);
+    expect(companion, `${name} has ASPSX ${version}'s output recorded`).toBeDefined();
     if (companion === undefined) return;
     expect(companion.gpSize).toBe(fixture.gpSize);
     expectMatchesCompanion(result, companion);

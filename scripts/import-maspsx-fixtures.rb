@@ -8,8 +8,9 @@
 #
 # maspsx (https://github.com/mkst/maspsx, MIT) records, for each small assembly
 # source under aspsx/ASM/, the .text words that real ASPSX binaries produce, keyed
-# by ASPSX version, in aspsx/fixtures/*.yaml. This keeps the "2.81" case of each
-# and writes test/fixtures/aspsx/<name>.json with the source bytes verbatim, the
+# by ASPSX version, in aspsx/fixtures/*.yaml. This keeps the "2.81" and "2.77"
+# cases of each, writing test/fixtures/aspsx/<name>.json (2.81) and
+# <name>.aspsx-2.77.json, each with the source bytes verbatim, the
 # -G value, the expected words, and the disassembly comments maspsx generated for
 # them. Identical expectations share YAML anchors upstream; the comments are read
 # from the raw text because YAML parsing discards them.
@@ -18,7 +19,7 @@ require 'fileutils'
 require 'json'
 require 'yaml'
 
-VERSION = '2.81'
+VERSIONS = %w[2.81 2.77].freeze
 OUT = File.expand_path('../test/fixtures/aspsx', __dir__)
 
 clone, commit = ARGV
@@ -63,15 +64,6 @@ paths.each do |path|
   name = File.basename(path, '.yaml')
   text = File.read(path)
   fixture = YAML.safe_load(text, aliases: true)
-  words = fixture.fetch('cases')[VERSION] || fail!("#{name}: no #{VERSION} case")
-  bad = words.reject { |w| w.match?(/\A0x[0-9A-F]{8}\z/) }
-  fail!("#{name}: malformed words #{bad.inspect}") unless bad.empty?
-
-  comments = comments_by_case(text)[VERSION]
-  unless comments && comments.length == words.length
-    fail!("#{name}: could not read one comment per word")
-  end
-
   options = fixture['options'] || {}
   extra = options['extra_flags'].to_s
   fail!("#{name}: extra_flags #{extra.inspect} are not supported") unless extra.empty?
@@ -89,16 +81,28 @@ paths.each do |path|
   source = File.binread(File.join(clone, 'aspsx', source_path)).force_encoding(Encoding::UTF_8)
   fail!("#{name}: source is not valid UTF-8") unless source.valid_encoding?
 
-  document = {
-    name: name,
-    origin: "mkst/maspsx aspsx/fixtures/#{name}.yaml @ #{commit}",
-    aspsxVersion: VERSION,
-    sourceFile: File.basename(source_path),
-    source: source,
-    gpSize: gp_size,
-    expectedWords: words,
-    disassembly: comments
-  }
-  File.write(File.join(OUT, "#{name}.json"), "#{JSON.pretty_generate(document)}\n")
-  puts "#{name}: #{words.length} words, -G #{gp_size}"
+  VERSIONS.each do |version|
+    words = fixture.fetch('cases')[version] || fail!("#{name}: no #{version} case")
+    bad = words.reject { |w| w.match?(/\A0x[0-9A-F]{8}\z/) }
+    fail!("#{name}: malformed words #{bad.inspect}") unless bad.empty?
+
+    comments = comments_by_case(text)[version]
+    unless comments && comments.length == words.length
+      fail!("#{name}: could not read one comment per word for #{version}")
+    end
+
+    document = {
+      name: name,
+      origin: "mkst/maspsx aspsx/fixtures/#{name}.yaml @ #{commit}",
+      aspsxVersion: version,
+      sourceFile: File.basename(source_path),
+      source: source,
+      gpSize: gp_size,
+      expectedWords: words,
+      disassembly: comments
+    }
+    file = version == '2.81' ? "#{name}.json" : "#{name}.aspsx-#{version}.json"
+    File.write(File.join(OUT, file), "#{JSON.pretty_generate(document)}\n")
+    puts "#{name} (#{version}): #{words.length} words, -G #{gp_size}"
+  end
 end

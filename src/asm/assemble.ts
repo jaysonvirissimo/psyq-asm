@@ -8,6 +8,7 @@ import { layout } from './layout.js';
 import { buildObject } from './object.js';
 import { parse } from './parser.js';
 import { classifySmallData, collectSymbols } from './symbols.js';
+import { rulesFor } from './versions.js';
 
 /**
  * Assemble PsyQ 4.4 `cc1psx` output into the words ASPSX 2.81 produces.
@@ -26,6 +27,7 @@ export function assemble(source: string | Uint8Array, options: AssembleOptions):
   const smallData = classifySmallData(symbols, normalized.gpSize);
   const items = expand(statements, {
     gpSize: normalized.gpSize,
+    rules: rulesFor(normalized.aspsxVersion),
     smallData,
     partialDivExpansion: normalized.partialDivExpansion,
     diagnostics,

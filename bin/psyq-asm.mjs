@@ -3,7 +3,7 @@
 /**
  * psyq-asm command line.
  *
- *   psyq-asm -G <n> [--partial-div] [--json <out.json>] <input.s>
+ *   psyq-asm -G <n> [--partial-div] [--aspsx-version 2.77|2.81] [--json <out.json>] <input.s>
  *   psyq-asm --decode [--base <address>] [--numeric] [--pseudo] <words.txt>
  *
  * Assembling prints a listing (offset, word, instruction, and why the word
@@ -24,7 +24,7 @@ import {
   formatProgram,
 } from '../dist/index.js';
 
-const USAGE = `usage: psyq-asm -G <n> [--partial-div] [--json <out.json>] <input.s>
+const USAGE = `usage: psyq-asm -G <n> [--partial-div] [--aspsx-version 2.77|2.81] [--json <out.json>] <input.s>
        psyq-asm --decode [--base <address>] [--numeric] [--pseudo] <words.txt>`;
 
 function usage(message) {
@@ -48,7 +48,11 @@ function parseArgs(argv) {
     } else if (arg === '-G') options.gpSize = value();
     else if (/^-G\d+$/.test(arg)) options.gpSize = arg.slice(2);
     else if (arg === '--partial-div') options.partialDiv = true;
-    else if (arg === '--json') options.json = value();
+    else if (arg === '--aspsx-version') {
+      options.aspsxVersion = value();
+      if (!['2.77', '2.81'].includes(options.aspsxVersion))
+        usage('--aspsx-version must be 2.77 or 2.81.');
+    } else if (arg === '--json') options.json = value();
     else if (arg === '--decode') options.decode = true;
     else if (arg === '--base') options.base = value();
     else if (arg === '--numeric') options.numeric = true;
@@ -107,6 +111,7 @@ function runAssemble(options) {
   const result = assemble(readFileSync(options.input), {
     gpSize: Number(options.gpSize),
     partialDivExpansion: options.partialDiv,
+    ...(options.aspsxVersion === undefined ? {} : { aspsxVersion: options.aspsxVersion }),
     filename: basename(options.input),
   });
   for (const d of result.diagnostics) {

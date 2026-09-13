@@ -1,0 +1,148 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x340C8CB8",
+    "0x03ACE823",
+    "0x019D6821",
+    "0xADBFFFF8",
+    "0x24032327",
+    "0x34028CAC",
+    "0x03A21021",
+    "0x00832021",
+    "0xAC440000",
+    "0x2442FFFC",
+    "0x2463FFFF",
+    "0x0461FFFC",
+    "0x2484FFFF",
+    "0x27A40010",
+    "0x0C000000",
+    "0x24052328",
+    "0x340C8CB8",
+    "0x019D6821",
+    "0x8DBFFFF8",
+    "0x00000000",
+    "0x03E00008",
+    "0x03ACE821",
+    "0x340C8CA0",
+    "0x03ACE823",
+    "0x00004821",
+    "0x01202821",
+    "0x03A01821",
+    "0x00851026",
+    "0x304200FF",
+    "0xAC620000",
+    "0x24A50001",
+    "0x28A22328",
+    "0x1440FFFA",
+    "0x24630004",
+    "0x00002821",
+    "0x24080008",
+    "0x03A03821",
+    "0x24060004",
+    "0x03A82021",
+    "0x2508000C",
+    "0x8CE20000",
+    "0x24E7000C",
+    "0x03A61821",
+    "0x24A50003",
+    "0x8C630000",
+    "0x8C840000",
+    "0x00431023",
+    "0x00441021",
+    "0x01224821",
+    "0x28A22328",
+    "0x1440FFF3",
+    "0x24C6000C",
+    "0x01201021",
+    "0x340C8CA0",
+    "0x03E00008",
+    "0x03ACE821",
+    "0x340C8038",
+    "0x03ACE823",
+    "0x019D6821",
+    "0x00A01021",
+    "0xADBFFFFC",
+    "0xADB0FFF8",
+    "0xAFA40010",
+    "0x27A40010",
+    "0x34038000",
+    "0x00831821",
+    "0xAC62001C",
+    "0x8FA30010",
+    "0x24050001",
+    "0x00431021",
+    "0xAFA2401C",
+    "0x00A21004",
+    "0x0C000000",
+    "0xAFA24020",
+    "0x27A44020",
+    "0x24050002",
+    "0x0C000000",
+    "0x00408021",
+    "0x340C8038",
+    "0x019D6821",
+    "0x8FA3401C",
+    "0x8FA44020",
+    "0x8DBFFFFC",
+    "0x00641821",
+    "0x00701821",
+    "0x8DB0FFF8",
+    "0x00621021",
+    "0x03E00008",
+    "0x03ACE821"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 56,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "mess_hall",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 288,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "mess_hall",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 304,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "mess_hall",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "rations_fill",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "rations_sum",
+          "section": ".text",
+          "offset": 88
+        },
+        {
+          "name": "two_frames",
+          "section": ".text",
+          "offset": 224
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

@@ -6,7 +6,7 @@
 import type { TableMnemonic } from './isa/table.js';
 
 /** ASPSX versions this package emulates. */
-export type AspsxVersion = '2.81';
+export type AspsxVersion = '2.77' | '2.81';
 
 /** Discriminant of every error thrown by psyq-asm. */
 export type ErrorCode = 'invalid-options' | 'invalid-instruction';
@@ -19,7 +19,10 @@ export interface AssembleOptions {
    * integer; PsyQ builds use 0 or 8. Required; never guessed.
    */
   readonly gpSize: number;
-  /** Emulated assembler version. Only '2.81' is accepted. Default '2.81'. */
+  /**
+   * Emulated assembler version: '2.81' (the default), or '2.77', the version in
+   * PsyQ 4.4's own bin directory, which addresses `la` of small data without `$gp`.
+   */
   readonly aspsxVersion?: AspsxVersion;
   /** Reproduce `ASPSX -0`: `div`/`rem` without divide-by-zero and overflow traps. Default false. */
   readonly partialDivExpansion?: boolean;

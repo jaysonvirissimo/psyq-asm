@@ -1,0 +1,235 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x03E00008",
+    "0x00041040",
+    "0x00840018",
+    "0x00001012",
+    "0x03E00008",
+    "0x00000000",
+    "0x27BDFFE8",
+    "0x00801021",
+    "0xAFBF0010",
+    "0x0040F809",
+    "0x00A02021",
+    "0x8FBF0010",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x27BDFFD8",
+    "0xAFB3001C",
+    "0x00809821",
+    "0xAFB20018",
+    "0x00009021",
+    "0xAFB10014",
+    "0x02408821",
+    "0x3C020000",
+    "0xAFB00010",
+    "0x24500000",
+    "0xAFBF0020",
+    "0x8E020004",
+    "0x00000000",
+    "0x0040F809",
+    "0x02602021",
+    "0x8E030008",
+    "0x00000000",
+    "0x00430018",
+    "0x26310001",
+    "0x2610000C",
+    "0x2A220002",
+    "0x00002812",
+    "0x1440FFF4",
+    "0x02459021",
+    "0x02401021",
+    "0x8FBF0020",
+    "0x8FB3001C",
+    "0x8FB20018",
+    "0x8FB10014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0028",
+    "0x00051080",
+    "0x03E00008",
+    "0x00821021",
+    "0x03E00008",
+    "0x00A41023",
+    "0x00004821",
+    "0x18A0000F",
+    "0x01204021",
+    "0x18C00009",
+    "0x00003821",
+    "0x8C830000",
+    "0x00000000",
+    "0x8C620000",
+    "0x24E70001",
+    "0x01024021",
+    "0x00E6102A",
+    "0x1440FFFA",
+    "0x24630004",
+    "0x25290001",
+    "0x0125102A",
+    "0x1440FFF3",
+    "0x24840004",
+    "0x03E00008",
+    "0x01001021",
+    "0x10800004",
+    "0x00000000",
+    "0x3C020000",
+    "0x03E00008",
+    "0x24420000",
+    "0x3C020000",
+    "0x03E00008",
+    "0x24420000"
+  ],
+  "data": {
+    "sections": {
+      ".data": 24,
+      ".sdata": 14
+    },
+    "relocations": [
+      {
+        "section": ".data",
+        "offset": 0,
+        "kind": "WORD32",
+        "target": {
+          "section": ".sdata",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 4,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 12,
+        "kind": "WORD32",
+        "target": {
+          "section": ".sdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".data",
+        "offset": 16,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 8
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 88,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 96,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 292,
+        "kind": "HI16",
+        "target": {
+          "symbol": "callback_a",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 300,
+        "kind": "LO16",
+        "target": {
+          "symbol": "callback_a",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 304,
+        "kind": "HI16",
+        "target": {
+          "symbol": "callback_b",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 312,
+        "kind": "LO16",
+        "target": {
+          "symbol": "callback_b",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "advance",
+          "section": ".text",
+          "offset": 188
+        },
+        {
+          "name": "apply",
+          "section": ".text",
+          "offset": 24
+        },
+        {
+          "name": "distance",
+          "section": ".text",
+          "offset": 200
+        },
+        {
+          "name": "entries",
+          "section": ".data",
+          "offset": 0
+        },
+        {
+          "name": "run_all",
+          "section": ".text",
+          "offset": 60
+        },
+        {
+          "name": "select_callback",
+          "section": ".text",
+          "offset": 284
+        },
+        {
+          "name": "walk",
+          "section": ".text",
+          "offset": 208
+        }
+      ],
+      "commons": [],
+      "locals": [
+        {
+          "name": "square",
+          "section": ".text",
+          "offset": 8
+        },
+        {
+          "name": "twice",
+          "section": ".text",
+          "offset": 0
+        }
+      ]
+    }
+  }
+}

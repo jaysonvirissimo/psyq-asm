@@ -1,0 +1,21 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x48044000",
+    "0x00000000",
+    "0x00841021",
+    "0x4845F800",
+    "0x00000000",
+    "0xACC50000"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

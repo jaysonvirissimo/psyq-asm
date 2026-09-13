@@ -7,7 +7,7 @@ import {
   textWords as assembledWords,
   type ObjectData,
 } from '../../scripts/object-data.mjs';
-import type { AssembleResult } from '../../src/public-types.js';
+import type { AspsxVersion, AssembleResult } from '../../src/public-types.js';
 
 export type { ObjectData, RecordedTarget } from '../../scripts/object-data.mjs';
 
@@ -20,9 +20,17 @@ export interface WordsCompanion {
   readonly data?: ObjectData;
 }
 
-/** The `<source>.words.json` beside a `.s` file, when an oracle has produced one. */
-export function loadCompanion(sourcePath: string): WordsCompanion | undefined {
-  const path = sourcePath.replace(/\.s$/, '.words.json');
+/**
+ * What the real assembler of `version` emitted for a `.s` file, when an oracle
+ * has recorded it: `<source>.words.json` for 2.81, `<source>.aspsx-<version>.words.json`
+ * otherwise.
+ */
+export function loadCompanion(
+  sourcePath: string,
+  version: AspsxVersion = '2.81',
+): WordsCompanion | undefined {
+  const suffix = version === '2.81' ? '.words.json' : `.aspsx-${version}.words.json`;
+  const path = sourcePath.replace(/\.s$/, suffix);
   if (!existsSync(path)) return undefined;
   const raw = JSON.parse(readFileSync(path, 'utf8')) as Record<string, unknown>;
   const { origin, gpSize, words, data } = raw;

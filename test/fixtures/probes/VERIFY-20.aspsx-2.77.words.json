@@ -1,0 +1,38 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x00001012",
+    "0x3C030000",
+    "0x8C630000",
+    "0x00A60018"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 4,
+        "kind": "HI16",
+        "target": {
+          "symbol": "sym",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "LO16",
+        "target": {
+          "symbol": "sym",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

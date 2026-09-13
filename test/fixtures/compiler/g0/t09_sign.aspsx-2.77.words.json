@@ -1,0 +1,131 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x03E00008",
+    "0x308200FF",
+    "0x00041600",
+    "0x03E00008",
+    "0x00021603",
+    "0x03E00008",
+    "0x308200FF",
+    "0x00041400",
+    "0x03E00008",
+    "0x00021403",
+    "0x03E00008",
+    "0x3082FFFF",
+    "0x308400FF",
+    "0x30A200FF",
+    "0x03E00008",
+    "0x0082102B",
+    "0x03E00008",
+    "0x00001021",
+    "0x03E00008",
+    "0x308200FF",
+    "0x00041400",
+    "0x03E00008",
+    "0x00021403",
+    "0x308400FF",
+    "0x30A200FF",
+    "0x03E00008",
+    "0x00821021",
+    "0x03E00008",
+    "0x00851021",
+    "0x03E00008",
+    "0x0085102B",
+    "0x03E00008",
+    "0x00801021",
+    "0x90820000",
+    "0x00000000",
+    "0x10400007",
+    "0x00801821",
+    "0x24630001",
+    "0x90620000",
+    "0x00000000",
+    "0x1440FFFD",
+    "0x24630001",
+    "0x2463FFFF",
+    "0x03E00008",
+    "0x00641023"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "char_arith",
+          "section": ".text",
+          "offset": 92
+        },
+        {
+          "name": "char_is_neg",
+          "section": ".text",
+          "offset": 64
+        },
+        {
+          "name": "char_lt",
+          "section": ".text",
+          "offset": 48
+        },
+        {
+          "name": "char_promote",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "cmp_mixed",
+          "section": ".text",
+          "offset": 116
+        },
+        {
+          "name": "long_id",
+          "section": ".text",
+          "offset": 124
+        },
+        {
+          "name": "mix",
+          "section": ".text",
+          "offset": 108
+        },
+        {
+          "name": "narrow",
+          "section": ".text",
+          "offset": 72
+        },
+        {
+          "name": "narrow_s",
+          "section": ".text",
+          "offset": 80
+        },
+        {
+          "name": "schar_promote",
+          "section": ".text",
+          "offset": 8
+        },
+        {
+          "name": "short_promote",
+          "section": ".text",
+          "offset": 28
+        },
+        {
+          "name": "str_len",
+          "section": ".text",
+          "offset": 132
+        },
+        {
+          "name": "uchar_promote",
+          "section": ".text",
+          "offset": 20
+        },
+        {
+          "name": "ushort_promote",
+          "section": ".text",
+          "offset": 40
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

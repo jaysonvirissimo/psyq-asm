@@ -1,0 +1,258 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x27BDFFE8",
+    "0xAFB00010",
+    "0x00808021",
+    "0x2A020002",
+    "0x14400008",
+    "0xAFBF0014",
+    "0x0C000000",
+    "0x2604FFFF",
+    "0x2604FFFE",
+    "0x0C000000",
+    "0x00408021",
+    "0x08000000",
+    "0x02021021",
+    "0x02001021",
+    "0x8FBF0014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x27BDFFE8",
+    "0x00A01021",
+    "0xAFBF0014",
+    "0xAFB00010",
+    "0x14800003",
+    "0x00000000",
+    "0x08000000",
+    "0x24420001",
+    "0x14400004",
+    "0x2490FFFF",
+    "0x2484FFFF",
+    "0x08000000",
+    "0x24020001",
+    "0x0C000000",
+    "0x2445FFFF",
+    "0x08000000",
+    "0x02002021",
+    "0x8FBF0014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x27BDFFE0",
+    "0xAFB10014",
+    "0x00808821",
+    "0xAFBF0018",
+    "0x1220000C",
+    "0xAFB00010",
+    "0x8E240000",
+    "0x0C000000",
+    "0x00000000",
+    "0x8E240004",
+    "0x0C000000",
+    "0x00408021",
+    "0x8E230008",
+    "0x00000000",
+    "0x00701821",
+    "0x08000000",
+    "0x00621021",
+    "0x00001021",
+    "0x8FBF0018",
+    "0x8FB10014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0020",
+    "0x10A0000F",
+    "0x00000000",
+    "0x0085001A",
+    "0x14A00002",
+    "0x00000000",
+    "0x0007000D",
+    "0x2401FFFF",
+    "0x14A10004",
+    "0x3C018000",
+    "0x14810002",
+    "0x00000000",
+    "0x0006000D",
+    "0x00001010",
+    "0x00A02021",
+    "0x08000000",
+    "0x00402821",
+    "0x03E00008",
+    "0x00801021",
+    "0x27BDFFE0",
+    "0xAFB00010",
+    "0x00808021",
+    "0xAFB10014",
+    "0xAFBF0018",
+    "0x0C000000",
+    "0x00A08821",
+    "0x0202001A",
+    "0x14400002",
+    "0x00000000",
+    "0x0007000D",
+    "0x2401FFFF",
+    "0x14410004",
+    "0x3C018000",
+    "0x16010002",
+    "0x00000000",
+    "0x0006000D",
+    "0x00008012",
+    "0x00000000",
+    "0x00000000",
+    "0x02110018",
+    "0x8FBF0018",
+    "0x8FB10014",
+    "0x8FB00010",
+    "0x00001012",
+    "0x03E00008",
+    "0x27BD0020"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 24,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 36,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 44,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 56
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 96,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 140
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 116,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 88
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 124,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 72
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 132,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 88
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 184,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 156
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 196,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 156
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 216,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 228
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 304,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 248
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 340,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 248
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "ackermann",
+          "section": ".text",
+          "offset": 72
+        },
+        {
+          "name": "fib",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "lcm",
+          "section": ".text",
+          "offset": 320
+        },
+        {
+          "name": "tree_sum",
+          "section": ".text",
+          "offset": 156
+        }
+      ],
+      "commons": [],
+      "locals": [
+        {
+          "name": "gcd_static",
+          "section": ".text",
+          "offset": 248
+        }
+      ]
+    }
+  }
+}

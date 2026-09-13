@@ -1,0 +1,211 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0x27BDFFD8",
+    "0x00C04021",
+    "0x00E03021",
+    "0x8FA30038",
+    "0x8FA2003C",
+    "0x01003821",
+    "0xAFBF0020",
+    "0xAFA50010",
+    "0xAFA40014",
+    "0x00822021",
+    "0x00A32821",
+    "0xAFA40018",
+    "0x00402021",
+    "0xAFA5001C",
+    "0x0C000000",
+    "0x00602821",
+    "0x8FBF0020",
+    "0x00000000",
+    "0x03E00008",
+    "0x27BD0028",
+    "0x00852023",
+    "0x00862021",
+    "0x00872023",
+    "0x8FA20010",
+    "0x8FA30014",
+    "0x00822021",
+    "0x8FA20018",
+    "0x00832023",
+    "0x03E00008",
+    "0x00821021",
+    "0x27BDFFD8",
+    "0xAFB20018",
+    "0x8FB20038",
+    "0xAFB3001C",
+    "0x8FB3003C",
+    "0xAFB10014",
+    "0xAFB00010",
+    "0x00C08021",
+    "0xAFBF0020",
+    "0x0C000000",
+    "0x00E08821",
+    "0x00402021",
+    "0x00602821",
+    "0x02003021",
+    "0x0C000000",
+    "0x02203821",
+    "0x00408021",
+    "0x00608821",
+    "0x0C000000",
+    "0x02402021",
+    "0x00402021",
+    "0x0C000000",
+    "0x02602821",
+    "0x0C000000",
+    "0x00402021",
+    "0x02002021",
+    "0x02202821",
+    "0x00403021",
+    "0x0C000000",
+    "0x00603821",
+    "0x8FBF0020",
+    "0x8FB3001C",
+    "0x8FB20018",
+    "0x8FB10014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0028",
+    "0x8FA30024",
+    "0x8FA20028",
+    "0xAFA40000",
+    "0xAFA50004",
+    "0xAFA60008",
+    "0xAFA7000C",
+    "0x00832021",
+    "0x03E00008",
+    "0x00821021",
+    "0x27BDFFD8",
+    "0x00801021",
+    "0x24060009",
+    "0x27A30024",
+    "0x00A62821",
+    "0xAC650000",
+    "0x2463FFFC",
+    "0x24C6FFFF",
+    "0x04C1FFFC",
+    "0x24A5FFFF",
+    "0x00402821",
+    "0x03A01821",
+    "0x27A60020",
+    "0x8C670000",
+    "0x8C680004",
+    "0x8C690008",
+    "0x8C6A000C",
+    "0xACA70000",
+    "0xACA80004",
+    "0xACA90008",
+    "0xACAA000C",
+    "0x24630010",
+    "0x1466FFF6",
+    "0x24A50010",
+    "0x8C670000",
+    "0x8C680004",
+    "0xACA70000",
+    "0xACA80004",
+    "0x03E00008",
+    "0x27BD0028"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 56,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "sink",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 156,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsidf",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 176,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__muldf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 192,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__floatsisf",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 204,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__mulsf3",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 212,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__extendsfdf2",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 232,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "__adddf3",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "mixed_args",
+          "section": ".text",
+          "offset": 120
+        },
+        {
+          "name": "pass_struct",
+          "section": ".text",
+          "offset": 268
+        },
+        {
+          "name": "pass_through",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "return_struct",
+          "section": ".text",
+          "offset": 304
+        },
+        {
+          "name": "stack_args",
+          "section": ".text",
+          "offset": 80
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

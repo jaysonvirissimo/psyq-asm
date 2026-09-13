@@ -1,0 +1,69 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x03E00008",
+    "0x00A41004",
+    "0x03E00008",
+    "0x00A41007",
+    "0x03E00008",
+    "0x00A41006",
+    "0x03E00008",
+    "0x00041140",
+    "0x03E00008",
+    "0x000411C3",
+    "0x03E00008",
+    "0x00041242",
+    "0x3082FFFF",
+    "0x000212C2",
+    "0x00042140",
+    "0x00441025",
+    "0x03E00008",
+    "0x3042FFFF"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [],
+    "symbols": {
+      "exports": [
+        {
+          "name": "rot5",
+          "section": ".text",
+          "offset": 48
+        },
+        {
+          "name": "shl",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "shlk",
+          "section": ".text",
+          "offset": 24
+        },
+        {
+          "name": "shr",
+          "section": ".text",
+          "offset": 8
+        },
+        {
+          "name": "shrk",
+          "section": ".text",
+          "offset": 32
+        },
+        {
+          "name": "ushr",
+          "section": ".text",
+          "offset": 16
+        },
+        {
+          "name": "ushrk",
+          "section": ".text",
+          "offset": 40
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

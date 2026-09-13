@@ -20,6 +20,20 @@ its evidence:
 A rule change without evidence is a bug. Change this document, the code, and a
 fixture together.
 
+## Versions
+
+`psyq-asm` emulates ASPSX 2.81 by default and ASPSX 2.77, the version in PsyQ
+4.4's own `bin` directory, with `aspsxVersion: '2.77'`. They differ in one
+rule, kept in `src/asm/versions.ts`:
+
+| Rule | 2.77 | 2.81 |
+| --- | --- | --- |
+| `la` of a small-data symbol | `lui rd,%hi(sym)`; `addiu rd,rd,%lo(sym)` | `addiu rd,$gp,%gp_rel(sym)` |
+
+**[fixture: la, both versions; aspsx: every probe, compiler fixture, corpus
+file, and regression, recorded with both]** Everything else in this document
+holds for both versions.
+
 ## Scope
 
 The assembler modelled is ASPSX 2.81 invoked as `aspsx -q -G <n> in.s -o out.o`
@@ -64,7 +78,7 @@ cfc2]**
 | `li rd,n` | fits16s: `addiu rd,$0,n`. Else fits16u: `ori rd,$0,n` [aspsx: VERIFY-9]. Else `lui rd,hi` and, if the low half is not zero, `ori rd,rd,lo` | [fixture: expand_li, sltu_at] |
 | `li.s rd,f` | IEEE single bits: `lui rd,hi` (always), then `ori rd,rd,lo` if the low half is not zero | [maspsx] test_float |
 | `li.d rd,d` | IEEE double: low word into `rd` (`addiu rd,$0,0` when zero, else `lui`/`ori`), high word into `rd+1` (`lui`, `ori` if needed) | [maspsx] test_float; pair order [aspsx: VERIFY-10] |
-| `la rd,sym[+a]` | small: `addiu rd,$gp,%gp_rel(sym+a)`. Else `lui rd,%hi(sym+a)`; `addiu rd,rd,%lo(sym+a)` | [fixture: la]; [maspsx] test_gp_rel |
+| `la rd,sym[+a]` | small, 2.81 only: `addiu rd,$gp,%gp_rel(sym+a)`. Else `lui rd,%hi(sym+a)`; `addiu rd,rd,%lo(sym+a)` | [fixture: la]; [maspsx] test_gp_rel |
 | `la rd,n` | as `li` | [aspsx: VERIFY-8] |
 | `addu`/`add rd,rs,n` | fits16s: `addiu`/`addi rd,rs,n`. Else `li $at,n`; `addu`/`add rd,rs,$at` | compiler output; out of range [aspsx: VERIFY-11] |
 | `subu`/`sub rd,rs,n` | fits16s(−n): `addiu`/`addi rd,rs,−n`; n = −0x8000 also gives `addiu`/`addi rd,rs,−0x8000`. Else `li $at,n`; `subu`/`sub rd,rs,$at` | [aspsx: VERIFY-11] (`subu`) |
@@ -172,7 +186,7 @@ With `gpSize` above 0, a symbol is addressed through `$gp` when it is:
 addresses external symbols with `lui` and `%lo`, as maspsx does. **[aspsx:
 VERIFY-1]**
 
-`symbol+offset` forms and `la` use `$gp` too. With `gpSize` 0 nothing is small.
+`symbol+offset` forms use `$gp` too, and so does `la` in 2.81 (see Versions). With `gpSize` 0 nothing is small.
 
 ## Relocations
 

@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { basename } from 'node:path';
+import type { AspsxVersion } from '../../src/public-types.js';
 import { fromRoot } from './paths.js';
 
 /** One ASPSX ground-truth case imported from maspsx (see test/fixtures/README.md). */
 export interface AspsxFixture {
   readonly name: string;
   readonly origin: string;
-  readonly aspsxVersion: string;
+  readonly aspsxVersion: AspsxVersion;
   readonly sourceFile: string;
   readonly source: string;
   readonly gpSize: number;
@@ -37,8 +38,8 @@ export function loadAspsxFixtures(): AspsxFixture[] {
     );
 }
 
-export function loadAspsxFixture(name: string): AspsxFixture {
-  const fixture = loadAspsxFixtures().find((f) => f.name === name);
+export function loadAspsxFixture(name: string, version: AspsxVersion = '2.81'): AspsxFixture {
+  const fixture = loadAspsxFixtures().find((f) => f.name === name && f.aspsxVersion === version);
   if (fixture === undefined) throw new Error(`no ASPSX fixture named ${name}`);
   return fixture;
 }

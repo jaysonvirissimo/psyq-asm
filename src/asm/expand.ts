@@ -4,6 +4,7 @@
  * instructions bind directly to their table row; macros expand into the
  * sequences ASPSX 2.81 emits (docs/ASPSX-2.81.md, "Macro expansion").
  */
+import type { VersionRules } from './versions.js';
 import { COP_SLOTS, hi16, lo16, signExtend16, type Slot } from '../isa/fields.js';
 import { ISA_ROWS, rowFor, type IsaRow, type TableMnemonic } from '../isa/table.js';
 import type { DiagnosticCode, SmallDataEntry } from '../public-types.js';
@@ -20,6 +21,8 @@ export interface ExpandContext {
   readonly smallData: ReadonlyMap<string, SmallDataEntry>;
   readonly partialDivExpansion: boolean;
   readonly diagnostics: Diagnostics;
+  /** What differs in the emulated ASPSX version. */
+  readonly rules: VersionRules;
 }
 
 type InstructionStatement = Extract<Statement, { kind: 'instruction' }>;
@@ -205,7 +208,8 @@ function loadDouble(rd: number, n: number): PendingWord[] {
 }
 
 function loadAddress(rd: number, symbol: SymbolExpr, ctx: ExpandContext): PendingWord[] {
-  if (ctx.smallData.has(symbol.name)) {
+  // ASPSX addresses small data through $gp for la only from 2.80 on.
+  if (ctx.rules.gpAddressesLa && ctx.smallData.has(symbol.name)) {
     return [word('addiu', gpr(rd), gpr(GP), value(reloc('gp_rel', symbol)))];
   }
   return [

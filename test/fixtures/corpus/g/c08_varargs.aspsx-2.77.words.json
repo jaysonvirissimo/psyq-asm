@@ -1,0 +1,104 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 8,
+  "words": [
+    "0xAFA60008",
+    "0x00003021",
+    "0xAFA50004",
+    "0x27A50004",
+    "0x00801021",
+    "0xAFA40000",
+    "0x2484FFFF",
+    "0x18400007",
+    "0xAFA7000C",
+    "0x24A50004",
+    "0x8CA2FFFC",
+    "0x00801821",
+    "0x2484FFFF",
+    "0x1C60FFFB",
+    "0x00C23021",
+    "0x03E00008",
+    "0x00C01021",
+    "0xAFA50004",
+    "0x27A50008",
+    "0xAFA40000",
+    "0x2484FFFF",
+    "0xAFA60008",
+    "0xAFA7000C",
+    "0x8CA6FFFC",
+    "0x1880000A",
+    "0x24A50004",
+    "0x8CA3FFFC",
+    "0x00000000",
+    "0x00C3102A",
+    "0x10400002",
+    "0x00000000",
+    "0x00603021",
+    "0x2484FFFF",
+    "0x1C80FFF8",
+    "0x24A50004",
+    "0x03E00008",
+    "0x00C01021",
+    "0x27BDFFE8",
+    "0x00801021",
+    "0x00A03021",
+    "0x24040001",
+    "0x00402821",
+    "0x00A63821",
+    "0xAFBF0014",
+    "0x0C000000",
+    "0xAFB00010",
+    "0x24040002",
+    "0x0C000000",
+    "0x00408021",
+    "0x02021021",
+    "0x8FBF0014",
+    "0x8FB00010",
+    "0x03E00008",
+    "0x27BD0018"
+  ],
+  "data": {
+    "sections": {},
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": 176,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "emit",
+          "addend": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 188,
+        "kind": "MIPS26",
+        "target": {
+          "symbol": "emit",
+          "addend": 0
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "forward",
+          "section": ".text",
+          "offset": 148
+        },
+        {
+          "name": "max_of",
+          "section": ".text",
+          "offset": 68
+        },
+        {
+          "name": "sum_ints",
+          "section": ".text",
+          "offset": 0
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

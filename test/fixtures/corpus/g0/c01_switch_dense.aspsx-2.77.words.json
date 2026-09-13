@@ -1,0 +1,441 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x2483FFD0",
+    "0x2C62000A",
+    "0x1040000C",
+    "0x3C020000",
+    "0x24420000",
+    "0x00031880",
+    "0x00621821",
+    "0x8C620000",
+    "0x00000000",
+    "0x00400008",
+    "0x00000000",
+    "0x03E00008",
+    "0x00001021",
+    "0x03E00008",
+    "0x24020001",
+    "0x03E00008",
+    "0x2402FFFF",
+    "0x308300FF",
+    "0x2C62000C",
+    "0x10400012",
+    "0x3C020000",
+    "0x24420000",
+    "0x00031880",
+    "0x00621821",
+    "0x8C620000",
+    "0x00000000",
+    "0x00400008",
+    "0x00000000",
+    "0x03E00008",
+    "0x24020001",
+    "0x03E00008",
+    "0x24020002",
+    "0x03E00008",
+    "0x24020003",
+    "0x03E00008",
+    "0x24020004",
+    "0x03E00008",
+    "0x24020005",
+    "0x03E00008",
+    "0x00001021",
+    "0x2C820006",
+    "0x1040001D",
+    "0x3C020000",
+    "0x24420000",
+    "0x00041880",
+    "0x00621821",
+    "0x8C620000",
+    "0x00000000",
+    "0x00400008",
+    "0x00000000",
+    "0x28A2000B",
+    "0x14400004",
+    "0x24030001",
+    "0x03E00008",
+    "0x24020003",
+    "0x24030001",
+    "0x00A31024",
+    "0x10400002",
+    "0x00000000",
+    "0x24030002",
+    "0x03E00008",
+    "0x00601021",
+    "0x08000000",
+    "0x00852021",
+    "0x08000000",
+    "0x00852023",
+    "0x00051040",
+    "0x08000000",
+    "0x00452021",
+    "0x03E00008",
+    "0x00041023",
+    "0x00002021",
+    "0x03E00008",
+    "0x00801021"
+  ],
+  "data": {
+    "sections": {
+      ".rdata": 112
+    },
+    "relocations": [
+      {
+        "section": ".rdata",
+        "offset": 0,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 44
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 4,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 52
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 8,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 44
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 12,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 52
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 16,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 44
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 20,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 52
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 24,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 44
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 28,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 52
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 32,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 44
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 36,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 52
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 40,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 112
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 44,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 120
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 48,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 120
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 52,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 128
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 56,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 112
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 60,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 136
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 64,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 120
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 68,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 128
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 72,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 112
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 76,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 144
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 80,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 120
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 84,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 120
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 88,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 200
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 92,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 220
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 96,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 248
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 100,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 256
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 104,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 264
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 108,
+        "kind": "WORD32",
+        "target": {
+          "section": ".text",
+          "offset": 276
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 16,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 80,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 40
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 84,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 40
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 168,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 88
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 172,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 88
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 248,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 288
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 256,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 288
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 268,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 288
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "classify_digit",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "opcode_length",
+          "section": ".text",
+          "offset": 68
+        },
+        {
+          "name": "step_machine",
+          "section": ".text",
+          "offset": 160
+        }
+      ],
+      "commons": [],
+      "locals": []
+    }
+  }
+}

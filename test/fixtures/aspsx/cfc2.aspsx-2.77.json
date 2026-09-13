@@ -1,0 +1,30 @@
+{
+  "name": "cfc2",
+  "origin": "mkst/maspsx aspsx/fixtures/cfc2.yaml @ 3629944",
+  "aspsxVersion": "2.77",
+  "sourceFile": "CFC2.S",
+  "source": "\tlhu\t$8,370($18)\r\n #APP\r\n\tcfc2    $4, $8\r\n #NO_APP\r\n\r\n\tlhu\t$8,370($18)\r\n #APP\r\n\tmfc2    $4, $8\r\n #NO_APP\r\n\r\n\tlhu\t$8,370($18)\r\n #APP\r\n\tctc2    $4, $8\r\n #NO_APP\r\n\r\n\tlhu\t$8,370($18)\r\n #APP\r\n\tctc2    $8, $4\r\n #NO_APP\r\n",
+  "gpSize": 0,
+  "expectedWords": [
+    "0x96480172",
+    "0x48444000",
+    "0x96480172",
+    "0x48044000",
+    "0x96480172",
+    "0x48C44000",
+    "0x96480172",
+    "0x00000000",
+    "0x48C82000"
+  ],
+  "disassembly": [
+    "lhu $t0, 0x172($s2)",
+    "cfc2 $a0, $8",
+    "lhu $t0, 0x172($s2)",
+    "mfc2 $a0, $8",
+    "lhu $t0, 0x172($s2)",
+    "ctc2 $a0, $8",
+    "lhu $t0, 0x172($s2)",
+    "nop",
+    "ctc2 $t0, $4"
+  ]
+}

@@ -1,0 +1,359 @@
+{
+  "origin": "ASPSX 2.77 via scripts/aspsx-oracle.rb",
+  "gpSize": 0,
+  "words": [
+    "0x03E00008",
+    "0x00041040",
+    "0x3C030000",
+    "0x8C620000",
+    "0x00000000",
+    "0x24420001",
+    "0xAC620000",
+    "0x3C020000",
+    "0x24430000",
+    "0x2C820004",
+    "0x10400002",
+    "0x00002821",
+    "0x00042880",
+    "0x00A31021",
+    "0x8C420000",
+    "0x03E00008",
+    "0x00000000",
+    "0x3C020000",
+    "0x94430000",
+    "0x3C040000",
+    "0x24630002",
+    "0xA4430000",
+    "0x00031C00",
+    "0x8C820000",
+    "0x00031C03",
+    "0x00431021",
+    "0x03E00008",
+    "0xAC820000",
+    "0x3C020000",
+    "0x24420000",
+    "0x3084007F",
+    "0x00822021",
+    "0x24030078",
+    "0x03E00008",
+    "0xA0830000",
+    "0x27BDFFE8",
+    "0xAFB00010",
+    "0x00808021",
+    "0x3C020000",
+    "0x8C440000",
+    "0xAFBF0014",
+    "0x0C000000",
+    "0x32100007",
+    "0x3C030000",
+    "0x24630000",
+    "0x00108040",
+    "0x02038021",
+    "0x86030000",
+    "0x8FBF0014",
+    "0x8FB00010",
+    "0x00621021",
+    "0x03E00008",
+    "0x27BD0018",
+    "0x3C020000",
+    "0x24430000",
+    "0x00002021",
+    "0x90420000",
+    "0x00000000",
+    "0x10400006",
+    "0x24630001",
+    "0x24840001",
+    "0x90620000",
+    "0x00000000",
+    "0x1440FFFC",
+    "0x24630001",
+    "0x03E00008",
+    "0x00801021"
+  ],
+  "data": {
+    "sections": {
+      ".bss": 144,
+      ".data": 20,
+      ".rdata": 57
+    },
+    "relocations": [
+      {
+        "section": ".rdata",
+        "offset": 0,
+        "kind": "WORD32",
+        "target": {
+          "section": ".rdata",
+          "offset": 32
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 4,
+        "kind": "WORD32",
+        "target": {
+          "section": ".rdata",
+          "offset": 28
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 8,
+        "kind": "WORD32",
+        "target": {
+          "section": ".rdata",
+          "offset": 24
+        }
+      },
+      {
+        "section": ".rdata",
+        "offset": 12,
+        "kind": "WORD32",
+        "target": {
+          "section": ".rdata",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 8,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 12,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 24,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 28,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 32,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 68,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 72,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 76,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 84,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 92,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 108,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 112,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 116,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 16
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 152,
+        "kind": "HI16",
+        "target": {
+          "section": ".bss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 156,
+        "kind": "LO16",
+        "target": {
+          "section": ".bss",
+          "offset": 4
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 164,
+        "kind": "MIPS26",
+        "target": {
+          "section": ".text",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 172,
+        "kind": "HI16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 176,
+        "kind": "LO16",
+        "target": {
+          "section": ".data",
+          "offset": 0
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 212,
+        "kind": "HI16",
+        "target": {
+          "section": ".rdata",
+          "offset": 40
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 216,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 40
+        }
+      },
+      {
+        "section": ".text",
+        "offset": 224,
+        "kind": "LO16",
+        "target": {
+          "section": ".rdata",
+          "offset": 40
+        }
+      }
+    ],
+    "symbols": {
+      "exports": [
+        {
+          "name": "fib_table",
+          "section": ".text",
+          "offset": 140
+        },
+        {
+          "name": "literal_length",
+          "section": ".text",
+          "offset": 212
+        },
+        {
+          "name": "name_of",
+          "section": ".text",
+          "offset": 8
+        },
+        {
+          "name": "next_id",
+          "section": ".text",
+          "offset": 68
+        },
+        {
+          "name": "scratch",
+          "section": ".text",
+          "offset": 112
+        }
+      ],
+      "commons": [],
+      "locals": [
+        {
+          "name": "buffer",
+          "section": ".bss",
+          "offset": 16
+        },
+        {
+          "name": "calls",
+          "section": ".bss",
+          "offset": 4
+        },
+        {
+          "name": "helper_twice",
+          "section": ".text",
+          "offset": 0
+        },
+        {
+          "name": "step.7",
+          "section": ".bss",
+          "offset": 0
+        }
+      ]
+    }
+  }
+}

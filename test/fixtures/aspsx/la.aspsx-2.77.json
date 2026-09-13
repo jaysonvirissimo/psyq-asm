@@ -1,0 +1,16 @@
+{
+  "name": "la",
+  "origin": "mkst/maspsx aspsx/fixtures/la.yaml @ 3629944",
+  "aspsxVersion": "2.77",
+  "sourceFile": "LA.S",
+  "source": "\t.comm\tspuCommonAttr,40\r\n\tla\t$4,spuCommonAttr\r\n",
+  "gpSize": 999,
+  "expectedWords": [
+    "0x3C040000",
+    "0x24840000"
+  ],
+  "disassembly": [
+    "lui $a0, 0x0",
+    "addiu $a0, $a0, 0x0"
+  ]
+}
